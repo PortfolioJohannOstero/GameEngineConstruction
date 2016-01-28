@@ -16,6 +16,9 @@
     <Filter Include="SheepEngine\World">
       <UniqueIdentifier>{864359e7-0e26-42c1-bc62-7e4293621305}</UniqueIdentifier>
     </Filter>
+    <Filter Include="SheepEngine\Utility">
+      <UniqueIdentifier>{41e6030a-e3d8-419c-b72a-5bb78902d892}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source.cpp" />
@@ -50,6 +53,12 @@
       <Filter>SheepEngine\World</Filter>
     </ClCompile>
     <ClCompile Include="SheepObjectScenery.cpp">
+      <Filter>SheepEngine\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Utility_Animation.cpp">
+      <Filter>SheepEngine\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="SheepObjectProjectile.cpp">
       <Filter>SheepEngine\Objects</Filter>
     </ClCompile>
   </ItemGroup>
@@ -91,6 +100,12 @@
       <Filter>SheepEngine\World</Filter>
     </ClInclude>
     <ClInclude Include="SheepObjectScenery.h">
+      <Filter>SheepEngine\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility_Animation.h">
+      <Filter>SheepEngine\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="SheepObjectProjectile.h">
       <Filter>SheepEngine\Objects</Filter>
     </ClInclude>
   </ItemGroup>

@@ -20,6 +20,8 @@ void ObjectPlayer::Update()
 	HAPI->GetKeyboardData(&mKeyData);
 	HAPI->GetControllerData(0, &mControllerData);
 
+	mPreviousTransform = transform;
+
 	if (mKeyData.scanCode[HK_LEFT])
 		transform->Translate(-1 * mSpeed, 0);
 	else if (mKeyData.scanCode[HK_RIGHT])
@@ -49,6 +51,7 @@ void ObjectPlayer::OnCollisionEnter(Object* otherObject)
 {
 	if (otherObject->GetTag() == PICKUP)
 		otherObject->SetActive(false);
+
 }
 
 void ObjectPlayer::OnCollisionExit(Object* otherObject)

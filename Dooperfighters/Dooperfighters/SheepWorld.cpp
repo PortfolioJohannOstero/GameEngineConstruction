@@ -5,6 +5,7 @@
 #include "SheepObjectPlayer.h"
 #include "SheepObjectPickup.h"
 #include "SheepObjectScenery.h"
+#include "SheepObjectProjectile.h"
 
 #include "SheepTransform2D.h"
 
@@ -89,9 +90,13 @@ void World::LoadLevel(unsigned int index)
 	Sheep::SheepObjectScenery* background = new Sheep::SheepObjectScenery(10, 0, 0, bgIndex, { 0, 0, 0, 0 }, Sheep::eTAG::NEUTRAL);
 	Sheep::ObjectPickup* pickup = new Sheep::ObjectPickup(10, 10, 10, 300, 300, playerIndex, collisionBox, Sheep::eTAG::PICKUP);
 
+	Sheep::ObjectProjectile* projectile = new Sheep::ObjectProjectile(10, 10, 10, 200, 300, playerIndex, collisionBox, Sheep::ENEMY);
+	projectile->AddCollisionTag(Sheep::PLAYER);
+
 	mObjectList.push_back(background);
 	mObjectList.push_back(player);
 	mObjectList.push_back(pickup);
+	mObjectList.push_back(projectile);
 
 }
 

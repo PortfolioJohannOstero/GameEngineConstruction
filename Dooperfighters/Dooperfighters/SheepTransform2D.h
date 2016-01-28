@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Precision.h"
+
 namespace Sheep
 {
 	class Vector2;
@@ -31,7 +33,7 @@ namespace Sheep
 		void SetPosition(const Vector2& pos);
 
 		void SetScale(int x, int y);
-		void SetCale(const Vector2& pos);
+		void SetScale(const Vector2& pos);
 
 		void SetRotation(int angle_deg);
 
@@ -39,6 +41,16 @@ namespace Sheep
 		Vector2 GetPosition() const;
 		Vector2 GetScale() const;
 		int GetRotation() const;
+
+
+		/* +==== Operator overloading ====+ */
+		Transform2D operator + (const Transform2D& rhs) const;
+		Transform2D operator - (const Transform2D& rhs) const;
+		void operator += (const Transform2D& rhs);
+		void operator -= (const Transform2D& rhs);
+
+		Transform2D operator * (real scale) const;
+		void operator *= (real scale);
 
 	private:
 		Vector2* mPosition = nullptr;

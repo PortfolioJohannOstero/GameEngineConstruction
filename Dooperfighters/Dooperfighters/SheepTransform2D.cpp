@@ -38,13 +38,15 @@ Transform2D::Transform2D(const Transform2D& cpy)
 
 Transform2D& Transform2D::operator = (const Transform2D& rhs)
 {
-	delete mPosition;
-	delete mScale;
+	if (!mPosition)
+		mPosition = new Vector2();
 
-	mPosition = new Vector2(*rhs.mPosition);
-	mScale = new Vector2(*rhs.mScale);
-
-	mRotation = rhs.mRotation;
+	if (!mScale)
+		mScale = new Vector2();
+	
+	*mPosition = rhs.GetPosition();
+	*mScale = rhs.GetScale();
+	mRotation = rhs.GetRotation();
 
 	return *this;
 }
@@ -104,7 +106,7 @@ void Transform2D::SetScale(int x, int y)
 	mScale->y = y;
 }
 
-void Transform2D::SetCale(const Vector2& pos)
+void Transform2D::SetScale(const Vector2& pos)
 {
 	*mScale = pos;
 }
@@ -130,5 +132,58 @@ Vector2 Transform2D::GetScale() const
 real Transform2D::GetRotation() const
 {
 	return mRotation;
+}
+#pragma endregion
+
+/* +==== Operator overloading ====+ */
+#pragma region Operator Overloading
+Transform2D Transform2D::operator + (const Transform2D& rhs) const
+{
+	Transform2D t = *this;
+	t.SetPosition(*mPosition + rhs.GetPosition());
+	t.SetRotation(mRotation + rhs.GetRotation());
+	t.SetScale(*mScale + rhs.GetScale());
+
+	return t;
+}
+
+Transform2D Transform2D::operator - (const Transform2D& rhs) const
+{
+	Transform2D t = *this;
+	t.SetPosition(*mPosition - rhs.GetPosition());
+	t.SetRotation(mRotation - rhs.GetRotation());
+	t.SetScale(*mScale - rhs.GetScale());
+
+	return t;
+}
+
+void Transform2D::operator += (const Transform2D& rhs)
+{
+	*mPosition += rhs.GetPosition();
+	mRotation += rhs.GetRotation();
+	*mScale += rhs.GetScale();
+}
+void Transform2D::operator -= (const Transform2D& rhs)
+{
+	*mPosition -= rhs.GetPosition();
+	mRotation -= rhs.GetRotation();
+	*mScale -= rhs.GetScale();
+}
+
+Transform2D Transform2D::operator * (real scale) const
+{
+	Transform2D t = *this;
+	t.SetPosition(*mPosition * scale);
+	t.SetRotation(mRotation * scale);
+	t.SetScale(*mScale * scale);
+
+	return t;
+}
+
+void Transform2D::operator *= (real scale)
+{
+	*mPosition *= scale;
+	mRotation *= scale;
+	*mScale *= scale;
 }
 #pragma endregion

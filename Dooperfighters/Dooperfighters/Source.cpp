@@ -25,6 +25,7 @@ void HAPI_Main()
 	{
 		VIEW.Debug_DisplayFPS(true, 8, 8);
 		WORLD.LoadLevel(0);
+		WORLD.SetFPS(25);
 		WORLD.ExecuteGameLoop();
 	}
 

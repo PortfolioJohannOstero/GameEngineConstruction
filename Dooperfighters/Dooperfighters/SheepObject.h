@@ -44,23 +44,24 @@ namespace Sheep
 
 		Transform2D* transform = nullptr;
 
-		/* +=== Tag handling ===+ */
+		/* +==== Collision Handling ====+ */
 		void AddCollisionTag(eTAG tag);
+		virtual void OnCollisionEnter(Object* otherObject);
+		virtual void OnCollisionExit(Object* otherObject);
+		void CollisionCheck(std::vector<Object*>& mapObjects);
+
 
 		/* +==== Object Control ====+ */
 		virtual void Update() = 0;
-		virtual void OnCollisionEnter(Object* otherObject);
-		virtual void OnCollisionExit(Object* otherObject);
 
 		virtual void Render();
-		void CollisionCheck(std::vector<Object*>& mapObjects);
 
 
 	protected:
 		unsigned int mSpriteId = 0;
 		bool mIsActive;
 
-		Transform2D* mNextTransform = nullptr;
+		Transform2D* mPreviousTransform = nullptr;
 		Rect* mCollisionBorder = nullptr;
 		eTAG mTag;
 		std::vector<eTAG> mCollisionCheckTags;

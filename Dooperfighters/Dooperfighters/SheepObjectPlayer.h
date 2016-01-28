@@ -16,6 +16,8 @@ namespace Sheep
 		void OnCollisionEnter(Object* otherObject) override final;
 		void OnCollisionExit(Object* otherObject) override final;
 
+
+
 	private:
 		HAPI_TKeyboardData mKeyData;
 		HAPI_TControllerData mControllerData;

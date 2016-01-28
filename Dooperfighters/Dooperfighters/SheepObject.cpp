@@ -4,6 +4,8 @@
 #include "Vector2.h"
 #include "SheepSprite.h"
 
+#include "Utility_Animation.h"
+
 using namespace Sheep;
 
 /* +==== Constructors ====+ */
@@ -12,7 +14,7 @@ Object::Object(unsigned int spriteId, eTAG tag)
 	: mSpriteId(spriteId), mSpeed(DEFAULT_VALUE), mHealth(DEFAULT_VALUE), mCollisionDamage(DEFAULT_VALUE), mIsActive(true), mTag(tag)
 {
 	transform = new Transform2D();
-	mNextTransform = new Transform2D();
+	mPreviousTransform = new Transform2D();
 	mCollisionBorder = new Rect();
 }
 
@@ -20,7 +22,7 @@ Object::Object(unsigned int speed, int health, int damage, const Vector2& positi
 	: mSpriteId(spriteId), mSpeed(speed), mHealth(health), mCollisionDamage(damage), mIsActive(true), mTag(tag)
 {
 	transform = new Transform2D(position);
-	mNextTransform = new Transform2D(position);
+	mPreviousTransform = new Transform2D(position);
 	mCollisionBorder = new Rect(collisionBox.Width(), collisionBox.Height());
 }
 
@@ -28,7 +30,7 @@ Object::Object(unsigned int speed, int health, int damage, int x, int y, unsigne
 	:mSpriteId(spriteId), mSpeed(speed), mHealth(health), mCollisionDamage(damage), mIsActive(true), mTag(tag)
 {
 	transform = new Transform2D(x, y);
-	mNextTransform = new Transform2D(x, y);
+	mPreviousTransform = new Transform2D(x, y);
 	mCollisionBorder = new Rect(collisionBox.Width(), collisionBox.Height());
 }
 
@@ -36,8 +38,8 @@ Object::~Object()
 {
 	delete transform;
 	transform = nullptr;
-	delete mNextTransform;
-	mNextTransform = nullptr;
+	delete mPreviousTransform;
+	mPreviousTransform = nullptr;
 	delete mCollisionBorder;
 	mCollisionBorder = nullptr;
 }
@@ -55,14 +57,14 @@ Object& Object::operator = (const Object& rhs)
 	if (!transform)
 		transform = new Transform2D();
 
-	if (!mNextTransform)
-		mNextTransform = new Transform2D();
+	if (!mPreviousTransform)
+		mPreviousTransform = new Transform2D();
 
 	if (!mCollisionBorder)
 		mCollisionBorder = new Rect();
 
 	*transform = *rhs.transform;
-	*mNextTransform = *rhs.mNextTransform;
+	*mPreviousTransform = *rhs.mPreviousTransform;
 	*mCollisionBorder = *rhs.mCollisionBorder;
 	
 	mSpriteId = rhs.mSpriteId;
@@ -132,7 +134,21 @@ Rect Object::GetCollisionBorder() const
 }
 #pragma endregion
 
-/* +=== Tag handling ===+ */
+/* +=== Rendering ===+ */
+void Object::Render()
+{
+	if (mIsActive)
+	{
+		Transform2D interpolatedPos = Lerp<Transform2D, DWORD>(*mPreviousTransform, *transform, HAPI->GetTime());
+		VIEW.Render(mSpriteId, *mPreviousTransform, 0);
+
+		VIEW.Debug_DisplayCollisionBox(interpolatedPos, *mCollisionBorder, { 255, 255, 0 });
+	}
+		
+}
+
+/* +==== Collision Handling ====+ */
+#pragma region Collision Handling
 void Object::AddCollisionTag(eTAG tag)
 {
 	for (const auto& collideTag : mCollisionCheckTags)
@@ -144,25 +160,12 @@ void Object::AddCollisionTag(eTAG tag)
 	mCollisionCheckTags.push_back(tag);
 }
 
-void Object::Render()
-{
-	if (mIsActive)
-	{
-		VIEW.Render(mSpriteId, *transform, 0);
-		VIEW.Debug_DisplayCollisionBox(*transform, *mCollisionBorder, { 255, 255, 0 });
-	}
-		
-}
-
-void Object::OnCollisionEnter(Object* otherObject)
-{}
-
-void Object::OnCollisionExit(Object* otherObject)
-{}
+void Object::OnCollisionEnter(Object* otherObject) {}
+void Object::OnCollisionExit(Object* otherObject) {}
 
 void Object::CollisionCheck(std::vector<Object*>& mapObjects)
 {
-	if (mCollisionCheckTags.size() <= 0 || mCollisionBorder == nullptr)
+	if (mCollisionCheckTags.size() <= 0 || mCollisionBorder == nullptr || !mIsActive)
 		return;
 
 	for (auto object : mapObjects)
@@ -196,4 +199,5 @@ void Object::CollisionCheck(std::vector<Object*>& mapObjects)
 			mCurrentHitObject = nullptr;
 		}
 	}
+#pragma endregion
 }
