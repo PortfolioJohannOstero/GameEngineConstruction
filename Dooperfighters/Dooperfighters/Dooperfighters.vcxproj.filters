@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="SheepEngine">
+      <UniqueIdentifier>{649eacb1-c75f-4e66-b9c3-92eb35cdad8f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SheepEngine\Objects">
+      <UniqueIdentifier>{e323e52f-3727-42f4-8184-9bc65ba15336}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SheepEngine\Math">
+      <UniqueIdentifier>{89dd41c1-6a81-4da8-a686-1d4f84e119ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SheepEngine\View">
+      <UniqueIdentifier>{3aa514e3-0ee4-4e55-8140-bcd33ea48838}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SheepEngine\World">
+      <UniqueIdentifier>{864359e7-0e26-42c1-bc62-7e4293621305}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Source.cpp" />
+    <ClCompile Include="SheepObject.cpp">
+      <Filter>SheepEngine\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="SheepView.cpp">
+      <Filter>SheepEngine\View</Filter>
+    </ClCompile>
+    <ClCompile Include="SheepSprite.cpp">
+      <Filter>SheepEngine\View</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector2.cpp">
+      <Filter>SheepEngine\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Rect.cpp">
+      <Filter>SheepEngine\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="SheepAnimator.cpp">
+      <Filter>SheepEngine\View</Filter>
+    </ClCompile>
+    <ClCompile Include="SheepTransform2D.cpp">
+      <Filter>SheepEngine\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="SheepObjectPlayer.cpp">
+      <Filter>SheepEngine\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="SheepObjectPickup.cpp">
+      <Filter>SheepEngine\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="SheepWorld.cpp">
+      <Filter>SheepEngine\World</Filter>
+    </ClCompile>
+    <ClCompile Include="SheepObjectScenery.cpp">
+      <Filter>SheepEngine\Objects</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Vector2.h">
+      <Filter>SheepEngine\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Precision.h">
+      <Filter>SheepEngine\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Rect.h">
+      <Filter>SheepEngine\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="SheepObject.h">
+      <Filter>SheepEngine\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="SheepView.h">
+      <Filter>SheepEngine\View</Filter>
+    </ClInclude>
+    <ClInclude Include="SheepSprite.h">
+      <Filter>SheepEngine\View</Filter>
+    </ClInclude>
+    <ClInclude Include="SheepTag.h">
+      <Filter>SheepEngine\World</Filter>
+    </ClInclude>
+    <ClInclude Include="SheepAnimator.h">
+      <Filter>SheepEngine\View</Filter>
+    </ClInclude>
+    <ClInclude Include="SheepTransform2D.h">
+      <Filter>SheepEngine\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="SheepObjectPlayer.h">
+      <Filter>SheepEngine\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="SheepObjectPickup.h">
+      <Filter>SheepEngine\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="SheepWorld.h">
+      <Filter>SheepEngine\World</Filter>
+    </ClInclude>
+    <ClInclude Include="SheepObjectScenery.h">
+      <Filter>SheepEngine\Objects</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

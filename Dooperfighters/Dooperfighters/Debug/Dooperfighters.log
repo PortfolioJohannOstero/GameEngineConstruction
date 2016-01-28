@@ -1,0 +1,24 @@
+﻿Build started 28/01/2016 14:28:46.
+     1>Project "d:\Users\suuunly\Desktop\Temporary files\Project Dooperfighters\Dooperfighters\Dooperfighters\Dooperfighters.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /IHAPI /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt SheepObject.cpp
+         SheepObject.cpp
+       Link:
+         D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"d:\Users\suuunly\Desktop\Temporary files\Project Dooperfighters\Dooperfighters\Debug\Dooperfighters.exe" /INCREMENTAL /NOLOGO /LIBPATH:HAPI HAPI_debug.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"d:\Users\suuunly\Desktop\Temporary files\Project Dooperfighters\Dooperfighters\Debug\Dooperfighters.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"d:\Users\suuunly\Desktop\Temporary files\Project Dooperfighters\Dooperfighters\Debug\Dooperfighters.lib" /MACHINE:X86 Debug\Rect.obj
+         Debug\SheepAnimator.obj
+         Debug\SheepObject.obj
+         Debug\SheepObjectPickup.obj
+         Debug\SheepObjectPlayer.obj
+         Debug\SheepObjectScenery.obj
+         Debug\SheepSprite.obj
+         Debug\SheepTransform2D.obj
+         Debug\SheepView.obj
+         Debug\Source.obj
+         Debug\Vector2.obj
+         Debug\SheepWorld.obj
+         Dooperfighters.vcxproj -> d:\Users\suuunly\Desktop\Temporary files\Project Dooperfighters\Dooperfighters\Debug\Dooperfighters.exe
+     1>Done Building Project "d:\Users\suuunly\Desktop\Temporary files\Project Dooperfighters\Dooperfighters\Dooperfighters\Dooperfighters.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:00.48
