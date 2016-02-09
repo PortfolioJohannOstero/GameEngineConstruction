@@ -16,9 +16,9 @@ namespace Sheep
 	{
 	public:
 		/* +==== Constructors ====+ */
-		Object(unsigned int spriteId, eTAG tag = NEUTRAL);
-		Object(unsigned int speed, int health, int damage, const Vector2& position, unsigned int spriteId, const Rect& collisionBox, eTAG tag = NEUTRAL);
-		Object(unsigned int speed, int health, int damage, int x, int y, unsigned int spriteId, const Rect& collisionBox, eTAG tag = NEUTRAL);
+		Object(const std::string& name, unsigned int spriteId, eTAG tag = NEUTRAL);
+		Object(const std::string& name, unsigned int speed, int health, int damage, const Vector2& position, unsigned int spriteId, const Rect& collisionBox, eTAG tag = NEUTRAL);
+		Object(const std::string& name, unsigned int speed, int health, int damage, int x, int y, unsigned int spriteId, const Rect& collisionBox, eTAG tag = NEUTRAL);
 		virtual ~Object();
 
 		/* +=== Copy ===+ */
@@ -28,6 +28,7 @@ namespace Sheep
 		/* +==== Setters ====+ */
 		void SetActive(bool isActive);
 	
+		void SetName(const std::string& name);
 		void SetSpeed(unsigned int speed);
 		void SetHealth(int health);
 		void SetCollisionDamage(int damage);
@@ -36,6 +37,7 @@ namespace Sheep
 
 		/* +=== Getters ===+ */
 		bool isActive() const;
+		std::string GetName() const;
 		unsigned int GetSpeed() const;
 		int GetHealth() const;
 		int GetCollisionDamage() const;
@@ -53,9 +55,7 @@ namespace Sheep
 
 		/* +==== Object Control ====+ */
 		virtual void Update() = 0;
-
 		virtual void Render();
-
 
 	protected:
 		unsigned int mSpriteId = 0;
@@ -68,6 +68,7 @@ namespace Sheep
 
 		int mFrameNumber = 0;
 
+		std::string mName;
 		unsigned int mSpeed;
 		int mHealth;
 		int mCollisionDamage;
@@ -75,6 +76,8 @@ namespace Sheep
 	private:
 		const int static DEFAULT_VALUE = 1;
 		Object* mCurrentHitObject = nullptr;
+
+		bool HitCheck(const Vector2& objectHit_position, const Rect& objectHit_boundary);
 	};
 }
 

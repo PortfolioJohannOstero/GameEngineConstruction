@@ -8,7 +8,8 @@ namespace Sheep
 		NEUTRAL = 0,
 		ENEMY,
 		PLAYER,
-		PICKUP
+		PICKUP,
+		PROJECTILE_BULLET
 	};
 }
 

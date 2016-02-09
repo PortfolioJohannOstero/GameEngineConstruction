@@ -6,6 +6,7 @@
 #include "Rect.h"
 
 #include "SheepWorld.h"
+#include "SheepInput.h"
 
 //#include "SheepObject.h"
 #include "SheepObjectPlayer.h"
@@ -26,8 +27,11 @@ void HAPI_Main()
 		VIEW.Debug_DisplayFPS(true, 8, 8);
 		WORLD.LoadLevel(0);
 		WORLD.SetFPS(25);
+
+		Sheep::Input::SetupControllers();
 		WORLD.ExecuteGameLoop();
 	}
 
+	Sheep::Input::CleanControllerSetup();
 	WORLD.Destroy();
 }

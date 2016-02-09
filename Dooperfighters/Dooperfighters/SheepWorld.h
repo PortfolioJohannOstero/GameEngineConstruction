@@ -29,7 +29,7 @@ namespace Sheep
 		
 		std::vector<Object*> mObjectList;
 		int mFPS = 25;
-		
+
 		World() {}
 		~World();
 

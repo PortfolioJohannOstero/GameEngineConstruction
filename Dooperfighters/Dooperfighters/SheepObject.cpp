@@ -10,24 +10,24 @@ using namespace Sheep;
 
 /* +==== Constructors ====+ */
 #pragma region Constructors
-Object::Object(unsigned int spriteId, eTAG tag)
-	: mSpriteId(spriteId), mSpeed(DEFAULT_VALUE), mHealth(DEFAULT_VALUE), mCollisionDamage(DEFAULT_VALUE), mIsActive(true), mTag(tag)
+Object::Object(const std::string& name, unsigned int spriteId, eTAG tag)
+	: mName(name), mSpriteId(spriteId), mSpeed(DEFAULT_VALUE), mHealth(DEFAULT_VALUE), mCollisionDamage(DEFAULT_VALUE), mIsActive(true), mTag(tag)
 {
 	transform = new Transform2D();
 	mPreviousTransform = new Transform2D();
 	mCollisionBorder = new Rect();
 }
 
-Object::Object(unsigned int speed, int health, int damage, const Vector2& position, unsigned int spriteId, const Rect& collisionBox, eTAG tag)
-	: mSpriteId(spriteId), mSpeed(speed), mHealth(health), mCollisionDamage(damage), mIsActive(true), mTag(tag)
+Object::Object(const std::string& name, unsigned int speed, int health, int damage, const Vector2& position, unsigned int spriteId, const Rect& collisionBox, eTAG tag)
+	: mName(name), mSpriteId(spriteId), mSpeed(speed), mHealth(health), mCollisionDamage(damage), mIsActive(true), mTag(tag)
 {
 	transform = new Transform2D(position);
 	mPreviousTransform = new Transform2D(position);
 	mCollisionBorder = new Rect(collisionBox.Width(), collisionBox.Height());
 }
 
-Object::Object(unsigned int speed, int health, int damage, int x, int y, unsigned int spriteId, const Rect& collisionBox, eTAG tag)
-	:mSpriteId(spriteId), mSpeed(speed), mHealth(health), mCollisionDamage(damage), mIsActive(true), mTag(tag)
+Object::Object(const std::string& name, unsigned int speed, int health, int damage, int x, int y, unsigned int spriteId, const Rect& collisionBox, eTAG tag)
+	: mName(name), mSpriteId(spriteId), mSpeed(speed), mHealth(health), mCollisionDamage(damage), mIsActive(true), mTag(tag)
 {
 	transform = new Transform2D(x, y);
 	mPreviousTransform = new Transform2D(x, y);
@@ -84,6 +84,10 @@ void Object::SetActive(bool isActive)
 {
 	mIsActive = isActive;
 }
+void Object::SetName(const std::string& name)
+{
+	mName = name;
+}
 void Object::SetSpeed(unsigned int speed)
 {
 	mSpeed = speed;
@@ -111,6 +115,10 @@ void Object::SetCollisionBorder(const Rect& border)
 bool Object::isActive() const
 {
 	return mIsActive;
+}
+std::string Object::GetName() const
+{
+	return mName;
 }
 unsigned int Object::GetSpeed() const
 {
@@ -187,7 +195,7 @@ void Object::CollisionCheck(std::vector<Object*>& mapObjects)
 			continue;
 
 		// On Collision Enter
-		if (mCollisionBorder->Contains(*object->mCollisionBorder, transform->GetPosition(), object->transform->GetPosition()))
+		if (HitCheck(object->transform->GetPosition(), *object->mCollisionBorder))
 		{
 			this->OnCollisionEnter(object);
 			mCurrentHitObject = object;
@@ -200,4 +208,14 @@ void Object::CollisionCheck(std::vector<Object*>& mapObjects)
 		}
 	}
 #pragma endregion
+}
+
+bool Object::HitCheck(const Vector2& objectHit_position, const Rect& objectHit_boundary)
+{
+	const Rect boundaryToWorld_local(transform->GetPosition(), *mCollisionBorder);
+	const Rect boundaryToWorld_external(objectHit_position, objectHit_boundary);
+
+	// if object is outside of the bounding box then return true, then flips it
+	return !(boundaryToWorld_external.left > boundaryToWorld_local.right || boundaryToWorld_external.right < boundaryToWorld_local.left ||
+			 boundaryToWorld_external.top > boundaryToWorld_local.bottom || boundaryToWorld_external.bottom < boundaryToWorld_local.top);
 }

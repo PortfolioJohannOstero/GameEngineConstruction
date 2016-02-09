@@ -7,6 +7,15 @@ Rect::Rect() :left(0), right(0), top(0), bottom(0) {}
 Rect::Rect(int l, int r, int t, int b) : left(l), right(r), top(t), bottom(b) {}
 Rect::Rect(int width, int height) : left(0), right(width), top(0), bottom(height) {}
 
+Rect::Rect(const Vector2& worldSpace, const Rect& boundary)
+{
+	left = worldSpace.x;
+	right = worldSpace.x + boundary.Width();
+
+	top = worldSpace.y;
+	bottom = worldSpace.y + boundary.Height();
+}
+
 /* +=== Copy ===+ */
 Rect::Rect(const Rect& cpy)
 {
@@ -82,12 +91,6 @@ void Rect::ClipTo(const Rect& rect)
 		top = rect.top;
 	if (bottom > rect.bottom)
 		bottom = rect.bottom;
-}
-
-bool Rect::Contains(const Rect& rect, const Vector2& internalPos, const Vector2& externalPos)
-{
-	return (abs(internalPos.x - externalPos.x) * 2 < (Width() + rect.Width())) &&
-		   (abs(internalPos.y - externalPos.x) * 2 < (Height() + rect.Height()));
 }
 #pragma endregion
 

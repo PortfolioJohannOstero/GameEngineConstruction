@@ -2,22 +2,24 @@
 #include "SheepTransform2D.h"
 #include "Rect.h"
 
+#include "Utility.h"
+
 using namespace Sheep;
 
 
-ObjectProjectile::ObjectProjectile(unsigned int spriteId, eTAG tag) : Object(spriteId, tag)
+ObjectProjectile::ObjectProjectile(const std::string& name, unsigned int spriteId, eTAG tag) : Object(name, spriteId, tag)
 {
 	SetActive(true);
 }
 
-ObjectProjectile::ObjectProjectile(unsigned int speed, int health, int damage, const Vector2& position, unsigned int spriteId, const Rect& collisionBox, eTAG tag)
-	: Object(speed, health, damage, position, spriteId, collisionBox, tag)
+ObjectProjectile::ObjectProjectile(const std::string& name, unsigned int speed, int health, int damage, const Vector2& position, unsigned int spriteId, const Rect& collisionBox, eTAG tag)
+	: Object(name, speed, health, damage, position, spriteId, collisionBox, tag)
 {
 	SetActive(true);
 }
 
-ObjectProjectile::ObjectProjectile(unsigned int speed, int health, int damage, int x, int y, unsigned int spriteId, const Rect& collisionBox, eTAG tag)
-	: Object(speed, health, damage, x, y, spriteId, collisionBox, tag)
+ObjectProjectile::ObjectProjectile(const std::string& name, unsigned int speed, int health, int damage, int x, int y, unsigned int spriteId, const Rect& collisionBox, eTAG tag)
+	: Object(name, speed, health, damage, x, y, spriteId, collisionBox, tag)
 {
 	SetActive(true);
 }
@@ -36,11 +38,16 @@ void ObjectProjectile::Update()
 			transform->GetPosition().y < 0 || transform->GetPosition().y > VIEW.WindowBoundary().Height())
 			SetActive(false);
 	}
+	else
+	{
+		transform->SetPosition(10, Sheep::Random<int>(10, VIEW.WindowBoundary().Height() - 10));
+		SetActive(true);
+	}
 }
 
 
 void ObjectProjectile::OnCollisionEnter(Object* otherObject)
 {
 	if (otherObject->GetTag() == PLAYER)
-		SetActive(false);
+		transform->SetPosition(10, Sheep::Random<int>(10, VIEW.WindowBoundary().Height() - 10));
 }

@@ -8,6 +8,9 @@
 #include "SheepObjectProjectile.h"
 
 #include "SheepTransform2D.h"
+#include "SheepInput.h"
+
+#include "Utility.h"
 
 using namespace Sheep;
 
@@ -82,22 +85,32 @@ void World::LoadLevel(unsigned int index)
 	unsigned int playerIndex;
 	if (!VIEW.CreateSprite(playerIndex, "Sprites/spritesheet_plane_red.png", 90, 44, 8, 1, true))
 		return;
+
+	unsigned int bulletIndex;
+	if (!VIEW.CreateSprite(bulletIndex, "Sprites/Bullet.png", 27, 7, 1, 1, true))
+		return;
+
 	Sheep::Rect collisionBox(82, 32);
 
-	Sheep::ObjectPlayer* player = new Sheep::ObjectPlayer(10, 10, 10, 500, 500, playerIndex, collisionBox, Sheep::eTAG::PLAYER);
+	Sheep::ObjectPlayer* player = new Sheep::ObjectPlayer("Player", 10, 10, 10, 500, 500, playerIndex, collisionBox, Sheep::eTAG::PLAYER);
 	player->AddCollisionTag(Sheep::eTAG::PICKUP);
 
-	Sheep::SheepObjectScenery* background = new Sheep::SheepObjectScenery(10, 0, 0, bgIndex, { 0, 0, 0, 0 }, Sheep::eTAG::NEUTRAL);
-	Sheep::ObjectPickup* pickup = new Sheep::ObjectPickup(10, 10, 10, 300, 300, playerIndex, collisionBox, Sheep::eTAG::PICKUP);
-
-	Sheep::ObjectProjectile* projectile = new Sheep::ObjectProjectile(10, 10, 10, 200, 300, playerIndex, collisionBox, Sheep::ENEMY);
-	projectile->AddCollisionTag(Sheep::PLAYER);
+	Sheep::SheepObjectScenery* background = new Sheep::SheepObjectScenery("Background", 10, 0, 0, bgIndex, { 0, 0, 0, 0 }, Sheep::eTAG::NEUTRAL);
+	Sheep::ObjectPickup* pickup = new Sheep::ObjectPickup("Pickup", 10, 10, 10, 300, 300, playerIndex, collisionBox, Sheep::eTAG::ENEMY);
 
 	mObjectList.push_back(background);
 	mObjectList.push_back(player);
 	mObjectList.push_back(pickup);
-	mObjectList.push_back(projectile);
 
+	for (int i = 0; i < 10; i++)
+	{
+		int x = 10;
+		int y = Sheep::Random<int>(10, VIEW.WindowBoundary().Height() - 1);
+
+		Sheep::ObjectProjectile* projectile = new Sheep::ObjectProjectile("Projectile", 10, 10, 10, x, y, bulletIndex, { 0, 25, 0, 6 }, Sheep::eTAG::PROJECTILE_BULLET);
+		projectile->AddCollisionTag(Sheep::PLAYER);
+		mObjectList.push_back(projectile);
+	}
 }
 
 void World::ExecuteGameLoop()
@@ -105,6 +118,8 @@ void World::ExecuteGameLoop()
 	DWORD timerClamp = HAPI->GetTime();
 	while (HAPI->Update())
 	{
+		Input::CheckInput();
+
 		if (timerClamp < HAPI->GetTime() - mFPS)
 		{
 			for (auto *object : mObjectList)

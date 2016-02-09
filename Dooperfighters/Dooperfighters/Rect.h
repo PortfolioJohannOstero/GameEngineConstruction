@@ -15,6 +15,7 @@ namespace Sheep
 		Rect(); /* <-- set eveyrhting to zero */
 		Rect(int l, int r, int t, int b);
 		Rect(int width, int height);
+		Rect(const Vector2& worldSpace, const Rect& boundary);
 		Rect(const Rect& cpy);
 
 		/* +==== Set dimensions ====+ */
@@ -31,8 +32,6 @@ namespace Sheep
 		/* +==== Collider Handling ====+ */
 		bool CompletelyOutside(const Rect& rect, int x, int y);
 		void ClipTo(const Rect& rect);
-		bool Contains(const Rect& rect, const Vector2& internalPos, const Vector2& externalPos);
-
 
 		/* +==== Operator Overloading ====+ */
 		#pragma region Operator Overloading
