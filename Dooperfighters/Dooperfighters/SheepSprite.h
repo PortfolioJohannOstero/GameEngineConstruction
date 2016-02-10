@@ -5,6 +5,7 @@
 #include <HAPI_lib.h>
 #include <string>
 #include "Rect.h"
+#include "SheepBlittingTypes.h"
 
 namespace Sheep
 {
@@ -26,7 +27,7 @@ namespace Sheep
 		Sprite& operator = (const Sprite& rhs);
 
 		/* +==== Setter Methods ====+ */
-		bool Load(std::string& filename, unsigned int spriteWidth, unsigned int spriteHeight, unsigned int maxHorizontalSprites, unsigned int maxVerticalSprites, bool isTransparent);
+		bool Load(std::string& filename, unsigned int spriteWidth, unsigned int spriteHeight, unsigned int maxHorizontalSprites, unsigned int maxVerticalSprites, BLITTING_TYPES type);
 
 		/* +==== Getter methods ====+ */
 		BYTE* GetImagePointer();
@@ -50,9 +51,11 @@ namespace Sheep
 		void (Sprite::*RenderType)(const Transform2D&, BYTE*, const Rect&, unsigned int) = nullptr;
 		void BlitLineByLine(const Transform2D& transform, BYTE* screenPointer, const Rect& screenBoundary, unsigned int frameNumber);
 		void BlitTransparent(const Transform2D& transform, BYTE* screenPointer, const Rect& screenBoundary, unsigned int frameNumber);
+		void BlitTransparentRotation(const Transform2D& transform, BYTE* screenPointer, const Rect& screenBoundary, unsigned int frameNumber);
 
 		// !NOTE: updates the x and y values if needed
 		Rect Clipping(const Rect& screenBoundary, int &x, int &y);
+		void AnimationOffset(unsigned int frameNumber, Rect& animationClipContainer);
 
 		Vector2 getRotation(const Vector2& initPos, int angle);
 		Vector2 getSimpleRotation(const Vector2& initPos, int angle);

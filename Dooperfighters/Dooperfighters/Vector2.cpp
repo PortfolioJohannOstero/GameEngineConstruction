@@ -25,30 +25,33 @@ Vector2& Vector2::operator = (const Vector2& rhs)
 
 /* +==== General Vector Methods ====+ */
 #pragma region General Vector Methods
-void Vector2::invert()
+void Vector2::Invert()
 {
 	x = -x;
 	y = -y;
 }
 
-real Vector2::magnitude() const
+real Vector2::Magnitude() const
 {
 	// TODO: int to float
-	//return (int)real_sqrt(x * x + y * y);
-	return 0;
+	return real_sqrt(x * x + y * y);
 }
 
-real Vector2::squareMagnitude() const /* <-- To avoid using square root: http://stackoverflow.com/questions/6884359/c-practical-computational-complexity-of-cmath-sqrt */
+real Vector2::SquareMagnitude() const /* <-- To avoid using square root: http://stackoverflow.com/questions/6884359/c-practical-computational-complexity-of-cmath-sqrt */
 {
 	return x * x + y * y;
 }
 
-void Vector2::normalize()
+void Vector2::Normalize()
 {
-	real n = magnitude();
-	if (n > 0)
-		*this *= ((real)1) / n;
+	*this /= SquareMagnitude();
 }
+
+Vector2 Vector2::Normalized() const
+{
+	return (*this) / SquareMagnitude();
+}
+
 #pragma endregion
 
 /* +== Scalars ==+ */
@@ -63,6 +66,20 @@ void Vector2::operator *= (const real rhs)
 {
 	x *= rhs;
 	y *= rhs;
+}
+	/* -Division- */
+Vector2 Vector2::operator / (const real rhs) const
+{
+	if (rhs > 0)
+		return Vector2(x / rhs, y / rhs);
+
+	return Vector2(0, 0);
+}
+
+void Vector2::operator /= (const real rhs)
+{
+	x /= rhs;
+	y /= rhs;
 }
 
 	/* -Add- */
@@ -89,7 +106,7 @@ void Vector2::operator -= (const Vector2& rhs)
 }
 
 /* -Add and Multiply (x2)- */
-void Vector2::addScaledVector(const Vector2& vector, real scale)	/* <-- two in one, for convienence sake */
+void Vector2::AddScaledVector(const Vector2& vector, real scale)	/* <-- two in one, for convienence sake */
 {
 	x += vector.x * scale;
 	y += vector.y * scale;
@@ -98,11 +115,11 @@ void Vector2::addScaledVector(const Vector2& vector, real scale)	/* <-- two in o
 
 /* +== Component Product ==+ */
 #pragma region Component
-Vector2 Vector2::componentProduct(const Vector2& vector) const
+Vector2 Vector2::ComponentProduct(const Vector2& vector) const
 {
 	return Vector2(x * vector.x, y * vector.y);
 }
-void Vector2::componentProductUpdate(const Vector2& vector)
+void Vector2::ComponentProductUpdate(const Vector2& vector)
 {
 	x *= vector.x;
 	y *= vector.y;

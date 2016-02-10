@@ -84,6 +84,8 @@
   <ItemGroup>
     <ClCompile Include="Rect.cpp" />
     <ClCompile Include="SheepAnimator.cpp" />
+    <ClCompile Include="SheepDebug.cpp" />
+    <ClCompile Include="SheepDebugMessage.cpp" />
     <ClCompile Include="SheepInput.cpp" />
     <ClCompile Include="SheepObject.cpp" />
     <ClCompile Include="SheepObjectPickup.cpp" />
@@ -102,6 +104,9 @@
     <ClInclude Include="Precision.h" />
     <ClInclude Include="Rect.h" />
     <ClInclude Include="SheepAnimator.h" />
+    <ClInclude Include="SheepBlittingTypes.h" />
+    <ClInclude Include="SheepDebug.h" />
+    <ClInclude Include="SheepDebugMessage.h" />
     <ClInclude Include="SheepInput.h" />
     <ClInclude Include="SheepObject.h" />
     <ClInclude Include="SheepObjectPickup.h" />

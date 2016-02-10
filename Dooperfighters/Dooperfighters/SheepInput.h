@@ -11,6 +11,12 @@ namespace Sheep
 		LEFT, RIGHT, UP, DOWN
 	};
 
+	struct Controller
+	{
+		HAPI_TControllerData Data;
+		bool isPluggedIn = false;
+	};
+
 	class Input
 	{
 	public:
@@ -26,7 +32,7 @@ namespace Sheep
 
 	private:
 		static HAPI_TKeyboardData mKeyData;
-		static std::vector<HAPI_TControllerData*> mControllerData;
+		static std::vector<Controller*> mControllerData;
 	};
 }
 

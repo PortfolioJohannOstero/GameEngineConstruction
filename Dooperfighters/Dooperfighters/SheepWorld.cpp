@@ -11,6 +11,7 @@
 #include "SheepInput.h"
 
 #include "Utility.h"
+#include "SheepDebugMessage.h"
 
 using namespace Sheep;
 
@@ -79,15 +80,15 @@ void World::SetFPS(unsigned int fps)
 void World::LoadLevel(unsigned int index)
 {
 	unsigned int bgIndex = 0;
-	if (!VIEW.CreateSprite(bgIndex, "Sprites/testMap.jpg", 800, 600, 0, 0, false))
+	if (!VIEW.CreateSprite(bgIndex, "Sprites/testMap.jpg", 800, 600, 0, 0, BLITTING_TYPES::LINE_BY_LINE))
 		return;
 
 	unsigned int playerIndex;
-	if (!VIEW.CreateSprite(playerIndex, "Sprites/spritesheet_plane_red.png", 90, 44, 8, 1, true))
+	if (!VIEW.CreateSprite(playerIndex, "Sprites/spritesheet_plane_red.png", 90, 44, 8, 1, BLITTING_TYPES::TRANSPARENT))
 		return;
 
 	unsigned int bulletIndex;
-	if (!VIEW.CreateSprite(bulletIndex, "Sprites/Bullet.png", 27, 7, 1, 1, true))
+	if (!VIEW.CreateSprite(bulletIndex, "Sprites/Bullet.png", 27, 7, 1, 1, BLITTING_TYPES::TRANSPARENT))
 		return;
 
 	Sheep::Rect collisionBox(82, 32);
@@ -134,5 +135,8 @@ void World::ExecuteGameLoop()
 		// Rendering
 		for (auto *object : mObjectList)
 			object->Render();
+
+		//HAPI->RenderText(10, 20, { 255, 255, 255 }, std::to_string(mObjectList[1]->transform->GetRotation()));
+		DEBUG_MESSAGE.RenderMessages();
 	}
 }

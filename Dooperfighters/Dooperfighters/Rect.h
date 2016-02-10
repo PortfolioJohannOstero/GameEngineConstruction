@@ -28,6 +28,7 @@ namespace Sheep
 		int Width() const;
 		int Height() const;
 		int Area() const;
+		Vector2 Center() const;
 
 		/* +==== Collider Handling ====+ */
 		bool CompletelyOutside(const Rect& rect, int x, int y);

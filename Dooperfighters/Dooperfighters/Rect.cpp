@@ -38,6 +38,11 @@ int Rect::Area() const
 {
 	return Width() * Height();
 }
+
+Vector2 Rect::Center() const
+{
+	return Vector2(Width() * 0.5, Height() * 0.5);
+}
 #pragma endregion
 
 /* +==== Set dimension ====+ */

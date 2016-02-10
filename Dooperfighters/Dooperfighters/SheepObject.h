@@ -3,6 +3,7 @@
 
 #include "SheepTag.h"
 #include "SheepView.h"
+#include "SheepDebugMessage.h"
 
 #include <vector>
 

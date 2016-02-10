@@ -14,10 +14,10 @@ This is the view class, everything related to rendering goes through here!
 #include <HAPI_lib.h>
 #include <vector>
 
+#include "SheepBlittingTypes.h"
 namespace Sheep
 {
 	#define VIEW Sheep::View::getInstance()
-
 	class Transform2D;
 	class Rect;
 	class Vector2;
@@ -34,16 +34,11 @@ namespace Sheep
 
 		bool Initialise(int screenWidth, int screenHeight, unsigned int maxLayers);
 
-		/* +==== Debug ====+ */
-		void Debug_DisplayFPS(bool state, int x, int y);
-		void Debug_DisplayCollisionBox(const Transform2D& transform, const Rect& boundingBox, const HAPI_TColour& lineColour);
-		void Debug_DisplayDirection(const HAPI_TColour& lineColour);
-
 		/* +==== Window Resolution ====+ */
 		Rect WindowBoundary() const;
 
 		/* +==== Sprite Handling ====+ */
-		bool CreateSprite(unsigned int& spriteId, std::string filename, unsigned int spriteWidth, unsigned int spriteHeight, unsigned int maxHorizontalSprites, unsigned int maxVerticalSprites, bool isTransparent);
+		bool CreateSprite(unsigned int& spriteId, std::string filename, unsigned int spriteWidth, unsigned int spriteHeight, unsigned int maxHorizontalSprites, unsigned int maxVerticalSprites, BLITTING_TYPES type);
 		void Render(unsigned int id, const Transform2D& transform, int framecount = 0);
 
 		/* +==== Rendering ====+ */

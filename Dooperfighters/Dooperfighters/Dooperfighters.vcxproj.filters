@@ -19,6 +19,9 @@
     <Filter Include="SheepEngine\Utility">
       <UniqueIdentifier>{41e6030a-e3d8-419c-b72a-5bb78902d892}</UniqueIdentifier>
     </Filter>
+    <Filter Include="SheepEngine\World\Debug">
+      <UniqueIdentifier>{d58eee5c-72ea-41df-ba58-4aa35910ab51}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source.cpp" />
@@ -63,6 +66,12 @@
     </ClCompile>
     <ClCompile Include="SheepInput.cpp">
       <Filter>SheepEngine\World</Filter>
+    </ClCompile>
+    <ClCompile Include="SheepDebug.cpp">
+      <Filter>SheepEngine\World\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="SheepDebugMessage.cpp">
+      <Filter>SheepEngine\World\Debug</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -116,6 +125,15 @@
     </ClInclude>
     <ClInclude Include="Utility.h">
       <Filter>SheepEngine\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="SheepBlittingTypes.h">
+      <Filter>SheepEngine\View</Filter>
+    </ClInclude>
+    <ClInclude Include="SheepDebug.h">
+      <Filter>SheepEngine\World\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="SheepDebugMessage.h">
+      <Filter>SheepEngine\World\Debug</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

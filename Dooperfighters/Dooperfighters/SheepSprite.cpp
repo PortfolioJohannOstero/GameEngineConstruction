@@ -64,7 +64,7 @@ Sprite& Sprite::operator = (const Sprite& rhs)
 #pragma endregion
 
 /* +==== Setter Methods ====+ */
-bool Sprite::Load(std::string& filename, unsigned int spriteWidth, unsigned int spriteHeight, unsigned int maxHorizontalSprites, unsigned int maxVerticalSprites, bool isTransparent)
+bool Sprite::Load(std::string& filename, unsigned int spriteWidth, unsigned int spriteHeight, unsigned int maxHorizontalSprites, unsigned int maxVerticalSprites, BLITTING_TYPES type)
 {
 	if (!HAPI->LoadTexture(filename, &mTexture, &mSheetSize.right, &mSheetSize.bottom))
 	{
@@ -77,7 +77,23 @@ bool Sprite::Load(std::string& filename, unsigned int spriteWidth, unsigned int 
 	mMaxSprites_col = maxHorizontalSprites;
 	mMaxSprites_row = maxVerticalSprites;
 
-	RenderType = (isTransparent) ? &Sprite::BlitTransparent : &Sprite::BlitLineByLine;
+	switch (type)
+	{
+	case BLITTING_TYPES::LINE_BY_LINE:
+		RenderType = &Sprite::BlitLineByLine;
+		break;
+	case BLITTING_TYPES::TRANSPARENT:
+		RenderType = &Sprite::BlitTransparent;
+		break;
+	case BLITTING_TYPES::TRANSPARENT_ROTATION:
+		RenderType = &Sprite::BlitTransparentRotation;
+		break;
+	default:
+		RenderType = nullptr;
+		return false;
+	}
+
+
 	return true;
 }
 
@@ -90,6 +106,7 @@ void Sprite::Render(const Transform2D& transform, BYTE* screenPointer, const Rec
 	(this->*RenderType)(transform, screenPointer, screenBoundary, frameNumber);
 }
 
+#pragma region Blitting methods
 void Sprite::BlitLineByLine(const Transform2D& transform, BYTE* screenPointer, const Rect& screenBoundary, unsigned int frameNumber)
 {
 	Vector2 pos = transform.GetPosition();
@@ -98,16 +115,7 @@ void Sprite::BlitLineByLine(const Transform2D& transform, BYTE* screenPointer, c
 		return;
 
 	Rect Clipped = Clipping(screenBoundary, pos.x, pos.y);
-
-	unsigned int yoffset = 0;
-	while (frameNumber > mMaxSprites_col)
-	{
-		frameNumber -= mMaxSprites_col;
-		yoffset++;
-	}
-
-	Clipped.Translate(frameNumber * mBoundingBox.Width(), yoffset * mBoundingBox.Height());
-
+	AnimationOffset(frameNumber, Clipped);
 
 	BYTE* destinationPointer = screenPointer + (pos.x + pos.y * screenBoundary.Width()) * BYTE_SIZE;
 	BYTE* sourcePointer = mTexture + (Clipped.left + Clipped.top * mBoundingBox.Width()) * BYTE_SIZE;
@@ -123,27 +131,12 @@ void Sprite::BlitLineByLine(const Transform2D& transform, BYTE* screenPointer, c
 
 void Sprite::BlitTransparent(const Transform2D& transform, BYTE* screenPointer, const Rect& screenBoundary, unsigned int frameNumber)
 {
-	Vector2 center = getSimpleRotation(Vector2(0,0), transform.GetRotation());
-	Vector2 pos = transform.GetPosition() + center;
-
+	Vector2 pos = transform.GetPosition();
 	if (mBoundingBox.CompletelyOutside(screenBoundary, pos.x, pos.y))
 		return;
 
 	Rect Clipped = Clipping(screenBoundary, pos.x, pos.y);
-
-	#pragma region Sprite Outside of Spritesheet
-	unsigned int yoffset = 0;
-	while (frameNumber > mMaxSprites_col)
-	{
-		frameNumber -= mMaxSprites_col;
-		yoffset++;
-	}
-
-	if (yoffset > mMaxSprites_row)
-		yoffset = mMaxSprites_row;
-	#pragma endregion
-
-	Clipped.Translate(frameNumber * mBoundingBox.Width(), yoffset * mBoundingBox.Height());
+	AnimationOffset(frameNumber, Clipped);
 
 	BYTE* destinationPointer = screenPointer + (pos.x + pos.y * screenBoundary.Width()) * BYTE_SIZE;
 	BYTE* sourcePointer = mTexture + (Clipped.left + Clipped.top * mSheetSize.Width()) * BYTE_SIZE;
@@ -177,6 +170,50 @@ void Sprite::BlitTransparent(const Transform2D& transform, BYTE* screenPointer, 
 	}
 }
 
+void Sprite::BlitTransparentRotation(const Transform2D& transform, BYTE* screenPointer, const Rect& screenBoundary, unsigned int frameNumber)
+{
+	Vector2 center = getSimpleRotation(Vector2(0, 0), transform.GetRotation());
+	Vector2 pos = transform.GetPosition() + center;
+
+	if (mBoundingBox.CompletelyOutside(screenBoundary, pos.x, pos.y))
+		return;
+
+	Rect Clipped = Clipping(screenBoundary, pos.x, pos.y);
+	AnimationOffset(frameNumber, Clipped);
+
+	BYTE* destinationPointer = screenPointer + (pos.x + pos.y * screenBoundary.Width()) * BYTE_SIZE;
+	BYTE* sourcePointer = mTexture + (Clipped.left + Clipped.top * mSheetSize.Width()) * BYTE_SIZE;
+
+	for (int y = 0; y < Clipped.Height(); y++)
+	{
+		for (int x = 0; x < Clipped.Width(); x++)
+		{
+			BYTE alpha = sourcePointer[3];
+			if (alpha == 255)
+			{
+				memcpy(destinationPointer, sourcePointer, BYTE_SIZE);
+			}
+			else if (alpha != 0)
+			{
+				BYTE blue = sourcePointer[0];
+				BYTE green = sourcePointer[1];
+				BYTE red = sourcePointer[2];
+
+				destinationPointer[0] = destinationPointer[0] + ((alpha * (blue - destinationPointer[0])) >> 8);
+				destinationPointer[1] = destinationPointer[1] + ((alpha * (green - destinationPointer[1])) >> 8);
+				destinationPointer[2] = destinationPointer[2] + ((alpha * (red - destinationPointer[2])) >> 8);
+			}
+
+			sourcePointer += BYTE_SIZE;
+			destinationPointer += BYTE_SIZE;
+		}
+
+		destinationPointer += (screenBoundary.Width() - Clipped.Width()) * BYTE_SIZE;
+		sourcePointer += (mSheetSize.Width() - Clipped.Width()) * BYTE_SIZE;
+	}
+}
+#pragma endregion
+
 Vector2 Sprite::getRotation(const Vector2& initPos, int angle)
 {
 	int x = initPos.y * (sin(angle) * (tan(angle / 2) * tan(angle / 2)) - 2 * tan(angle / 2)) + initPos.x * (-sin(angle) * tan(angle / 2) + 1);
@@ -205,6 +242,20 @@ Rect Sprite::Clipping(const Rect& screenBoundary, int &x, int &y)
 	return Clipped;
 }
 
+void Sprite::AnimationOffset(unsigned int frameNumber, Rect& animationClipContainer)
+{
+	unsigned int yoffset = 0;
+	while (frameNumber > mMaxSprites_col)
+	{
+		frameNumber -= mMaxSprites_col;
+		yoffset++;
+	}
+
+	if (yoffset > mMaxSprites_row)
+		yoffset = mMaxSprites_row;
+
+	animationClipContainer.Translate(frameNumber * mBoundingBox.Width(), yoffset * mBoundingBox.Height());
+}
 
 /* +==== Getter Methods ====+ */
 #pragma region Getter Methods

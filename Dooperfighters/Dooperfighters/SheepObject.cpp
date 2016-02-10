@@ -5,6 +5,7 @@
 #include "SheepSprite.h"
 
 #include "Utility_Animation.h"
+#include "SheepDebug.h"
 
 using namespace Sheep;
 
@@ -150,7 +151,8 @@ void Object::Render()
 		Transform2D interpolatedPos = Lerp<Transform2D, DWORD>(*mPreviousTransform, *transform, HAPI->GetTime());
 		VIEW.Render(mSpriteId, *mPreviousTransform, 0);
 
-		VIEW.Debug_DisplayCollisionBox(interpolatedPos, *mCollisionBorder, { 255, 255, 0 });
+		Sheep::Debug::DisplayCollisionBox(*this, { 255, 255, 0 });
+		Sheep::Debug::DisplayDirection(*this, 30, { 255, 0, 0 });
 	}
 		
 }
@@ -219,3 +221,5 @@ bool Object::HitCheck(const Vector2& objectHit_position, const Rect& objectHit_b
 	return !(boundaryToWorld_external.left > boundaryToWorld_local.right || boundaryToWorld_external.right < boundaryToWorld_local.left ||
 			 boundaryToWorld_external.top > boundaryToWorld_local.bottom || boundaryToWorld_external.bottom < boundaryToWorld_local.top);
 }
+
+#pragma endregion

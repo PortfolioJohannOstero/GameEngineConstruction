@@ -21,14 +21,19 @@ void ObjectPlayer::Update()
 {
 	mPreviousTransform = transform;
 
-	if (Input::Key_isPressed(HK_LEFT) || Input::Controller_LeftAnalogueMoved(0, Sheep::ANALOGUE_DIRECTION::LEFT))
+	if (Input::Key_isPressed('Q'))
+	{
+		transform->Rotate(1);
+	}
+
+	if (Input::Key_isPressed('A') || Input::Controller_LeftAnalogueMoved(0, Sheep::ANALOGUE_DIRECTION::LEFT))
 		transform->Translate(-1 * mSpeed, 0);
-	else if (Input::Key_isPressed(HK_RIGHT) || Input::Controller_LeftAnalogueMoved(0, Sheep::ANALOGUE_DIRECTION::RIGHT))
+	else if (Input::Key_isPressed('D') || Input::Controller_LeftAnalogueMoved(0, Sheep::ANALOGUE_DIRECTION::RIGHT))
 		transform->Translate(mSpeed, 0);
 
-	if (Input::Key_isPressed(HK_UP) || Input::Controller_LeftAnalogueMoved(0, Sheep::ANALOGUE_DIRECTION::UP))
+	if (Input::Key_isPressed('W') || Input::Controller_LeftAnalogueMoved(0, Sheep::ANALOGUE_DIRECTION::UP))
 		transform->Translate(0, -1 * mSpeed);
-	else if (Input::Key_isPressed(HK_DOWN) || Input::Controller_LeftAnalogueMoved(0,Sheep::ANALOGUE_DIRECTION::DOWN))
+	else if (Input::Key_isPressed('S') || Input::Controller_LeftAnalogueMoved(0,Sheep::ANALOGUE_DIRECTION::DOWN))
 		transform->Translate(0, mSpeed);
 }
 

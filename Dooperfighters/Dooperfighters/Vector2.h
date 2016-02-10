@@ -31,16 +31,21 @@ namespace Sheep
 		Vector2& operator = (const Vector2& rhs);
 
 		/* +==== General Vector Methods ====+ */
-		void invert();
+		void Invert();
 
-		real magnitude() const;
-		real squareMagnitude() const; /* <-- To avoid using square root: http://stackoverflow.com/questions/6884359/c-practical-computational-complexity-of-cmath-sqrt */
+		real Magnitude() const;
+		real SquareMagnitude() const; /* <-- To avoid using square root: http://stackoverflow.com/questions/6884359/c-practical-computational-complexity-of-cmath-sqrt */
 
-		void normalize();
+		void Normalize();
+		Vector2 Normalized() const;
 
 		/* +== Scalars ==+ */
 		Vector2 operator * (const real rhs) const;
 		void operator   *= (const real rhs);
+		
+		Vector2 operator / (const real rhs) const;
+		void operator /= (const real rhs);
+
 
 		Vector2 operator + (const Vector2& rhs) const;
 		void operator   += (const Vector2& rhs);
@@ -48,11 +53,11 @@ namespace Sheep
 		Vector2 operator - (const Vector2& rhs) const;
 		void operator   -= (const Vector2& rhs);
 
-		void addScaledVector(const Vector2& vector, real scale);	/* <-- two in one, for convienence sake */
+		void AddScaledVector(const Vector2& vector, real scale);	/* <-- two in one, for convienence sake */
 
 		/* +== Component Product ==+ */
-		Vector2 componentProduct(const Vector2& vector) const; /* <-- returns the component product */
-		void componentProductUpdate(const Vector2& vector); /* <-- updates it to the component product*/
+		Vector2 ComponentProduct(const Vector2& vector) const; /* <-- returns the component product */
+		void ComponentProductUpdate(const Vector2& vector); /* <-- updates it to the component product*/
 
 		/* +== Scalar (Dot) Product ==+ */
 		//real scalarProduct(const Vector2& vector);

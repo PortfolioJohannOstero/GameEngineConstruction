@@ -26,7 +26,6 @@ ObjectProjectile::ObjectProjectile(const std::string& name, unsigned int speed, 
 
 void ObjectProjectile::Update()
 {
-	
 	if (isActive())
 	{
 		// TODO: move into transform
@@ -49,5 +48,8 @@ void ObjectProjectile::Update()
 void ObjectProjectile::OnCollisionEnter(Object* otherObject)
 {
 	if (otherObject->GetTag() == PLAYER)
+	{
 		transform->SetPosition(10, Sheep::Random<int>(10, VIEW.WindowBoundary().Height() - 10));
+		DEBUG_MESSAGE.PushMessage("Hit" + otherObject->GetName());
+	}
 }

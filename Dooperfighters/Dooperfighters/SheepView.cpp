@@ -66,26 +66,6 @@ View::~View()
 }
 #pragma endregion
 
-/* +==== Debug ====+ */
-#pragma region Debug
-void View::Debug_DisplayFPS(bool state, int x, int y)
-{
-	HAPI->SetShowFPS(state, x, y);
-}
-
-void View::Debug_DisplayCollisionBox(const Transform2D& transform, const Rect& boundingBox, const HAPI_TColour& lineColour)
-{
-	Rect r = boundingBox;
-	r.Translate(transform.GetPosition());
-	VIEW.DrawSquare(r, lineColour);
-}
-
-void View::Debug_DisplayDirection(const HAPI_TColour& lineColour)
-{
-
-}
-#pragma endregion
-
 /* +==== Window Resolution ====+ */
 Rect View::WindowBoundary() const
 {
@@ -93,10 +73,10 @@ Rect View::WindowBoundary() const
 }
 
 /* +==== Sprite Handling ====+ */
-bool View::CreateSprite(unsigned int& spriteId, std::string filename, unsigned int spriteWidth, unsigned int spriteHeight, unsigned int maxHorizontalSprites, unsigned int maxVerticalSprites, bool isTransparent)
+bool View::CreateSprite(unsigned int& spriteId, std::string filename, unsigned int spriteWidth, unsigned int spriteHeight, unsigned int maxHorizontalSprites, unsigned int maxVerticalSprites, BLITTING_TYPES type)
 {
 	Sprite* newSprite = new Sprite;
-	if (!newSprite->Load(filename, spriteWidth, spriteHeight, maxHorizontalSprites, maxVerticalSprites, isTransparent))
+	if (!newSprite->Load(filename, spriteWidth, spriteHeight, maxHorizontalSprites, maxVerticalSprites, type))
 	{
 		HAPI->UserMessage("Could not load " + filename, "Image Load Failure");
 		return false;
