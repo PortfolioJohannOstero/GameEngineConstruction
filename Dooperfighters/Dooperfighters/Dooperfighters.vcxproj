@@ -83,6 +83,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Rect.cpp" />
+    <ClCompile Include="SheepAmmo.cpp" />
     <ClCompile Include="SheepAnimator.cpp" />
     <ClCompile Include="SheepDebug.cpp" />
     <ClCompile Include="SheepDebugMessage.cpp" />
@@ -96,6 +97,7 @@
     <ClCompile Include="SheepTransform2D.cpp" />
     <ClCompile Include="SheepView.cpp" />
     <ClCompile Include="Source.cpp" />
+    <ClCompile Include="Utility.cpp" />
     <ClCompile Include="Utility_Animation.cpp" />
     <ClCompile Include="Vector2.cpp" />
     <ClCompile Include="SheepWorld.cpp" />
@@ -103,8 +105,10 @@
   <ItemGroup>
     <ClInclude Include="Precision.h" />
     <ClInclude Include="Rect.h" />
+    <ClInclude Include="SheepAmmo.h" />
     <ClInclude Include="SheepAnimator.h" />
     <ClInclude Include="SheepBlittingTypes.h" />
+    <ClInclude Include="SheepControls.h" />
     <ClInclude Include="SheepDebug.h" />
     <ClInclude Include="SheepDebugMessage.h" />
     <ClInclude Include="SheepInput.h" />
@@ -118,6 +122,7 @@
     <ClInclude Include="SheepTransform2D.h" />
     <ClInclude Include="SheepView.h" />
     <ClInclude Include="SheepWorld.h" />
+    <ClInclude Include="SheepWorldMessages.h" />
     <ClInclude Include="Utility.h" />
     <ClInclude Include="Utility_Animation.h" />
     <ClInclude Include="Vector2.h" />

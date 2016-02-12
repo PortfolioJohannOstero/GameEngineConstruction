@@ -57,9 +57,6 @@ namespace Sheep
 		Rect Clipping(const Rect& screenBoundary, int &x, int &y);
 		void AnimationOffset(unsigned int frameNumber, Rect& animationClipContainer);
 
-		Vector2 getRotation(const Vector2& initPos, int angle);
-		Vector2 getSimpleRotation(const Vector2& initPos, int angle);
-
 		/* +=== Pixel handling ===+ */
 		BYTE* GetPixel(int x, int y);
 		void SetPixel(int x, int y, const HAPI_TColour& colour);

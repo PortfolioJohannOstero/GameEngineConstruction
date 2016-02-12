@@ -3,10 +3,17 @@
 
 #include "SheepView.h"
 #include <vector>
+#include "SheepTag.h"
 
 namespace Sheep
 {
 	#define WORLD Sheep::World::getInstance()
+
+	enum eWorld_message_types
+	{
+		FIRE = 0,
+	};
+
 
 	class Object;
 	class World
@@ -23,6 +30,9 @@ namespace Sheep
 		void ExecuteGameLoop();
 
 		void SetFPS(unsigned int fps);
+
+		void SendMessage(eWorld_message_types messageType, const void* messenger);
+		Object* FindProjectile(eTAG projectileType);
 
 	private:
 		static World* INSTANCE;

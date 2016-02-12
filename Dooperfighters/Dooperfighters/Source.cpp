@@ -11,10 +11,11 @@
 void HAPI_Main()
 {
 	WORLD.Create();
-	if (WORLD.Initialise(800, 600))
+	if (WORLD.Initialise(1080, 600))
 	{
 		DEBUG_MESSAGE.Create();
 		DEBUG_MESSAGE.Initialise(Sheep::Vector2(8, 20), 10, 10);
+		DEBUG_MESSAGE.DisplayTimeStamp(false);
 
 		Sheep::Debug::DisplayFPS(true, 8, 8);		
 		WORLD.LoadLevel(0);

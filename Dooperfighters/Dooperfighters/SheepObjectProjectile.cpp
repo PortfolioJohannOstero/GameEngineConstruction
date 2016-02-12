@@ -2,8 +2,6 @@
 #include "SheepTransform2D.h"
 #include "Rect.h"
 
-#include "Utility.h"
-
 using namespace Sheep;
 
 
@@ -31,25 +29,39 @@ void ObjectProjectile::Update()
 		// TODO: move into transform
 		mPreviousTransform = transform;
 
-		transform->Translate(mSpeed, 0);
+		/*float angle = toRadian<float>(transform->GetRotation());
+		float x = cos(angle);
+		float y = sin(angle);
+
+		if (x > 0.5)
+			x = ceil(x);
+		else
+			x = floor(x);
+
+		if (y > 0.5)
+			y = ceil(y);
+		else
+			y = floor(y);*/
+
+		transform->Translate(transform->GetDirection() * mSpeed);
 
 		if (transform->GetPosition().x < 0 || transform->GetPosition().x > VIEW.WindowBoundary().Width() ||
 			transform->GetPosition().y < 0 || transform->GetPosition().y > VIEW.WindowBoundary().Height())
 			SetActive(false);
-	}
-	else
-	{
-		transform->SetPosition(10, Sheep::Random<int>(10, VIEW.WindowBoundary().Height() - 10));
-		SetActive(true);
 	}
 }
 
 
 void ObjectProjectile::OnCollisionEnter(Object* otherObject)
 {
-	if (otherObject->GetTag() == PLAYER)
+	if (otherObject->GetTag() == mTarget && otherObject->isActive())
 	{
-		transform->SetPosition(10, Sheep::Random<int>(10, VIEW.WindowBoundary().Height() - 10));
-		DEBUG_MESSAGE.PushMessage("Hit" + otherObject->GetName());
+		SetActive(false);
+		otherObject->SetActive(false);
 	}
+}
+
+void ObjectProjectile::SetTarget(eTAG target)
+{
+	mTarget = target;
 }

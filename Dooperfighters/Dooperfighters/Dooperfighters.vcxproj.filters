@@ -4,9 +4,6 @@
     <Filter Include="SheepEngine">
       <UniqueIdentifier>{649eacb1-c75f-4e66-b9c3-92eb35cdad8f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="SheepEngine\Objects">
-      <UniqueIdentifier>{e323e52f-3727-42f4-8184-9bc65ba15336}</UniqueIdentifier>
-    </Filter>
     <Filter Include="SheepEngine\Math">
       <UniqueIdentifier>{89dd41c1-6a81-4da8-a686-1d4f84e119ca}</UniqueIdentifier>
     </Filter>
@@ -22,11 +19,17 @@
     <Filter Include="SheepEngine\World\Debug">
       <UniqueIdentifier>{d58eee5c-72ea-41df-ba58-4aa35910ab51}</UniqueIdentifier>
     </Filter>
+    <Filter Include="SheepEngine\World\Objects">
+      <UniqueIdentifier>{e323e52f-3727-42f4-8184-9bc65ba15336}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SheepEngine\World\Object Utils">
+      <UniqueIdentifier>{09ae2a48-e601-4495-905f-29831b40eb05}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="SheepObject.cpp">
-      <Filter>SheepEngine\Objects</Filter>
+      <Filter>SheepEngine\World\Objects</Filter>
     </ClCompile>
     <ClCompile Include="SheepView.cpp">
       <Filter>SheepEngine\View</Filter>
@@ -47,22 +50,22 @@
       <Filter>SheepEngine\Math</Filter>
     </ClCompile>
     <ClCompile Include="SheepObjectPlayer.cpp">
-      <Filter>SheepEngine\Objects</Filter>
+      <Filter>SheepEngine\World\Objects</Filter>
     </ClCompile>
     <ClCompile Include="SheepObjectPickup.cpp">
-      <Filter>SheepEngine\Objects</Filter>
+      <Filter>SheepEngine\World\Objects</Filter>
     </ClCompile>
     <ClCompile Include="SheepWorld.cpp">
       <Filter>SheepEngine\World</Filter>
     </ClCompile>
     <ClCompile Include="SheepObjectScenery.cpp">
-      <Filter>SheepEngine\Objects</Filter>
+      <Filter>SheepEngine\World\Objects</Filter>
     </ClCompile>
     <ClCompile Include="Utility_Animation.cpp">
       <Filter>SheepEngine\Utility</Filter>
     </ClCompile>
     <ClCompile Include="SheepObjectProjectile.cpp">
-      <Filter>SheepEngine\Objects</Filter>
+      <Filter>SheepEngine\World\Objects</Filter>
     </ClCompile>
     <ClCompile Include="SheepInput.cpp">
       <Filter>SheepEngine\World</Filter>
@@ -72,6 +75,12 @@
     </ClCompile>
     <ClCompile Include="SheepDebugMessage.cpp">
       <Filter>SheepEngine\World\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="SheepAmmo.cpp">
+      <Filter>SheepEngine\World\Object Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Utility.cpp">
+      <Filter>SheepEngine\Utility</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -85,7 +94,7 @@
       <Filter>SheepEngine\Math</Filter>
     </ClInclude>
     <ClInclude Include="SheepObject.h">
-      <Filter>SheepEngine\Objects</Filter>
+      <Filter>SheepEngine\World\Objects</Filter>
     </ClInclude>
     <ClInclude Include="SheepView.h">
       <Filter>SheepEngine\View</Filter>
@@ -103,22 +112,22 @@
       <Filter>SheepEngine\Math</Filter>
     </ClInclude>
     <ClInclude Include="SheepObjectPlayer.h">
-      <Filter>SheepEngine\Objects</Filter>
+      <Filter>SheepEngine\World\Objects</Filter>
     </ClInclude>
     <ClInclude Include="SheepObjectPickup.h">
-      <Filter>SheepEngine\Objects</Filter>
+      <Filter>SheepEngine\World\Objects</Filter>
     </ClInclude>
     <ClInclude Include="SheepWorld.h">
       <Filter>SheepEngine\World</Filter>
     </ClInclude>
     <ClInclude Include="SheepObjectScenery.h">
-      <Filter>SheepEngine\Objects</Filter>
+      <Filter>SheepEngine\World\Objects</Filter>
     </ClInclude>
     <ClInclude Include="Utility_Animation.h">
       <Filter>SheepEngine\Utility</Filter>
     </ClInclude>
     <ClInclude Include="SheepObjectProjectile.h">
-      <Filter>SheepEngine\Objects</Filter>
+      <Filter>SheepEngine\World\Objects</Filter>
     </ClInclude>
     <ClInclude Include="SheepInput.h">
       <Filter>SheepEngine\World</Filter>
@@ -134,6 +143,15 @@
     </ClInclude>
     <ClInclude Include="SheepDebugMessage.h">
       <Filter>SheepEngine\World\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="SheepControls.h">
+      <Filter>SheepEngine\World</Filter>
+    </ClInclude>
+    <ClInclude Include="SheepWorldMessages.h">
+      <Filter>SheepEngine\World</Filter>
+    </ClInclude>
+    <ClInclude Include="SheepAmmo.h">
+      <Filter>SheepEngine\World\Object Utils</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

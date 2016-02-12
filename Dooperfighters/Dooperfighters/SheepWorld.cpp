@@ -7,6 +7,8 @@
 #include "SheepObjectScenery.h"
 #include "SheepObjectProjectile.h"
 
+#include "SheepAmmo.h"
+
 #include "SheepTransform2D.h"
 #include "SheepInput.h"
 
@@ -76,6 +78,35 @@ void World::SetFPS(unsigned int fps)
 }
 
 
+void World::SendMessage(eWorld_message_types messageType, const void* messenger)
+{
+	switch (messageType)
+	{
+	case eWorld_message_types::FIRE:
+		if (Object* obj = FindProjectile(((ObjectPlayer*)messenger)->GetAmmoType()))
+		{
+			obj->transform->SetPosition(((ObjectPlayer*)messenger)->GetProjectileSpawnPoint());
+			obj->transform->SetRotation(((Object*)messenger)->transform->GetRotation());
+			((ObjectProjectile*)obj)->SetTarget(eTAG::ENEMY);
+			obj->SetActive(true);
+		}
+	}
+}
+
+Object* World::FindProjectile(eTAG projectileType)
+{
+	for (auto& object : mObjectList)
+	{
+		if (object->GetTag() == projectileType && !object->isActive())
+			return object;
+	}
+
+	return nullptr;
+}
+
+
+
+
 // TODO: Setup up using xml
 void World::LoadLevel(unsigned int index)
 {
@@ -84,7 +115,7 @@ void World::LoadLevel(unsigned int index)
 		return;
 
 	unsigned int playerIndex;
-	if (!VIEW.CreateSprite(playerIndex, "Sprites/spritesheet_plane_red.png", 90, 44, 8, 1, BLITTING_TYPES::TRANSPARENT))
+	if (!VIEW.CreateSprite(playerIndex, "Sprites/spritesheet_plane_red.png", 90, 44, 8, 1, BLITTING_TYPES::TRANSPARENT_ROTATION))
 		return;
 
 	unsigned int bulletIndex;
@@ -93,23 +124,25 @@ void World::LoadLevel(unsigned int index)
 
 	Sheep::Rect collisionBox(82, 32);
 
-	Sheep::ObjectPlayer* player = new Sheep::ObjectPlayer("Player", 10, 10, 10, 500, 500, playerIndex, collisionBox, Sheep::eTAG::PLAYER);
-	player->AddCollisionTag(Sheep::eTAG::PICKUP);
+	Ammo gameAmmo(300, 0.5, eTAG::PROJECTILE_BULLET);
+
+	Sheep::ObjectPlayer* player = new Sheep::ObjectPlayer("Player", 10, 10, 10, 500, 500, playerIndex, collisionBox, Sheep::eTAG::PLAYER, gameAmmo);
+	player->AddCollisionTag(Sheep::eTAG::ENEMY);
+	player->SetControls('A', 'D', 'W', 'S', HK_SPACE);
 
 	Sheep::SheepObjectScenery* background = new Sheep::SheepObjectScenery("Background", 10, 0, 0, bgIndex, { 0, 0, 0, 0 }, Sheep::eTAG::NEUTRAL);
-	Sheep::ObjectPickup* pickup = new Sheep::ObjectPickup("Pickup", 10, 10, 10, 300, 300, playerIndex, collisionBox, Sheep::eTAG::ENEMY);
+	Sheep::ObjectPickup* enemy = new Sheep::ObjectPickup("Enemy", 10, 10, 10, 300, 300, playerIndex, collisionBox, Sheep::eTAG::ENEMY);
 
 	mObjectList.push_back(background);
 	mObjectList.push_back(player);
-	mObjectList.push_back(pickup);
+	mObjectList.push_back(enemy);
 
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < 50; i++)
 	{
-		int x = 10;
-		int y = Sheep::Random<int>(10, VIEW.WindowBoundary().Height() - 1);
-
-		Sheep::ObjectProjectile* projectile = new Sheep::ObjectProjectile("Projectile", 10, 10, 10, x, y, bulletIndex, { 0, 25, 0, 6 }, Sheep::eTAG::PROJECTILE_BULLET);
-		projectile->AddCollisionTag(Sheep::PLAYER);
+		Sheep::ObjectProjectile* projectile = new Sheep::ObjectProjectile("Projectile", 30, 1, 10, 0, 0, bulletIndex, { 0, 25, 0, 6 }, Sheep::eTAG::PROJECTILE_BULLET);
+		projectile->SetActive(false);
+		projectile->AddCollisionTag(Sheep::eTAG::ENEMY);
+		projectile->AddCollisionTag(Sheep::eTAG::PLAYER);
 		mObjectList.push_back(projectile);
 	}
 }

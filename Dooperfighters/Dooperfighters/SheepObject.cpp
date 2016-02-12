@@ -149,10 +149,10 @@ void Object::Render()
 	if (mIsActive)
 	{
 		Transform2D interpolatedPos = Lerp<Transform2D, DWORD>(*mPreviousTransform, *transform, HAPI->GetTime());
-		VIEW.Render(mSpriteId, *mPreviousTransform, 0);
-
-		Sheep::Debug::DisplayCollisionBox(*this, { 255, 255, 0 });
-		Sheep::Debug::DisplayDirection(*this, 30, { 255, 0, 0 });
+		VIEW.Render(mSpriteId, interpolatedPos, 0);
+		
+		Debug::DisplayCollisionBox(*this, { 255, 255, 0 });
+		Debug::DisplayDirection(*this, 30, { 255, 0, 0 });
 	}
 		
 }

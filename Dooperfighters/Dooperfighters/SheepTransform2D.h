@@ -1,6 +1,8 @@
-#pragma once
+#ifndef SHEEP_TRANSFORM2D
+#define SHEEP_TRANSFORM2D
 
 #include "Precision.h"
+#include "Utility.h"
 
 namespace Sheep
 {
@@ -26,7 +28,7 @@ namespace Sheep
 		void Scale(int s);
 		void Scale(const Vector2& scale);
 
-		void Rotate(int angle);
+		void Rotate(float angle_deg);
 
 		/* +==== Setter Methods ====+ */
 		void SetPosition(int x, int y);
@@ -35,13 +37,13 @@ namespace Sheep
 		void SetScale(int x, int y);
 		void SetScale(const Vector2& pos);
 
-		void SetRotation(int angle_deg);
+		void SetRotation(float angle_deg);
 
 		/* +==== Getter Methods ====+ */
 		Vector2 GetPosition() const;
 		Vector2 GetScale() const;
-		int GetRotation() const;
-
+		float GetRotation() const;
+		Vector2 GetDirection();
 
 		/* +==== Operator overloading ====+ */
 		Transform2D operator + (const Transform2D& rhs) const;
@@ -55,6 +57,11 @@ namespace Sheep
 	private:
 		Vector2* mPosition = nullptr;
 		Vector2* mScale = nullptr;
-		int mRotation;
+		float mRotation;
+
+		Vector2* mDirection = nullptr;
+		float mCurrentRotation;
 	};
 }
+
+#endif

@@ -27,7 +27,6 @@ namespace Sheep
 			: message(newMessage), type(messageType) {}
 	};
 
-	class Rect;
 	class Vector2;
 	class DebugMessage
 	{
@@ -40,6 +39,8 @@ namespace Sheep
 
 		/* +==== Message Handling ====+ */
 		void PushMessage(const std::string& message, MESSAGE_TYPE type = MESSAGE_TYPE::NORMAL);
+		// Extensions:
+		void PushMessage(const Vector2& message, MESSAGE_TYPE type = MESSAGE_TYPE::NORMAL);
 		void RenderMessages();
 
 		/* +=== Toggles ===+ */

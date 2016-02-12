@@ -54,6 +54,11 @@ void DebugMessage::PushMessage(const std::string& message, MESSAGE_TYPE type)
 	mIndex++;
 }
 
+void DebugMessage::PushMessage(const Vector2& message, MESSAGE_TYPE type)
+{
+	PushMessage("x: " + std::to_string(message.x) + " - y: " + std::to_string(message.y), type);
+}
+
 /* +=== Toggles ===+ */
 void DebugMessage::Display(bool state)
 {

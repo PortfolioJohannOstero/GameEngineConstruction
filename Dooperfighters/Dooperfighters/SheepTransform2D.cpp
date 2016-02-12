@@ -1,6 +1,7 @@
 #include "SheepTransform2D.h"
 #include "Vector2.h"
 
+
 using namespace Sheep;
 
 #pragma region Constructor
@@ -8,18 +9,21 @@ Transform2D::Transform2D(int x, int y) : mRotation(0)
 {
 	mPosition = new Vector2(x, y);
 	mScale = new Vector2(1, 1);
+	mDirection = new Vector2(0, 0);
 }
 
 Transform2D::Transform2D() : mRotation(0)
 {
 	mPosition = new Vector2(0, 0);
 	mScale = new Vector2(1, 1);
+	mDirection = new Vector2(0, 0);
 }
 
 Transform2D::Transform2D(const Vector2& pos) : mRotation(0)
 {
 	mPosition = new Vector2(pos);
 	mScale = new Vector2(1, 1);
+	mDirection = new Vector2(0, 0);
 }
 
 Transform2D::~Transform2D()
@@ -28,6 +32,8 @@ Transform2D::~Transform2D()
 	mPosition = nullptr;
 	delete mScale;
 	mScale = nullptr;
+	delete mDirection;
+	mDirection = nullptr;
 }
 
 /* +=== Copy ===+ */
@@ -82,9 +88,9 @@ void Transform2D::Scale(const Vector2& scale)
 	*mScale += scale;
 }
 
-void Transform2D::Rotate(int angle)
+void Transform2D::Rotate(float angle_deg)
 {
-	mRotation += angle;
+	mRotation += angle_deg;
 }
 #pragma endregion
 
@@ -111,7 +117,7 @@ void Transform2D::SetScale(const Vector2& pos)
 	*mScale = pos;
 }
 
-void Transform2D::SetRotation(real angle_deg)
+void Transform2D::SetRotation(float angle_deg)
 {
 	mRotation = angle_deg;
 }
@@ -129,10 +135,22 @@ Vector2 Transform2D::GetScale() const
 	return *mScale;
 }
 
-real Transform2D::GetRotation() const
+float Transform2D::GetRotation() const
 {
 	return mRotation;
 }
+
+Vector2 Transform2D::GetDirection()
+{
+	if (mCurrentRotation != mRotation)
+	{
+		*mDirection = getBasicRotation(mPosition->Normalized(), mRotation);;
+		mCurrentRotation = mRotation;
+	}
+
+	return *mDirection;
+}
+
 #pragma endregion
 
 /* +==== Operator overloading ====+ */

@@ -14,7 +14,12 @@ namespace Sheep
 		ObjectProjectile(const std::string& name, unsigned int speed, int health, int damage, int x, int y, unsigned int spriteId, const Rect& collisionBox, eTAG tag);
 		
 		void Update() override final;
-		void OnCollisionEnter(Object* otherObject) override final;	
+		void OnCollisionEnter(Object* otherObject) override final;
+
+		void SetTarget(eTAG target);
+
+	private:
+		eTAG mTarget;
 	};
 }
 

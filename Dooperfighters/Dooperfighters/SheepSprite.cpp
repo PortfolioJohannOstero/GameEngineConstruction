@@ -1,10 +1,11 @@
 #include "SheepSprite.h"
 #include "SheepTransform2D.h"
+#include "SheepDebugMessage.h"
 
 using namespace Sheep;
 
 /* +==== Constructors ====+ */
-#pragma region Constructors
+#pragma region CONSTRUCTORS
 Sprite::Sprite(const std::string& imgFilePath)
 {
 	if (!HAPI->LoadTexture(imgFilePath, &mTexture, &mBoundingBox.right, &mBoundingBox.bottom))
@@ -39,10 +40,9 @@ Sprite::~Sprite()
 {
 	delete[] mTexture;
 }
-#pragma endregion
 
 /* +=== Copy ===+ */
-#pragma region Copy
+#pragma region COPY
 Sprite::Sprite(const Sprite& cpy)
 {
 	*this = cpy;
@@ -61,7 +61,9 @@ Sprite& Sprite::operator = (const Sprite& rhs)
 
 	return *this; 
 }
-#pragma endregion
+#pragma endregion copy
+
+#pragma endregion Constructors
 
 /* +==== Setter Methods ====+ */
 bool Sprite::Load(std::string& filename, unsigned int spriteWidth, unsigned int spriteHeight, unsigned int maxHorizontalSprites, unsigned int maxVerticalSprites, BLITTING_TYPES type)
@@ -106,7 +108,7 @@ void Sprite::Render(const Transform2D& transform, BYTE* screenPointer, const Rec
 	(this->*RenderType)(transform, screenPointer, screenBoundary, frameNumber);
 }
 
-#pragma region Blitting methods
+#pragma region BLITTING METHODS
 void Sprite::BlitLineByLine(const Transform2D& transform, BYTE* screenPointer, const Rect& screenBoundary, unsigned int frameNumber)
 {
 	Vector2 pos = transform.GetPosition();
@@ -172,8 +174,7 @@ void Sprite::BlitTransparent(const Transform2D& transform, BYTE* screenPointer, 
 
 void Sprite::BlitTransparentRotation(const Transform2D& transform, BYTE* screenPointer, const Rect& screenBoundary, unsigned int frameNumber)
 {
-	Vector2 center = getSimpleRotation(Vector2(0, 0), transform.GetRotation());
-	Vector2 pos = transform.GetPosition() + center;
+	Vector2 pos = transform.GetPosition();
 
 	if (mBoundingBox.CompletelyOutside(screenBoundary, pos.x, pos.y))
 		return;
@@ -212,21 +213,7 @@ void Sprite::BlitTransparentRotation(const Transform2D& transform, BYTE* screenP
 		sourcePointer += (mSheetSize.Width() - Clipped.Width()) * BYTE_SIZE;
 	}
 }
-#pragma endregion
-
-Vector2 Sprite::getRotation(const Vector2& initPos, int angle)
-{
-	int x = initPos.y * (sin(angle) * (tan(angle / 2) * tan(angle / 2)) - 2 * tan(angle / 2)) + initPos.x * (-sin(angle) * tan(angle / 2) + 1);
-	int y = initPos.y * (-sin(angle) * tan(angle / 2) + 1) + initPos.x * sin(angle);
-
-	return Vector2(x, y);
-}
-
-Vector2 Sprite::getSimpleRotation(const Vector2& initPos, int angle)
-{
-	return Sheep::Vector2(initPos.x * cos(angle) + initPos.y * sin(angle),
-						  initPos.y * cos(angle) - initPos.x * sin(angle));
-}
+#pragma endregion Blitting methods
 
 Rect Sprite::Clipping(const Rect& screenBoundary, int &x, int &y)
 {
@@ -258,7 +245,7 @@ void Sprite::AnimationOffset(unsigned int frameNumber, Rect& animationClipContai
 }
 
 /* +==== Getter Methods ====+ */
-#pragma region Getter Methods
+#pragma region GETTER METHODS
 BYTE* Sprite::GetImagePointer()
 {
 	return mTexture;
@@ -270,7 +257,7 @@ Rect Sprite::Image() const
 	return mBoundingBox;
 }
 
-#pragma endregion
+#pragma endregion getter methods
 
 
 
