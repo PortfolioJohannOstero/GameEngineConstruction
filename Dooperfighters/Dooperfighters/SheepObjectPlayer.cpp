@@ -44,7 +44,7 @@ void ObjectPlayer::Update()
 
 	if (Input::Key_isPressed('Q'))
 	{
-		transform->Rotate(1);
+		transform->Rotate(20);
 		//DEBUG_MESSAGE.PushMessage("Player Rotation: " + std::to_string(transform->GetRotation()));
 	}
 	

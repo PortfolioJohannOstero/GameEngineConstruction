@@ -144,15 +144,14 @@ Vector2 Transform2D::GetDirection()
 {
 	if (mCurrentRotation != mRotation)
 	{
-		*mDirection = getBasicRotation(Vector2(1,0), mRotation);
 		mCurrentRotation = mRotation;
+		*mDirection = getBasicRotation(mPosition->Normalized(), toRadian<float>(mCurrentRotation));
 	}
 
 	return *mDirection;
 }
 
 #pragma endregion
-
 /* +==== Operator overloading ====+ */
 #pragma region Operator Overloading
 Transform2D Transform2D::operator + (const Transform2D& rhs) const

@@ -20,17 +20,9 @@ void Debug::DisplayCollisionBox(const Object& object, const HAPI_TColour& lineCo
 
 void Debug::DisplayDirection(const Object& object, int distance, const HAPI_TColour& lineColour)
 {
-	const Vector2 pos = object.transform->GetPosition();
 	const Rect container = object.GetCollisionBorder();
-	const float angle = object.transform->GetRotation();
+	const Vector2 originPos(object.transform->GetPosition() + container.Center());
+	const Vector2 dir = object.transform->GetDirection();
 
-	const Vector2 origin(pos + container.Center());
-
-	const float s = sin(toRadian<float>(angle));
-	const float c = cos(toRadian<float>(angle));
-
-	const Vector2 rotatedPoint(origin.x * c - origin.y * s, 
-							   origin.x * s + origin.y * c);
-
-	VIEW.DrawLine(origin, rotatedPoint, lineColour);
+	VIEW.DrawLine(originPos, dir * distance, lineColour);
 }

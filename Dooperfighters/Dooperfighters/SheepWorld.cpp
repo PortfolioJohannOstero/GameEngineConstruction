@@ -139,7 +139,7 @@ void World::LoadLevel(unsigned int index)
 
 	for (int i = 0; i < 50; i++)
 	{
-		Sheep::ObjectProjectile* projectile = new Sheep::ObjectProjectile("Projectile", 30, 1, 10, 0, 0, bulletIndex, { 0, 25, 0, 6 }, Sheep::eTAG::PROJECTILE_BULLET);
+		Sheep::ObjectProjectile* projectile = new Sheep::ObjectProjectile("Projectile", 2, 1, 10, 0, 0, bulletIndex, { 0, 25, 0, 6 }, Sheep::eTAG::PROJECTILE_BULLET);
 		projectile->SetActive(false);
 		projectile->AddCollisionTag(Sheep::eTAG::ENEMY);
 		projectile->AddCollisionTag(Sheep::eTAG::PLAYER);

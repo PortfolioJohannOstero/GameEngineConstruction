@@ -1,6 +1,7 @@
 #include "SheepObjectProjectile.h"
 #include "SheepTransform2D.h"
 #include "Rect.h"
+#include "Utility.h"
 
 using namespace Sheep;
 
@@ -29,21 +30,11 @@ void ObjectProjectile::Update()
 		// TODO: move into transform
 		mPreviousTransform = transform;
 
-		/*float angle = toRadian<float>(transform->GetRotation());
-		float x = cos(angle);
-		float y = sin(angle);
+		float angle = toRadian<float>(transform->GetRotation());
+		int x = roundFromHalf(sin(angle));
+		int y = roundFromHalf(cos(angle));
 
-		if (x > 0.5)
-			x = ceil(x);
-		else
-			x = floor(x);
-
-		if (y > 0.5)
-			y = ceil(y);
-		else
-			y = floor(y);*/
-
-		transform->Translate(transform->GetDirection() * mSpeed);
+		transform->Translate(Vector2(x,y) * mSpeed);
 
 		if (transform->GetPosition().x < 0 || transform->GetPosition().x > VIEW.WindowBoundary().Width() ||
 			transform->GetPosition().y < 0 || transform->GetPosition().y > VIEW.WindowBoundary().Height())

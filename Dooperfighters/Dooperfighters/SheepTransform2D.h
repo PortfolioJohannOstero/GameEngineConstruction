@@ -43,6 +43,7 @@ namespace Sheep
 		Vector2 GetScale() const;
 		float GetRotation() const;
 		Vector2 GetDirection();
+		Transform2D GetPreviousTransform() const;
 
 		/* +==== Operator overloading ====+ */
 		Transform2D operator + (const Transform2D& rhs) const;
