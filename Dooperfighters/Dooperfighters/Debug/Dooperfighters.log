@@ -1,24 +1,20 @@
-﻿Build started 12/02/2016 15:56:28.
-     1>Project "D:\Users\suuunly\Documents\GameEngineConstruction\Dooperfighters\Dooperfighters\Dooperfighters.vcxproj" on node 2 (Build target(s)).
+﻿Build started 13-02-2016 00:20:21.
+     1>Project "D:\Users\Jóhann Østerø_2\Documents\GameEngineConstruction\Dooperfighters\Dooperfighters\Dooperfighters.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /IHAPI /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt SheepDebug.cpp SheepObject.cpp SheepObjectPickup.cpp SheepObjectPlayer.cpp SheepObjectProjectile.cpp SheepSprite.cpp SheepTransform2D.cpp SheepView.cpp SheepWorld.cpp Utility.cpp
-         SheepDebug.cpp
-     1>d:\users\suuunly\documents\gameengineconstruction\dooperfighters\dooperfighters\sheepdebug.cpp(33): warning C4244: 'argument' : conversion from 'const float' to 'const Sheep::real', possible loss of data
+         D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /IHAPI /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt SheepDebug.cpp SheepObject.cpp SheepObjectPickup.cpp SheepObjectPlayer.cpp SheepObjectProjectile.cpp SheepSprite.cpp SheepTransform2D.cpp SheepView.cpp SheepWorld.cpp
+         SheepObjectProjectile.cpp
          Generating Code...
-         Compiling...
+         Skipping... (no relevant changes detected)
          SheepWorld.cpp
          SheepView.cpp
          SheepTransform2D.cpp
          SheepSprite.cpp
-         SheepObjectProjectile.cpp
          SheepObjectPlayer.cpp
          SheepObjectPickup.cpp
          SheepObject.cpp
-         Generating Code...
-         Skipping... (no relevant changes detected)
-         Utility.cpp
+         SheepDebug.cpp
        Link:
-         D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\Users\suuunly\Documents\GameEngineConstruction\Dooperfighters\Debug\Dooperfighters.exe" /INCREMENTAL /NOLOGO /LIBPATH:HAPI HAPI_debug.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\Users\suuunly\Documents\GameEngineConstruction\Dooperfighters\Debug\Dooperfighters.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\Users\suuunly\Documents\GameEngineConstruction\Dooperfighters\Debug\Dooperfighters.lib" /MACHINE:X86 Debug\Rect.obj
+         D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\Users\Jóhann Østerø_2\Documents\GameEngineConstruction\Dooperfighters\Debug\Dooperfighters.exe" /INCREMENTAL /NOLOGO /LIBPATH:HAPI HAPI_debug.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\Users\Jóhann Østerø_2\Documents\GameEngineConstruction\Dooperfighters\Debug\Dooperfighters.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\Users\Jóhann Østerø_2\Documents\GameEngineConstruction\Dooperfighters\Debug\Dooperfighters.lib" /MACHINE:X86 Debug\Rect.obj
          Debug\SheepAmmo.obj
          Debug\SheepAnimator.obj
          Debug\SheepDebug.obj
@@ -37,37 +33,9 @@
          Debug\Utility_Animation.obj
          Debug\Vector2.obj
          Debug\SheepWorld.obj
-     1>SheepObject.obj : error LNK2005: "class Sheep::Vector2 __cdecl getBasicRotation(class Sheep::Vector2 const &,float)" (?getBasicRotation@@YA?AVVector2@Sheep@@ABV12@M@Z) already defined in SheepDebug.obj
-     1>SheepObject.obj : error LNK2005: "class Sheep::Vector2 __cdecl getSheerRotation(class Sheep::Vector2 const &,float)" (?getSheerRotation@@YA?AVVector2@Sheep@@ABV12@M@Z) already defined in SheepDebug.obj
-     1>SheepObject.obj : error LNK2005: "int __cdecl roundFromHalf(float)" (?roundFromHalf@@YAHM@Z) already defined in SheepDebug.obj
-     1>SheepObjectPickup.obj : error LNK2005: "class Sheep::Vector2 __cdecl getBasicRotation(class Sheep::Vector2 const &,float)" (?getBasicRotation@@YA?AVVector2@Sheep@@ABV12@M@Z) already defined in SheepDebug.obj
-     1>SheepObjectPickup.obj : error LNK2005: "class Sheep::Vector2 __cdecl getSheerRotation(class Sheep::Vector2 const &,float)" (?getSheerRotation@@YA?AVVector2@Sheep@@ABV12@M@Z) already defined in SheepDebug.obj
-     1>SheepObjectPickup.obj : error LNK2005: "int __cdecl roundFromHalf(float)" (?roundFromHalf@@YAHM@Z) already defined in SheepDebug.obj
-     1>SheepObjectPlayer.obj : error LNK2005: "class Sheep::Vector2 __cdecl getBasicRotation(class Sheep::Vector2 const &,float)" (?getBasicRotation@@YA?AVVector2@Sheep@@ABV12@M@Z) already defined in SheepDebug.obj
-     1>SheepObjectPlayer.obj : error LNK2005: "class Sheep::Vector2 __cdecl getSheerRotation(class Sheep::Vector2 const &,float)" (?getSheerRotation@@YA?AVVector2@Sheep@@ABV12@M@Z) already defined in SheepDebug.obj
-     1>SheepObjectPlayer.obj : error LNK2005: "int __cdecl roundFromHalf(float)" (?roundFromHalf@@YAHM@Z) already defined in SheepDebug.obj
-     1>SheepObjectProjectile.obj : error LNK2005: "class Sheep::Vector2 __cdecl getBasicRotation(class Sheep::Vector2 const &,float)" (?getBasicRotation@@YA?AVVector2@Sheep@@ABV12@M@Z) already defined in SheepDebug.obj
-     1>SheepObjectProjectile.obj : error LNK2005: "class Sheep::Vector2 __cdecl getSheerRotation(class Sheep::Vector2 const &,float)" (?getSheerRotation@@YA?AVVector2@Sheep@@ABV12@M@Z) already defined in SheepDebug.obj
-     1>SheepObjectProjectile.obj : error LNK2005: "int __cdecl roundFromHalf(float)" (?roundFromHalf@@YAHM@Z) already defined in SheepDebug.obj
-     1>SheepSprite.obj : error LNK2005: "class Sheep::Vector2 __cdecl getBasicRotation(class Sheep::Vector2 const &,float)" (?getBasicRotation@@YA?AVVector2@Sheep@@ABV12@M@Z) already defined in SheepDebug.obj
-     1>SheepSprite.obj : error LNK2005: "class Sheep::Vector2 __cdecl getSheerRotation(class Sheep::Vector2 const &,float)" (?getSheerRotation@@YA?AVVector2@Sheep@@ABV12@M@Z) already defined in SheepDebug.obj
-     1>SheepSprite.obj : error LNK2005: "int __cdecl roundFromHalf(float)" (?roundFromHalf@@YAHM@Z) already defined in SheepDebug.obj
-     1>SheepTransform2D.obj : error LNK2005: "class Sheep::Vector2 __cdecl getBasicRotation(class Sheep::Vector2 const &,float)" (?getBasicRotation@@YA?AVVector2@Sheep@@ABV12@M@Z) already defined in SheepDebug.obj
-     1>SheepTransform2D.obj : error LNK2005: "class Sheep::Vector2 __cdecl getSheerRotation(class Sheep::Vector2 const &,float)" (?getSheerRotation@@YA?AVVector2@Sheep@@ABV12@M@Z) already defined in SheepDebug.obj
-     1>SheepTransform2D.obj : error LNK2005: "int __cdecl roundFromHalf(float)" (?roundFromHalf@@YAHM@Z) already defined in SheepDebug.obj
-     1>SheepView.obj : error LNK2005: "class Sheep::Vector2 __cdecl getBasicRotation(class Sheep::Vector2 const &,float)" (?getBasicRotation@@YA?AVVector2@Sheep@@ABV12@M@Z) already defined in SheepDebug.obj
-     1>SheepView.obj : error LNK2005: "class Sheep::Vector2 __cdecl getSheerRotation(class Sheep::Vector2 const &,float)" (?getSheerRotation@@YA?AVVector2@Sheep@@ABV12@M@Z) already defined in SheepDebug.obj
-     1>SheepView.obj : error LNK2005: "int __cdecl roundFromHalf(float)" (?roundFromHalf@@YAHM@Z) already defined in SheepDebug.obj
-     1>Utility.obj : error LNK2005: "class Sheep::Vector2 __cdecl getBasicRotation(class Sheep::Vector2 const &,float)" (?getBasicRotation@@YA?AVVector2@Sheep@@ABV12@M@Z) already defined in SheepDebug.obj
-     1>Utility.obj : error LNK2005: "class Sheep::Vector2 __cdecl getSheerRotation(class Sheep::Vector2 const &,float)" (?getSheerRotation@@YA?AVVector2@Sheep@@ABV12@M@Z) already defined in SheepDebug.obj
-     1>Utility.obj : error LNK2005: "int __cdecl roundFromHalf(float)" (?roundFromHalf@@YAHM@Z) already defined in SheepDebug.obj
-     1>SheepWorld.obj : error LNK2005: "class Sheep::Vector2 __cdecl getBasicRotation(class Sheep::Vector2 const &,float)" (?getBasicRotation@@YA?AVVector2@Sheep@@ABV12@M@Z) already defined in SheepDebug.obj
-     1>SheepWorld.obj : error LNK2005: "class Sheep::Vector2 __cdecl getSheerRotation(class Sheep::Vector2 const &,float)" (?getSheerRotation@@YA?AVVector2@Sheep@@ABV12@M@Z) already defined in SheepDebug.obj
-     1>SheepWorld.obj : error LNK2005: "int __cdecl roundFromHalf(float)" (?roundFromHalf@@YAHM@Z) already defined in SheepDebug.obj
-     1>SheepTransform2D.obj : error LNK2019: unresolved external symbol "class Sheep::Vector2 __cdecl Sheep::getBasicRotation(class Sheep::Vector2 const &,float)" (?getBasicRotation@Sheep@@YA?AVVector2@1@ABV21@M@Z) referenced in function "public: class Sheep::Vector2 __thiscall Sheep::Transform2D::GetDirection(void)" (?GetDirection@Transform2D@Sheep@@QAE?AVVector2@2@XZ)
-     1>D:\Users\suuunly\Documents\GameEngineConstruction\Dooperfighters\Debug\Dooperfighters.exe : fatal error LNK1120: 1 unresolved externals
-     1>Done Building Project "D:\Users\suuunly\Documents\GameEngineConstruction\Dooperfighters\Dooperfighters\Dooperfighters.vcxproj" (Build target(s)) -- FAILED.
+         Dooperfighters.vcxproj -> D:\Users\Jóhann Østerø_2\Documents\GameEngineConstruction\Dooperfighters\Debug\Dooperfighters.exe
+     1>Done Building Project "D:\Users\Jóhann Østerø_2\Documents\GameEngineConstruction\Dooperfighters\Dooperfighters\Dooperfighters.vcxproj" (Build target(s)).
 
-Build FAILED.
+Build succeeded.
 
-Time Elapsed 00:00:02.66
+Time Elapsed 00:00:01.19

@@ -1,5 +1,5 @@
-#ifndef UTILITY
-#define UTILITY
+#ifndef SHEEP_UTILITY
+#define SHEEP_UTILITY
 
 /* +============================+
 Utility Functions
@@ -11,8 +11,7 @@ Author: Jóhann Østerø
 #include "Vector2.h"
 #include <random>
 #include <cmath>
-namespace Sheep
-{
+
 	/* +==== Decleration ====+ */
 	// Random
 	template<typename T> T randomRange(T min, T max);
@@ -21,12 +20,11 @@ namespace Sheep
 	template<typename T> T toRadian(float deg);
 	template<typename T> T toDegrees(float rad);
 	
-	extern int roundFromHalf(float value);
+	inline int roundFromHalf(float value);
 
 	// Vector methods
-	extern Vector2 getSheerRotation(const Vector2& initPos, float angle);
-	extern Vector2 getBasicRotation(const Vector2& initPos, float angle);
-
+	Sheep::Vector2 getSheerRotation(const Sheep::Vector2& initPos, float angle);
+	Sheep::Vector2 getBasicRotation(const Sheep::Vector2& initPos, float angle);
 	// Boundaries
 	template<typename T> T min(T value1, T value2);
 	template<typename T> T max(T value1, T value2);
@@ -67,7 +65,5 @@ namespace Sheep
 		return (value1 > value2) ? value1 : value2;
 	}
 	#pragma endregion Boundaries
-}
 
-#include "Utility.cpp"
 #endif

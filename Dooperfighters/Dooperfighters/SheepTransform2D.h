@@ -2,7 +2,6 @@
 #define SHEEP_TRANSFORM2D
 
 #include "Precision.h"
-#include "Utility.h"
 
 namespace Sheep
 {

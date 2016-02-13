@@ -49,7 +49,10 @@ void Vector2::Normalize()
 
 Vector2 Vector2::Normalized() const
 {
-	return (*this) / SquareMagnitude();
+	int magnitude = Magnitude();
+	Vector2 pos = (*this);
+	Vector2 derp = (*this) / magnitude;
+	return derp;
 }
 
 #pragma endregion

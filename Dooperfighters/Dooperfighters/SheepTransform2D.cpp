@@ -1,6 +1,6 @@
 #include "SheepTransform2D.h"
 #include "Vector2.h"
-
+#include "Utility.h"
 
 using namespace Sheep;
 
@@ -9,21 +9,21 @@ Transform2D::Transform2D(int x, int y) : mRotation(0)
 {
 	mPosition = new Vector2(x, y);
 	mScale = new Vector2(1, 1);
-	mDirection = new Vector2(0, 0);
+	mDirection = new Vector2(1, 1);
 }
 
 Transform2D::Transform2D() : mRotation(0)
 {
 	mPosition = new Vector2(0, 0);
 	mScale = new Vector2(1, 1);
-	mDirection = new Vector2(0, 0);
+	mDirection = new Vector2(1, 1);
 }
 
 Transform2D::Transform2D(const Vector2& pos) : mRotation(0)
 {
 	mPosition = new Vector2(pos);
 	mScale = new Vector2(1, 1);
-	mDirection = new Vector2(0, 0);
+	mDirection = new Vector2(1, 1);
 }
 
 Transform2D::~Transform2D()
@@ -144,7 +144,7 @@ Vector2 Transform2D::GetDirection()
 {
 	if (mCurrentRotation != mRotation)
 	{
-		*mDirection = getBasicRotation(mPosition->Normalized(), mRotation);;
+		*mDirection = getBasicRotation(Vector2(1,0), mRotation);
 		mCurrentRotation = mRotation;
 	}
 
