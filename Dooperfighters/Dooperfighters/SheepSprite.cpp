@@ -1,6 +1,7 @@
 #include "SheepSprite.h"
 #include "SheepTransform2D.h"
 #include "SheepDebugMessage.h"
+#include "Utility.h"
 
 using namespace Sheep;
 
@@ -39,6 +40,7 @@ Sprite::Sprite(BYTE* spriteImage, int width, int height, int sheetWidth)
 Sprite::~Sprite()
 {
 	delete[] mTexture;
+	delete[] mRotatedTexture;
 }
 
 /* +=== Copy ===+ */
@@ -79,6 +81,11 @@ bool Sprite::Load(std::string& filename, unsigned int spriteWidth, unsigned int 
 	mMaxSprites_col = maxHorizontalSprites;
 	mMaxSprites_row = maxVerticalSprites;
 
+	// Creating a modifieable texture array with initial values set to 0 
+	const unsigned int textureSize = mSheetSize.Area() * BYTE_SIZE;
+	mRotatedTexture = new BYTE[textureSize];
+	memset(mRotatedTexture, 0, textureSize);
+	
 	switch (type)
 	{
 	case BLITTING_TYPES::LINE_BY_LINE:
@@ -87,14 +94,10 @@ bool Sprite::Load(std::string& filename, unsigned int spriteWidth, unsigned int 
 	case BLITTING_TYPES::TRANSPARENT:
 		RenderType = &Sprite::BlitTransparent;
 		break;
-	case BLITTING_TYPES::TRANSPARENT_ROTATION:
-		RenderType = &Sprite::BlitTransparentRotation;
-		break;
 	default:
 		RenderType = nullptr;
 		return false;
 	}
-
 
 	return true;
 }
@@ -119,29 +122,73 @@ void Sprite::BlitLineByLine(const Transform2D& transform, BYTE* screenPointer, c
 	Rect Clipped = Clipping(screenBoundary, pos.x, pos.y);
 	AnimationOffset(frameNumber, Clipped);
 
-	BYTE* destinationPointer = screenPointer + (pos.x + pos.y * screenBoundary.Width()) * BYTE_SIZE;
-	BYTE* sourcePointer = mTexture + (Clipped.left + Clipped.top * mBoundingBox.Width()) * BYTE_SIZE;
+	BYTE* destinationPointer = screenPointer + ((int)pos.x + (int)pos.y * screenBoundary.Width()) * BYTE_SIZE;
+	BYTE* sourcePointer = mTexture + (Clipped.left + Clipped.top * mSheetSize.Width()) * BYTE_SIZE;
 	
 	for (int y = 0; y < Clipped.Height(); y++)
 	{
 		memcpy(destinationPointer, sourcePointer, mBoundingBox.Width() * BYTE_SIZE);
 
-		sourcePointer += mBoundingBox.Width() * BYTE_SIZE;
+		sourcePointer += mSheetSize.Width() * BYTE_SIZE;
 		destinationPointer += screenBoundary.Width() * BYTE_SIZE;
+	}
+}
+
+void Sprite::Rotate(real angle, const Vector2& center)
+{
+	angle = toRadian<float>(angle);
+	if (angle != mCurrentRotation)
+	{
+		mCurrentRotation = angle;
+
+		const Vector2 posH = getBasicRotation(Right(), -angle);
+		const Vector2 posV = getBasicRotation(Up(), -angle);
+
+		Vector2 coord0 = getBasicRotation(Vector2(mBoundingBox.Center() * -1), -angle) + mBoundingBox.Center();
+
+		for (int y = 0; y < mBoundingBox.Height(); y += BYTE_SIZE)
+		{
+			Vector2 coord1 = coord0;
+			for (int x = 0; x < mBoundingBox.Width(); x += BYTE_SIZE)
+			{
+				int xx = (int)coord1.x * BYTE_SIZE;
+				int yy = (int)coord1.y * BYTE_SIZE;
+
+				const int rIndex = x + y * mSheetSize.Width();
+				const int index = xx + yy * mSheetSize.Width();
+
+				BYTE alpha = 0;
+				if (xx < 0 || xx >= mBoundingBox.Width() || yy < 0 || yy >= mBoundingBox.Height())
+					alpha = 0;
+				else
+					alpha = mTexture[index + 3];
+
+
+				mRotatedTexture[rIndex] = mTexture[index];
+				mRotatedTexture[rIndex + 1] = mTexture[index + 1];
+				mRotatedTexture[rIndex + 2] = mTexture[index + 2];
+				mRotatedTexture[rIndex + 3] = alpha;
+
+				coord1 += posH;
+			}
+			coord0 += posV;
+		}
 	}
 }
 
 void Sprite::BlitTransparent(const Transform2D& transform, BYTE* screenPointer, const Rect& screenBoundary, unsigned int frameNumber)
 {
 	Vector2 pos = transform.GetPosition();
+	Rotate(transform.GetRotation(), pos + mBoundingBox.Center());
+
 	if (mBoundingBox.CompletelyOutside(screenBoundary, pos.x, pos.y))
 		return;
 
 	Rect Clipped = Clipping(screenBoundary, pos.x, pos.y);
 	AnimationOffset(frameNumber, Clipped);
 
-	BYTE* destinationPointer = screenPointer + (pos.x + pos.y * screenBoundary.Width()) * BYTE_SIZE;
-	BYTE* sourcePointer = mTexture + (Clipped.left + Clipped.top * mSheetSize.Width()) * BYTE_SIZE;
+	BYTE* destinationPointer = screenPointer + ((int)pos.x + (int)pos.y * screenBoundary.Width()) * BYTE_SIZE;
+	BYTE* sourcePointer = mRotatedTexture + (Clipped.left + Clipped.top * mSheetSize.Width()) * BYTE_SIZE;
 	
 	for (int y = 0; y < Clipped.Height(); y++)
 	{
@@ -171,51 +218,9 @@ void Sprite::BlitTransparent(const Transform2D& transform, BYTE* screenPointer, 
 		sourcePointer += (mSheetSize.Width() - Clipped.Width()) * BYTE_SIZE;
 	}
 }
-
-void Sprite::BlitTransparentRotation(const Transform2D& transform, BYTE* screenPointer, const Rect& screenBoundary, unsigned int frameNumber)
-{
-	Vector2 pos = transform.GetPosition();
-
-	if (mBoundingBox.CompletelyOutside(screenBoundary, pos.x, pos.y))
-		return;
-
-	Rect Clipped = Clipping(screenBoundary, pos.x, pos.y);
-	AnimationOffset(frameNumber, Clipped);
-
-	BYTE* destinationPointer = screenPointer + (pos.x + pos.y * screenBoundary.Width()) * BYTE_SIZE;
-	BYTE* sourcePointer = mTexture + (Clipped.left + Clipped.top * mSheetSize.Width()) * BYTE_SIZE;
-
-	for (int y = 0; y < Clipped.Height(); y++)
-	{
-		for (int x = 0; x < Clipped.Width(); x++)
-		{
-			BYTE alpha = sourcePointer[3];
-			if (alpha == 255)
-			{
-				memcpy(destinationPointer, sourcePointer, BYTE_SIZE);
-			}
-			else if (alpha != 0)
-			{
-				BYTE blue = sourcePointer[0];
-				BYTE green = sourcePointer[1];
-				BYTE red = sourcePointer[2];
-
-				destinationPointer[0] = destinationPointer[0] + ((alpha * (blue - destinationPointer[0])) >> 8);
-				destinationPointer[1] = destinationPointer[1] + ((alpha * (green - destinationPointer[1])) >> 8);
-				destinationPointer[2] = destinationPointer[2] + ((alpha * (red - destinationPointer[2])) >> 8);
-			}
-
-			sourcePointer += BYTE_SIZE;
-			destinationPointer += BYTE_SIZE;
-		}
-
-		destinationPointer += (screenBoundary.Width() - Clipped.Width()) * BYTE_SIZE;
-		sourcePointer += (mSheetSize.Width() - Clipped.Width()) * BYTE_SIZE;
-	}
-}
 #pragma endregion Blitting methods
 
-Rect Sprite::Clipping(const Rect& screenBoundary, int &x, int &y)
+Rect Sprite::Clipping(const Rect& screenBoundary, real &x, real &y)
 {
 	Rect Clipped(0, mBoundingBox.Width(), 0, mBoundingBox.Height()); /* 1. source space */
 	Clipped.Translate(x, y); /* 2. Convert to screen space */

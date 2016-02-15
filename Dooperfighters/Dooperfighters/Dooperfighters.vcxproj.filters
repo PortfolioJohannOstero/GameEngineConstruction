@@ -43,9 +43,6 @@
     <ClCompile Include="Rect.cpp">
       <Filter>SheepEngine\Math</Filter>
     </ClCompile>
-    <ClCompile Include="SheepAnimator.cpp">
-      <Filter>SheepEngine\View</Filter>
-    </ClCompile>
     <ClCompile Include="SheepTransform2D.cpp">
       <Filter>SheepEngine\Math</Filter>
     </ClCompile>
@@ -82,6 +79,9 @@
     <ClCompile Include="Utility.cpp">
       <Filter>SheepEngine\Utility</Filter>
     </ClCompile>
+    <ClCompile Include="SheepAnimator.cpp">
+      <Filter>SheepEngine\World\Object Utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Vector2.h">
@@ -104,9 +104,6 @@
     </ClInclude>
     <ClInclude Include="SheepTag.h">
       <Filter>SheepEngine\World</Filter>
-    </ClInclude>
-    <ClInclude Include="SheepAnimator.h">
-      <Filter>SheepEngine\View</Filter>
     </ClInclude>
     <ClInclude Include="SheepTransform2D.h">
       <Filter>SheepEngine\Math</Filter>
@@ -151,6 +148,9 @@
       <Filter>SheepEngine\World</Filter>
     </ClInclude>
     <ClInclude Include="SheepAmmo.h">
+      <Filter>SheepEngine\World\Object Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="SheepAnimator.h">
       <Filter>SheepEngine\World\Object Utils</Filter>
     </ClInclude>
   </ItemGroup>

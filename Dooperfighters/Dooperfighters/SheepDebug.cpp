@@ -20,9 +20,8 @@ void Debug::DisplayCollisionBox(const Object& object, const HAPI_TColour& lineCo
 
 void Debug::DisplayDirection(const Object& object, int distance, const HAPI_TColour& lineColour)
 {
-	const Rect container = object.GetCollisionBorder();
-	const Vector2 originPos(object.transform->GetPosition() + container.Center());
-	const Vector2 dir = object.transform->GetDirection();
+	const Vector2 centerOfContainer = object.GetCollisionBorder().Center();
+	const Vector2 currPos = object.transform->GetPosition() + centerOfContainer;
 
-	VIEW.DrawLine(originPos, dir * distance, lineColour);
+	VIEW.DrawLine(currPos, currPos + object.transform->GetDirection(Right()) * distance, lineColour);
 }

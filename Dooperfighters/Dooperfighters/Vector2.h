@@ -33,11 +33,11 @@ namespace Sheep
 		/* +==== General Vector Methods ====+ */
 		void Invert();
 
-		real Magnitude() const;
-		real SquareMagnitude() const; /* <-- To avoid using square root: http://stackoverflow.com/questions/6884359/c-practical-computational-complexity-of-cmath-sqrt */
+		real Magnitude(const Vector2& otherPoint) const;
+		real SquareMagnitude(const Vector2& otherPoint) const; /* <-- To avoid using square root: http://stackoverflow.com/questions/6884359/c-practical-computational-complexity-of-cmath-sqrt */
 
-		void Normalize();
-		Vector2 Normalized() const;
+		void Normalize(const Vector2& otherPoint);
+		Vector2 Normalized(const Vector2& otherPoint) const;
 
 		/* +== Scalars ==+ */
 		Vector2 operator * (const real rhs) const;
@@ -45,7 +45,6 @@ namespace Sheep
 		
 		Vector2 operator / (const real rhs) const;
 		void operator /= (const real rhs);
-
 
 		Vector2 operator + (const Vector2& rhs) const;
 		void operator   += (const Vector2& rhs);
@@ -67,6 +66,26 @@ namespace Sheep
 		//Vector2 vectorProduct(const Vector2& vector) const;
 		//void vectorProductUpdate(const Vector2& vector);
 	};
+
+	inline Vector2 Right()
+	{
+		return Vector2(1, 0);
+	}
+
+	inline Vector2 Left()
+	{
+		return Vector2(-1, 0);
+	}
+
+	inline Vector2 Up()
+	{
+		return Vector2(0, 1);
+	}
+
+	inline Vector2 Down()
+	{
+		return Vector2(0, -1);
+	}
 
 }
 

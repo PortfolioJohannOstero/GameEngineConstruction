@@ -37,7 +37,6 @@ namespace Sheep
 		Vector2 mProjectileSpawnPoint; // <--- default is in the center of the collision box
 
 		Ammo* mProjectile_machineGun;
-
 	};
 }
 

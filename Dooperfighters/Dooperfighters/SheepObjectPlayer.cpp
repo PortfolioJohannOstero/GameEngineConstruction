@@ -44,7 +44,8 @@ void ObjectPlayer::Update()
 
 	if (Input::Key_isPressed('Q'))
 	{
-		transform->Rotate(20);
+		transform->Rotate(1);
+		mCollisionBorder->Rotate(1);
 		//DEBUG_MESSAGE.PushMessage("Player Rotation: " + std::to_string(transform->GetRotation()));
 	}
 	
@@ -59,7 +60,6 @@ void ObjectPlayer::Update()
 		WORLD.SendMessage(eWorld_message_types::FIRE, this);
 		DEBUG_MESSAGE.PushMessage(std::to_string(mProjectile_machineGun->GetAmmoCount()));
 	}
-
 
 	if (Input::Key_isPressed(mControls.left) || Input::Controller_LeftAnalogueMoved(0, Sheep::ANALOGUE_DIRECTION::LEFT))
 	{

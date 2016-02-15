@@ -40,6 +40,8 @@ namespace Sheep
 
 	private:
 		BYTE* mTexture = nullptr;
+		BYTE* mRotatedTexture = nullptr;
+		float mCurrentRotation = -1.0f;
 		Rect mBoundingBox;
 		Rect mSheetSize;
 		unsigned int mLayer;
@@ -51,11 +53,12 @@ namespace Sheep
 		void (Sprite::*RenderType)(const Transform2D&, BYTE*, const Rect&, unsigned int) = nullptr;
 		void BlitLineByLine(const Transform2D& transform, BYTE* screenPointer, const Rect& screenBoundary, unsigned int frameNumber);
 		void BlitTransparent(const Transform2D& transform, BYTE* screenPointer, const Rect& screenBoundary, unsigned int frameNumber);
-		void BlitTransparentRotation(const Transform2D& transform, BYTE* screenPointer, const Rect& screenBoundary, unsigned int frameNumber);
 
 		// !NOTE: updates the x and y values if needed
-		Rect Clipping(const Rect& screenBoundary, int &x, int &y);
+		Rect Clipping(const Rect& screenBoundary, real &x, real &y);
 		void AnimationOffset(unsigned int frameNumber, Rect& animationClipContainer);
+		void Rotate(real angle, const Vector2& center);
+
 
 		/* +=== Pixel handling ===+ */
 		BYTE* GetPixel(int x, int y);

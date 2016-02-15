@@ -1,4 +1,5 @@
 #include "Rect.h"
+#include "Utility.h"
 
 using namespace Sheep;
 
@@ -73,6 +74,11 @@ void Rect::Translate(const Vector2& pos)
 {
 	Translate(pos.x, pos.y);
 }
+
+void Rect::Rotate(const real angle)
+{
+	Vector2 rotate = getBasicRotation(Right(), angle);
+}
 #pragma endregion
 
 /* +==== Collider Handling ====+ */
@@ -96,6 +102,12 @@ void Rect::ClipTo(const Rect& rect)
 		top = rect.top;
 	if (bottom > rect.bottom)
 		bottom = rect.bottom;
+}
+
+bool Rect::Contains(const Vector2& pos)
+{
+	return pos.x > left && pos.x < right && 
+		   pos.y > top && pos.y < bottom;
 }
 #pragma endregion
 

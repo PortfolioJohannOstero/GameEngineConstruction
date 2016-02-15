@@ -29,12 +29,7 @@ void ObjectProjectile::Update()
 	{
 		// TODO: move into transform
 		mPreviousTransform = transform;
-
-		float angle = toRadian<float>(transform->GetRotation());
-		int x = roundFromHalf(sin(angle));
-		int y = roundFromHalf(cos(angle));
-
-		transform->Translate(Vector2(x,y) * mSpeed);
+		transform->Translate(transform->GetDirection(Right()) * mSpeed);
 
 		if (transform->GetPosition().x < 0 || transform->GetPosition().x > VIEW.WindowBoundary().Width() ||
 			transform->GetPosition().y < 0 || transform->GetPosition().y > VIEW.WindowBoundary().Height())

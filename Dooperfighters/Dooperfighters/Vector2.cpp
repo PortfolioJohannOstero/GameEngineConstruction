@@ -31,25 +31,26 @@ void Vector2::Invert()
 	y = -y;
 }
 
-real Vector2::Magnitude() const
+real Vector2::Magnitude(const Vector2& otherPoint) const
 {
-	// TODO: int to float
-	return real_sqrt(x * x + y * y);
+	return real_sqrt(((otherPoint.x - x) * (otherPoint.x - x)) + 
+					 ((otherPoint.y - y) * (otherPoint.y - y)));
 }
 
-real Vector2::SquareMagnitude() const /* <-- To avoid using square root: http://stackoverflow.com/questions/6884359/c-practical-computational-complexity-of-cmath-sqrt */
+real Vector2::SquareMagnitude(const Vector2& otherPoint) const /* <-- To avoid using square root: http://stackoverflow.com/questions/6884359/c-practical-computational-complexity-of-cmath-sqrt */
 {
-	return x * x + y * y;
+	return ((otherPoint.x - x) * (otherPoint.x - x)) +
+		   ((otherPoint.y - y) * (otherPoint.y - y));
 }
 
-void Vector2::Normalize()
+void Vector2::Normalize(const Vector2& otherPoint)
 {
-	*this /= SquareMagnitude();
+	*this /= SquareMagnitude(otherPoint);
 }
 
-Vector2 Vector2::Normalized() const
+Vector2 Vector2::Normalized(const Vector2& otherPoint) const
 {
-	int magnitude = Magnitude();
+	int magnitude = Magnitude(otherPoint);
 	Vector2 pos = (*this);
 	Vector2 derp = (*this) / magnitude;
 	return derp;

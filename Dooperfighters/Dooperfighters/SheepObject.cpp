@@ -141,6 +141,12 @@ Rect Object::GetCollisionBorder() const
 {
 	return *mCollisionBorder;
 }
+
+Vector2 Object::GetPreviousPosition() const
+{
+	return mPreviousTransform->GetPosition();
+}
+
 #pragma endregion
 
 /* +=== Rendering ===+ */
@@ -151,7 +157,7 @@ void Object::Render()
 		Transform2D interpolatedPos = Lerp<Transform2D, DWORD>(*mPreviousTransform, *transform, HAPI->GetTime());
 		VIEW.Render(mSpriteId, interpolatedPos, 0);
 		
-		Debug::DisplayCollisionBox(*this, { 255, 255, 0 });
+		//Debug::DisplayCollisionBox(*this, { 255, 255, 0 });
 		Debug::DisplayDirection(*this, 30, { 255, 0, 0 });
 	}
 		

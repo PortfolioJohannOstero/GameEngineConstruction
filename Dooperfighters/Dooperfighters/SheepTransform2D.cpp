@@ -140,12 +140,12 @@ float Transform2D::GetRotation() const
 	return mRotation;
 }
 
-Vector2 Transform2D::GetDirection()
+Vector2 Transform2D::GetDirection(const Vector2& facing)
 {
 	if (mCurrentRotation != mRotation)
 	{
 		mCurrentRotation = mRotation;
-		*mDirection = getBasicRotation(mPosition->Normalized(), toRadian<float>(mCurrentRotation));
+		*mDirection = getBasicRotation(facing, toRadian<float>(mRotation));
 	}
 
 	return *mDirection;

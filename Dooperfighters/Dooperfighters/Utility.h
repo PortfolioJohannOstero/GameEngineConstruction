@@ -20,7 +20,7 @@ Author: Jóhann Østerø
 	template<typename T> T toRadian(float deg);
 	template<typename T> T toDegrees(float rad);
 	
-	inline int roundFromHalf(float value);
+	int roundFromHalf(float value);
 
 	// Vector methods
 	Sheep::Vector2 getSheerRotation(const Sheep::Vector2& initPos, float angle);

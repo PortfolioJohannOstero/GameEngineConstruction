@@ -20,7 +20,7 @@ namespace Sheep
 #define real_sqrt sqrtf
 #define real_pow powf
 
-	typedef int real;
+	typedef float real;
 }
 
 

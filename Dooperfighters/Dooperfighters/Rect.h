@@ -23,6 +23,7 @@ namespace Sheep
 		void setDimension(int width, int height);
 		void Translate(int x, int y);
 		void Translate(const Sheep::Vector2& pos);
+		void Rotate(const real angle);
 
 		/* +==== Get Dimension ====+ */
 		int Width() const;
@@ -33,6 +34,7 @@ namespace Sheep
 		/* +==== Collider Handling ====+ */
 		bool CompletelyOutside(const Rect& rect, int x, int y);
 		void ClipTo(const Rect& rect);
+		bool Contains(const Vector2& pos);
 
 		/* +==== Operator Overloading ====+ */
 		#pragma region Operator Overloading

@@ -42,7 +42,7 @@ namespace Sheep
 		Vector2 GetPosition() const;
 		Vector2 GetScale() const;
 		float GetRotation() const;
-		Vector2 GetDirection();
+		Vector2 GetDirection(const Vector2& facing);
 		Transform2D GetPreviousTransform() const;
 
 		/* +==== Operator overloading ====+ */

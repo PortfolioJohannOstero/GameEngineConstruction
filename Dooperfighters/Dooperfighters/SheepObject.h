@@ -12,7 +12,6 @@ namespace Sheep
 	class Vector2;
 	class Transform2D;
 	class Rect;
-
 	class Object
 	{
 	public:
@@ -35,6 +34,7 @@ namespace Sheep
 		void SetCollisionDamage(int damage);
 		void SetTag(eTAG tag);
 		void SetCollisionBorder(const Rect& border);
+		Vector2 GetPreviousPosition() const;
 
 		/* +=== Getters ===+ */
 		bool isActive() const;

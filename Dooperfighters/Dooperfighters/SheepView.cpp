@@ -39,7 +39,7 @@ bool View::Initialise(int screenWidth, int screenHeight, unsigned int maxLayers)
 		return false;
 
 	// TODO: fix [original: !HAPI->Initialise(&screenWidth, &screenHeight)
-	if (HAPI->Initialise(&screenWidth, &screenHeight))
+	if (!HAPI->Initialise(&screenWidth, &screenHeight))
 		return false;
 
 	/* Get Window properties */
