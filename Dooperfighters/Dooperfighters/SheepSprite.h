@@ -57,7 +57,7 @@ namespace Sheep
 		// !NOTE: updates the x and y values if needed
 		Rect Clipping(const Rect& screenBoundary, real &x, real &y);
 		void AnimationOffset(unsigned int frameNumber, Rect& animationClipContainer);
-		void Rotate(real angle, const Vector2& center);
+		void Rotate(real angle_deg);
 
 
 		/* +=== Pixel handling ===+ */

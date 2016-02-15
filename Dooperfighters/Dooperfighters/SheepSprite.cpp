@@ -134,11 +134,11 @@ void Sprite::BlitLineByLine(const Transform2D& transform, BYTE* screenPointer, c
 	}
 }
 
-void Sprite::Rotate(real angle, const Vector2& center)
+void Sprite::Rotate(real angle)
 {
-	angle = toRadian<float>(angle);
 	if (angle != mCurrentRotation)
 	{
+		angle = toRadian<float>(angle);
 		mCurrentRotation = angle;
 
 		const Vector2 posH = getBasicRotation(Right(), -angle);
@@ -146,23 +146,23 @@ void Sprite::Rotate(real angle, const Vector2& center)
 
 		Vector2 coord0 = getBasicRotation(Vector2(mBoundingBox.Center() * -1), -angle) + mBoundingBox.Center();
 
-		for (int y = 0; y < mBoundingBox.Height(); y += BYTE_SIZE)
+		for (int y = 0; y < mBoundingBox.Height(); y++)
 		{
 			Vector2 coord1 = coord0;
-			for (int x = 0; x < mBoundingBox.Width(); x += BYTE_SIZE)
+			for (int x = 0; x < mBoundingBox.Width(); x++)
 			{
-				int xx = (int)coord1.x * BYTE_SIZE;
-				int yy = (int)coord1.y * BYTE_SIZE;
+				int xx = (int)coord1.x;
+				int yy = (int)coord1.y;
 
-				const int rIndex = x + y * mSheetSize.Width();
-				const int index = xx + yy * mSheetSize.Width();
+				const int rIndex = (x + y * mSheetSize.Width()) * BYTE_SIZE;
+				const int index = (xx + yy * mSheetSize.Width()) * BYTE_SIZE;
+
 
 				BYTE alpha = 0;
-				if (xx < 0 || xx >= mBoundingBox.Width() || yy < 0 || yy >= mBoundingBox.Height())
+				if (rIndex < 0 && rIndex >= mBoundingBox.Area() * BYTE_SIZE)
 					alpha = 0;
-				else
+				else					
 					alpha = mTexture[index + 3];
-
 
 				mRotatedTexture[rIndex] = mTexture[index];
 				mRotatedTexture[rIndex + 1] = mTexture[index + 1];
@@ -179,7 +179,7 @@ void Sprite::Rotate(real angle, const Vector2& center)
 void Sprite::BlitTransparent(const Transform2D& transform, BYTE* screenPointer, const Rect& screenBoundary, unsigned int frameNumber)
 {
 	Vector2 pos = transform.GetPosition();
-	Rotate(transform.GetRotation(), pos + mBoundingBox.Center());
+	Rotate(transform.GetRotation());
 
 	if (mBoundingBox.CompletelyOutside(screenBoundary, pos.x, pos.y))
 		return;

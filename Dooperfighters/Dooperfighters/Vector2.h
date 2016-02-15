@@ -52,6 +52,9 @@ namespace Sheep
 		Vector2 operator - (const Vector2& rhs) const;
 		void operator   -= (const Vector2& rhs);
 
+		Vector2 operator * (const Vector2& rhs) const;
+		Vector2 operator *= (const Vector2& rhs);
+
 		void AddScaledVector(const Vector2& vector, real scale);	/* <-- two in one, for convienence sake */
 
 		/* +== Component Product ==+ */
@@ -59,8 +62,7 @@ namespace Sheep
 		void ComponentProductUpdate(const Vector2& vector); /* <-- updates it to the component product*/
 
 		/* +== Scalar (Dot) Product ==+ */
-		//real scalarProduct(const Vector2& vector);
-		real operator * (const Vector2& vector) const; /* <-- Scalar product (dot product) */
+		real scalarProduct(const Vector2& vector) const;
 
 		/* +== Vector (Cross) Product ==+ */
 		//Vector2 vectorProduct(const Vector2& vector) const;

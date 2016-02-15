@@ -48,6 +48,9 @@ void ObjectPlayer::Update()
 		mCollisionBorder->Rotate(1);
 		//DEBUG_MESSAGE.PushMessage("Player Rotation: " + std::to_string(transform->GetRotation()));
 	}
+	else if (Input::Key_isPressed('E'))
+		transform->Rotate(-1);
+
 	
 	if (Input::Key_isPressed('B'))
 	{
@@ -63,24 +66,24 @@ void ObjectPlayer::Update()
 
 	if (Input::Key_isPressed(mControls.left) || Input::Controller_LeftAnalogueMoved(0, Sheep::ANALOGUE_DIRECTION::LEFT))
 	{
-		transform->Translate(-1 * mSpeed, 0);
-		mProjectileSpawnPoint.x -= mSpeed;
+		transform->Translate(transform->GetDirection(Right()) * mSpeed * -1);
+		mProjectileSpawnPoint -= transform->GetDirection(Right()) * mSpeed;
 	}
 	else if (Input::Key_isPressed(mControls.right) || Input::Controller_LeftAnalogueMoved(0, Sheep::ANALOGUE_DIRECTION::RIGHT))
 	{
-		transform->Translate(mSpeed, 0);
-		mProjectileSpawnPoint.x += mSpeed;
+		transform->Translate(transform->GetDirection(Right()) * mSpeed);
+		mProjectileSpawnPoint += transform->GetDirection(Right()) * mSpeed;
 	}
 
 	if (Input::Key_isPressed(mControls.up) || Input::Controller_LeftAnalogueMoved(0, Sheep::ANALOGUE_DIRECTION::UP))
 	{
-		transform->Translate(0, -1 * mSpeed);
-		mProjectileSpawnPoint.y -= mSpeed;
+		transform->Rotate(1);
+		//mProjectileSpawnPoint.y -= mSpeed;
 	}
 	else if (Input::Key_isPressed(mControls.down) || Input::Controller_LeftAnalogueMoved(0, Sheep::ANALOGUE_DIRECTION::DOWN))
 	{
-		transform->Translate(0, mSpeed);
-		mProjectileSpawnPoint.y += mSpeed;
+		transform->Rotate(-1);
+		//mProjectileSpawnPoint.y += mSpeed;
 	}
 }
 

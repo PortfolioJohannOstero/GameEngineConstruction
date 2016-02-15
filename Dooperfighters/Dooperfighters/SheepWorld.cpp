@@ -1,4 +1,4 @@
-#include "SheepWorld.h"
+ #include "SheepWorld.h"
 #include "Rect.h"
 
 #include "SheepObject.h"
@@ -85,7 +85,10 @@ void World::SendMessage(eWorld_message_types messageType, const void* messenger)
 	case eWorld_message_types::FIRE:
 		if (Object* obj = FindProjectile(((ObjectPlayer*)messenger)->GetAmmoType()))
 		{
-			obj->transform->SetPosition(((ObjectPlayer*)messenger)->GetProjectileSpawnPoint());
+			Vector2 position = ((ObjectPlayer*)messenger)->GetProjectileSpawnPoint();
+			position.y -= obj->GetCollisionBorder().Center().y;
+
+			obj->transform->SetPosition(position);
 			obj->transform->SetRotation(((Object*)messenger)->transform->GetRotation());
 			((ObjectProjectile*)obj)->SetTarget(eTAG::ENEMY);
 			obj->SetActive(true);
@@ -119,10 +122,12 @@ void World::LoadLevel(unsigned int index)
 		return;
 
 	unsigned int bulletIndex;
-	if (!VIEW.CreateSprite(bulletIndex, "Sprites/Bullet.png", 27, 7, 1, 1, BLITTING_TYPES::TRANSPARENT))
+	if (!VIEW.CreateSprite(bulletIndex, "Sprites/projectile_bullet.png", 18, 18, 1, 1, BLITTING_TYPES::TRANSPARENT))
 		return;
 
+	//Sheep::Rect collisionBox(82, 32);
 	Sheep::Rect collisionBox(82, 32);
+
 
 	Ammo gameAmmo(300, 0.5, eTAG::PROJECTILE_BULLET);
 

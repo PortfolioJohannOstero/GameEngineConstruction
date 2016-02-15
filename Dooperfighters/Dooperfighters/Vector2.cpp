@@ -109,6 +109,19 @@ void Vector2::operator -= (const Vector2& rhs)
 	y -= rhs.y;
 }
 
+Vector2 Vector2::operator * (const Vector2& rhs) const
+{
+	return Vector2(x * rhs.x, y * rhs.y);
+}
+
+Vector2 Vector2::operator *= (const Vector2& rhs)
+{
+	x *= rhs.x;
+	y *= rhs.y;
+
+	return *this;
+}
+
 /* -Add and Multiply (x2)- */
 void Vector2::AddScaledVector(const Vector2& vector, real scale)	/* <-- two in one, for convienence sake */
 {
@@ -131,7 +144,7 @@ void Vector2::ComponentProductUpdate(const Vector2& vector)
 #pragma endregion
 
 /* +== Scalar (Dot) Product ==+ */
-real Vector2::operator * (const Vector2& vector) const
+real Vector2::scalarProduct(const Vector2& vector) const
 {
 	return x * vector.x + y * vector.y;
 }

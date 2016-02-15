@@ -158,9 +158,8 @@ void Object::Render()
 		VIEW.Render(mSpriteId, interpolatedPos, 0);
 		
 		//Debug::DisplayCollisionBox(*this, { 255, 255, 0 });
-		Debug::DisplayDirection(*this, 30, { 255, 0, 0 });
+		//Debug::DisplayDirection(*this, 30, { 255, 0, 0 });
 	}
-		
 }
 
 /* +==== Collision Handling ====+ */
@@ -220,6 +219,7 @@ void Object::CollisionCheck(std::vector<Object*>& mapObjects)
 
 bool Object::HitCheck(const Vector2& objectHit_position, const Rect& objectHit_boundary)
 {
+
 	const Rect boundaryToWorld_local(transform->GetPosition(), *mCollisionBorder);
 	const Rect boundaryToWorld_external(objectHit_position, objectHit_boundary);
 
