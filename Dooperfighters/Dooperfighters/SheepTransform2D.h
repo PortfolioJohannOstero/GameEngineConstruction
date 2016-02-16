@@ -11,7 +11,7 @@ namespace Sheep
 	public:
 		/* +==== Constructor ====+ */
 		Transform2D();
-		Transform2D(int x, int y);
+		Transform2D(real x, real y);
 		Transform2D(const Vector2& pos);
 		~Transform2D();
 
@@ -20,23 +20,23 @@ namespace Sheep
 		Transform2D& operator = (const Transform2D& rhs);
 
 		/* +==== Transformation ====+ */
-		void Translate(int x, int y);
+		void Translate(real x, real y);
 		void Translate(const Vector2& pos);
 
-		void Scale(int x, int y);
-		void Scale(int s);
+		void Scale(real x, real y);
+		void Scale(real s);
 		void Scale(const Vector2& scale);
 
-		void Rotate(float angle_deg);
+		void Rotate(real angle_deg);
 
 		/* +==== Setter Methods ====+ */
-		void SetPosition(int x, int y);
+		void SetPosition(real x, real y);
 		void SetPosition(const Vector2& pos);
 
-		void SetScale(int x, int y);
+		void SetScale(real x, real y);
 		void SetScale(const Vector2& pos);
 
-		void SetRotation(float angle_deg);
+		void SetRotation(real angle_deg);
 
 		/* +==== Getter Methods ====+ */
 		Vector2 GetPosition() const;

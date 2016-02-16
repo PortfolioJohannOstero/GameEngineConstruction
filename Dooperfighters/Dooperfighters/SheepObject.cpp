@@ -12,27 +12,30 @@ using namespace Sheep;
 /* +==== Constructors ====+ */
 #pragma region Constructors
 Object::Object(const std::string& name, unsigned int spriteId, eTAG tag)
-	: mName(name), mSpriteId(spriteId), mSpeed(DEFAULT_VALUE), mHealth(DEFAULT_VALUE), mCollisionDamage(DEFAULT_VALUE), mIsActive(true), mTag(tag)
+	: mName(name), mSpriteId(spriteId), mSpeed(1.0f), mHealth(1), mCollisionDamage(1), mIsActive(true), mTag(tag)
 {
 	transform = new Transform2D();
 	mPreviousTransform = new Transform2D();
 	mCollisionBorder = new Rect();
+	mCollisionBoxOffset = new Vector2();
 }
 
-Object::Object(const std::string& name, unsigned int speed, int health, int damage, const Vector2& position, unsigned int spriteId, const Rect& collisionBox, eTAG tag)
+Object::Object(const std::string& name, real speed, int health, int damage, const Vector2& position, unsigned int spriteId, const Rect& collisionBox, const Vector2& collisionBoxOffset, eTAG tag)
 	: mName(name), mSpriteId(spriteId), mSpeed(speed), mHealth(health), mCollisionDamage(damage), mIsActive(true), mTag(tag)
 {
 	transform = new Transform2D(position);
 	mPreviousTransform = new Transform2D(position);
 	mCollisionBorder = new Rect(collisionBox.Width(), collisionBox.Height());
+	mCollisionBoxOffset = new Vector2(collisionBoxOffset);
 }
 
-Object::Object(const std::string& name, unsigned int speed, int health, int damage, int x, int y, unsigned int spriteId, const Rect& collisionBox, eTAG tag)
+Object::Object(const std::string& name, real speed, int health, int damage, real x, real y, unsigned int spriteId, const Rect& collisionBox, const Vector2& collisionBoxOffset, eTAG tag)
 	: mName(name), mSpriteId(spriteId), mSpeed(speed), mHealth(health), mCollisionDamage(damage), mIsActive(true), mTag(tag)
 {
 	transform = new Transform2D(x, y);
 	mPreviousTransform = new Transform2D(x, y);
 	mCollisionBorder = new Rect(collisionBox.Width(), collisionBox.Height());
+	mCollisionBoxOffset = new Vector2(collisionBoxOffset);
 }
 
 Object::~Object()
@@ -43,6 +46,9 @@ Object::~Object()
 	mPreviousTransform = nullptr;
 	delete mCollisionBorder;
 	mCollisionBorder = nullptr;
+
+	delete mCollisionBoxOffset;
+	mCollisionBoxOffset = nullptr;
 }
 #pragma endregion
 
@@ -89,7 +95,7 @@ void Object::SetName(const std::string& name)
 {
 	mName = name;
 }
-void Object::SetSpeed(unsigned int speed)
+void Object::SetSpeed(real speed)
 {
 	mSpeed = speed;
 }
@@ -121,7 +127,7 @@ std::string Object::GetName() const
 {
 	return mName;
 }
-unsigned int Object::GetSpeed() const
+real Object::GetSpeed() const
 {
 	return mSpeed;
 }
@@ -141,6 +147,11 @@ Rect Object::GetCollisionBorder() const
 {
 	return *mCollisionBorder;
 }
+Vector2 Object::GetCollisionBorderOffset() const
+{
+	return *mCollisionBoxOffset;
+}
+
 
 Vector2 Object::GetPreviousPosition() const
 {
@@ -155,10 +166,13 @@ void Object::Render()
 	if (mIsActive)
 	{
 		Transform2D interpolatedPos = Lerp<Transform2D, DWORD>(*mPreviousTransform, *transform, HAPI->GetTime());
-		VIEW.Render(mSpriteId, interpolatedPos, 0);
-		
-		//Debug::DisplayCollisionBox(*this, { 255, 255, 0 });
-		//Debug::DisplayDirection(*this, 30, { 255, 0, 0 });
+		VIEW.Render(mSpriteId, interpolatedPos, mPreviousTransform->GetRotation(), 0);
+
+		const float prevRot = mPreviousTransform->GetRotation();
+		const float currRot = transform->GetRotation();
+
+		Debug::DisplayCollisionBox(*this, { 255, 255, 0 });
+		Debug::DisplayDirection(*this, 30, { 255, 0, 0 });
 	}
 }
 
@@ -219,9 +233,8 @@ void Object::CollisionCheck(std::vector<Object*>& mapObjects)
 
 bool Object::HitCheck(const Vector2& objectHit_position, const Rect& objectHit_boundary)
 {
-
-	const Rect boundaryToWorld_local(transform->GetPosition(), *mCollisionBorder);
-	const Rect boundaryToWorld_external(objectHit_position, objectHit_boundary);
+	const Rect boundaryToWorld_local(transform->GetPosition() + *mCollisionBoxOffset, *mCollisionBorder);
+	const Rect boundaryToWorld_external(objectHit_position + *mCollisionBoxOffset, objectHit_boundary);
 
 	// if object is outside of the bounding box then return true, then flips it
 	return !(boundaryToWorld_external.left > boundaryToWorld_local.right || boundaryToWorld_external.right < boundaryToWorld_local.left ||

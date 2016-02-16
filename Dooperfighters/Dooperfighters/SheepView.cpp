@@ -39,7 +39,7 @@ bool View::Initialise(int screenWidth, int screenHeight, unsigned int maxLayers)
 		return false;
 
 	// TODO: fix [original: !HAPI->Initialise(&screenWidth, &screenHeight)
-	if (!HAPI->Initialise(&screenWidth, &screenHeight))
+	if (HAPI->Initialise(&screenWidth, &screenHeight))
 		return false;
 
 	/* Get Window properties */
@@ -89,11 +89,11 @@ bool View::CreateSprite(unsigned int& spriteId, std::string filename, unsigned i
 }
 
 
-void View::Render(unsigned int id, const Transform2D& transform, int framecount)
+void View::Render(unsigned int id, const Transform2D& transform, float previousRotation, int framecount)
 {
 	assert(id >= 0 && id <= mSpriteContainer.size());
 	assert(mSpriteContainer[id]);
-	mSpriteContainer[id]->Render(transform, this->mScreenPointer, *mWindowBoundary, framecount);
+	mSpriteContainer[id]->Render(transform, previousRotation, this->mScreenPointer, *mWindowBoundary, framecount);
 }
 
 
@@ -120,13 +120,13 @@ void View::DrawLine(const Vector2& positionA, const Vector2& positionB, const HA
 	// https://en.wikipedia.org/wiki/Bresenham%27s_line_algorithm	
 	Vector2 delta(abs(positionB.x - positionA.x), -abs(positionB.y - positionA.y));
 
-	int x = positionA.x;
-	int y = positionA.y;
+	int x = (int)positionA.x;
+	int y = (int)positionA.y;
 
 	int sx = x < positionB.x ? 1 : -1;
 	int sy = y < positionB.y ? 1 : -1;
 
-	int err = delta.x + delta.y;
+	int err = (int)(delta.x + delta.y);
 	int err2 = 0;
 
 	BYTE* buffer = nullptr;
@@ -135,20 +135,20 @@ void View::DrawLine(const Vector2& positionA, const Vector2& positionB, const HA
 		if (x < 0 || y < 0 || x >= mWindowBoundary->Width() || y >= mWindowBoundary->Height())
 			break;
 		
-		memcpy(mScreenPointer + (x + y * mWindowBoundary->Width()) * BYTE_SIZE, &color, BYTE_SIZE);
+		memcpy(mScreenPointer + ((int)(x + y * mWindowBoundary->Width())) * BYTE_SIZE, &color, BYTE_SIZE);
 		err2 = 2 * err;
 
 		if (err2 >= delta.y)
 		{
 			if (x == positionB.x) break;
-			err += delta.y;
+			err += (int)delta.y;
 			x += sx;
 		}
 
 		if (err2 <= delta.x)
 		{
 			if (y == positionB.y) break;
-			err += delta.x;
+			err += (int)delta.x;
 			y += sy;
 		}
 	}
@@ -165,10 +165,10 @@ void View::DrawLines(const std::vector<Vector2>& points, const HAPI_TColour& col
 
 void View::DrawSquare(const Rect& rectangle, const HAPI_TColour& colour)
 {
-	DrawLine(Vector2(rectangle.left, rectangle.top), Vector2(rectangle.right, rectangle.top), colour);
-	DrawLine(Vector2(rectangle.right, rectangle.top), Vector2(rectangle.right, rectangle.bottom), colour);
-	DrawLine(Vector2(rectangle.right, rectangle.bottom), Vector2(rectangle.left, rectangle.bottom), colour);
-	DrawLine(Vector2(rectangle.left, rectangle.bottom), Vector2(rectangle.left, rectangle.top), colour);
+	DrawLine(Vector2((real)rectangle.left, (real)rectangle.top), Vector2((real)rectangle.right, (real)rectangle.top), colour);
+	DrawLine(Vector2((real)rectangle.right, (real)rectangle.top), Vector2((real)rectangle.right, (real)rectangle.bottom), colour);
+	DrawLine(Vector2((real)rectangle.right, (real)rectangle.bottom), Vector2((real)rectangle.left, (real)rectangle.bottom), colour);
+	DrawLine(Vector2((real)rectangle.left, (real)rectangle.bottom), Vector2((real)rectangle.left, (real)rectangle.top), colour);
 }
 #pragma endregion
 #pragma endregion

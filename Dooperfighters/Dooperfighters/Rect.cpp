@@ -75,7 +75,7 @@ void Rect::Translate(const Vector2& pos)
 	Translate(pos.x, pos.y);
 }
 
-void Rect::Rotate(const real angle)
+void Rect::Rotate(const int angle)
 {
 	Vector2 rotate = getBasicRotation(Right(), angle);
 }

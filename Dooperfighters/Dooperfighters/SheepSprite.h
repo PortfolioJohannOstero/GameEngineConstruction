@@ -17,8 +17,6 @@ namespace Sheep
 
 		/* +==== Constructors ====+ */
 		Sprite() {};
-		Sprite(const std::string& imgFilePath);
-		Sprite(BYTE* spriteImage, int width, int height, int sheetWidth);
 
 		~Sprite();
 
@@ -36,12 +34,11 @@ namespace Sheep
 		Rect Image() const;
 
 		/* +==== Render ====+ */
-		void Render(const Transform2D& transform, BYTE* screenPointer, const Rect& screenBoundary, unsigned int frameNumber);
+		void Render(const Transform2D& transform, float previousRotation, BYTE* screenPointer, const Rect& screenBoundary, unsigned int frameNumber);
 
 	private:
 		BYTE* mTexture = nullptr;
 		BYTE* mRotatedTexture = nullptr;
-		float mCurrentRotation = -1.0f;
 		Rect mBoundingBox;
 		Rect mSheetSize;
 		unsigned int mLayer;
@@ -50,9 +47,9 @@ namespace Sheep
 		unsigned int mMaxSprites_row;
 
 		/* +=== Rendering types ===+ */
-		void (Sprite::*RenderType)(const Transform2D&, BYTE*, const Rect&, unsigned int) = nullptr;
-		void BlitLineByLine(const Transform2D& transform, BYTE* screenPointer, const Rect& screenBoundary, unsigned int frameNumber);
-		void BlitTransparent(const Transform2D& transform, BYTE* screenPointer, const Rect& screenBoundary, unsigned int frameNumber);
+		void (Sprite::*RenderType)(const Transform2D&, float, BYTE*, const Rect&, unsigned int) = nullptr;
+		void BlitLineByLine(const Transform2D& transform,  float previousRotation, BYTE* screenPointer, const Rect& screenBoundary, unsigned int frameNumber);
+		void BlitTransparent(const Transform2D& transform, float previousRotation, BYTE* screenPointer, const Rect& screenBoundary, unsigned int frameNumber);
 
 		// !NOTE: updates the x and y values if needed
 		Rect Clipping(const Rect& screenBoundary, real &x, real &y);

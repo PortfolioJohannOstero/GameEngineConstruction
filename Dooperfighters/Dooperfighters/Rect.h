@@ -23,7 +23,7 @@ namespace Sheep
 		void setDimension(int width, int height);
 		void Translate(int x, int y);
 		void Translate(const Sheep::Vector2& pos);
-		void Rotate(const real angle);
+		void Rotate(const int angle);
 
 		/* +==== Get Dimension ====+ */
 		int Width() const;

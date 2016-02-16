@@ -14,14 +14,14 @@ void Debug::DisplayFPS(bool state, int x, int y)
 void Debug::DisplayCollisionBox(const Object& object, const HAPI_TColour& lineColour)
 {
 	Rect r = object.GetCollisionBorder();
-	r.Translate(object.transform->GetPosition());
+	r.Translate(object.transform->GetPosition() + object.GetCollisionBorderOffset());
 	VIEW.DrawSquare(r, lineColour);
 }
 
-void Debug::DisplayDirection(const Object& object, int distance, const HAPI_TColour& lineColour)
+void Debug::DisplayDirection(const Object& object, real distance, const HAPI_TColour& lineColour)
 {
 	const Vector2 centerOfContainer = object.GetCollisionBorder().Center();
-	const Vector2 currPos = object.transform->GetPosition() + centerOfContainer;
+	const Vector2 currPos = object.transform->GetPosition() + object.GetCollisionBorderOffset() + centerOfContainer;
 
 	VIEW.DrawLine(currPos, currPos + object.transform->GetDirection(Right()) * distance, lineColour);
 }

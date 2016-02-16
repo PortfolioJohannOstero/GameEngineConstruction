@@ -49,9 +49,6 @@
     <ClCompile Include="SheepObjectPlayer.cpp">
       <Filter>SheepEngine\World\Objects</Filter>
     </ClCompile>
-    <ClCompile Include="SheepObjectPickup.cpp">
-      <Filter>SheepEngine\World\Objects</Filter>
-    </ClCompile>
     <ClCompile Include="SheepWorld.cpp">
       <Filter>SheepEngine\World</Filter>
     </ClCompile>
@@ -109,9 +106,6 @@
       <Filter>SheepEngine\Math</Filter>
     </ClInclude>
     <ClInclude Include="SheepObjectPlayer.h">
-      <Filter>SheepEngine\World\Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="SheepObjectPickup.h">
       <Filter>SheepEngine\World\Objects</Filter>
     </ClInclude>
     <ClInclude Include="SheepWorld.h">

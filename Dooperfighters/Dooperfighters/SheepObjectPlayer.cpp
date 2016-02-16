@@ -17,15 +17,15 @@ ObjectPlayer::ObjectPlayer(const std::string& name, unsigned int spriteId, eTAG 
 	mProjectile_machineGun = new Ammo(ammo);
 }
 
-ObjectPlayer::ObjectPlayer(const std::string& name, unsigned int speed, int health, int damage, const Vector2& position, unsigned int spriteId, const Rect& collisionBox, eTAG tag, const Ammo& ammo)
-	: Object(name, speed, health, damage, position, spriteId, collisionBox, tag)
+ObjectPlayer::ObjectPlayer(const std::string& name, real speed, int health, int damage, const Vector2& position, unsigned int spriteId, const Rect& collisionBox, const Vector2& collisionBoxOffset, eTAG tag, const Ammo& ammo)
+	: Object(name, speed, health, damage, position, spriteId, collisionBox, collisionBoxOffset, tag)
 {
 	SetProjectileSpawnPoint(transform->GetPosition() + mCollisionBorder->Center());
 	mProjectile_machineGun = new Ammo(ammo);
 }
 
-ObjectPlayer::ObjectPlayer(const std::string& name, unsigned int speed, int health, int damage, int x, int y, unsigned int spriteId, const Rect& collisionBox, eTAG tag, const Ammo& ammo)
-	: Object(name, speed, health, damage, x, y, spriteId, collisionBox, tag)
+ObjectPlayer::ObjectPlayer(const std::string& name, real speed, int health, int damage, real x, real y, unsigned int spriteId, const Rect& collisionBox, const Vector2& collisionBoxOffset, eTAG tag, const Ammo& ammo)
+	: Object(name, speed, health, damage, x, y, spriteId, collisionBox, collisionBoxOffset, tag)
 {
 	SetProjectileSpawnPoint(transform->GetPosition() + mCollisionBorder->Center());
 	mProjectile_machineGun = new Ammo(ammo);
@@ -40,16 +40,13 @@ ObjectPlayer::~ObjectPlayer()
 
 void ObjectPlayer::Update()
 {
-	mPreviousTransform = transform;
+	mPreviousTransform;
+	transform;
+
+	mPreviousTransform->SetRotation(transform->GetRotation());
 
 	if (Input::Key_isPressed('Q'))
-	{
-		transform->Rotate(1);
-		mCollisionBorder->Rotate(1);
-		//DEBUG_MESSAGE.PushMessage("Player Rotation: " + std::to_string(transform->GetRotation()));
-	}
-	else if (Input::Key_isPressed('E'))
-		transform->Rotate(-1);
+		mIsActive = false;
 
 	
 	if (Input::Key_isPressed('B'))
@@ -68,11 +65,15 @@ void ObjectPlayer::Update()
 	{
 		transform->Translate(transform->GetDirection(Right()) * mSpeed * -1);
 		mProjectileSpawnPoint -= transform->GetDirection(Right()) * mSpeed;
+
+		mPreviousTransform->SetPosition(transform->GetPosition());
 	}
 	else if (Input::Key_isPressed(mControls.right) || Input::Controller_LeftAnalogueMoved(0, Sheep::ANALOGUE_DIRECTION::RIGHT))
 	{
 		transform->Translate(transform->GetDirection(Right()) * mSpeed);
 		mProjectileSpawnPoint += transform->GetDirection(Right()) * mSpeed;
+
+		mPreviousTransform->SetPosition(transform->GetPosition());
 	}
 
 	if (Input::Key_isPressed(mControls.up) || Input::Controller_LeftAnalogueMoved(0, Sheep::ANALOGUE_DIRECTION::UP))
@@ -118,7 +119,7 @@ void ObjectPlayer::SetControls(unsigned int left, unsigned int right, unsigned i
 #pragma region PROJECTILE HANDLING
 Vector2 ObjectPlayer::GetProjectileSpawnPoint() const
 {
-	return mProjectileSpawnPoint;
+	return mProjectileSpawnPoint + *mCollisionBoxOffset;
 }
 
 void ObjectPlayer::SetProjectileSpawnPoint(const Vector2& point)

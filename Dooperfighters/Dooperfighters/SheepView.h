@@ -39,7 +39,7 @@ namespace Sheep
 
 		/* +==== Sprite Handling ====+ */
 		bool CreateSprite(unsigned int& spriteId, std::string filename, unsigned int spriteWidth, unsigned int spriteHeight, unsigned int maxHorizontalSprites, unsigned int maxVerticalSprites, BLITTING_TYPES type);
-		void Render(unsigned int id, const Transform2D& transform, int framecount = 0);
+		void Render(unsigned int id, const Transform2D& transform, float previousRotation, int framecount = 0);
 
 		/* +==== Rendering ====+ */
 			/* +=== Text ===+ */

@@ -7,36 +7,6 @@ using namespace Sheep;
 
 /* +==== Constructors ====+ */
 #pragma region CONSTRUCTORS
-Sprite::Sprite(const std::string& imgFilePath)
-{
-	if (!HAPI->LoadTexture(imgFilePath, &mTexture, &mBoundingBox.right, &mBoundingBox.bottom))
-		HAPI->UserMessage("Could not load image: " + imgFilePath, "Image Failure");
-
-	mBoundingBox.left = 0;
-	mBoundingBox.top = 0;
-}
-
-Sprite::Sprite(BYTE* spriteImage, int width, int height, int sheetWidth)
-{
-	mBoundingBox.right = width;
-	mBoundingBox.bottom = height;
-
-	mTexture = new BYTE[mBoundingBox.Area() * 4];
-
-	BYTE* destinationPointer = mTexture;
-	BYTE* sourcePointer = spriteImage;
-
-	for (int y = 0; y < mBoundingBox.Height(); y++)
-	{
-		memcpy(destinationPointer, sourcePointer, mBoundingBox.Width() * 4);
-
-		destinationPointer += mBoundingBox.Width() * 4;
-		sourcePointer += sheetWidth * 4;
-	}
-
-	mBoundingBox.setDimension(0, width, 0, height);
-}
-
 Sprite::~Sprite()
 {
 	delete[] mTexture;
@@ -56,10 +26,10 @@ Sprite& Sprite::operator = (const Sprite& rhs)
 	{
 		mBoundingBox = rhs.mBoundingBox;
 
-		mTexture = new BYTE[mBoundingBox.Area() * 4];
+		mTexture = new BYTE[mBoundingBox.Area() * BYTE_SIZE];
 	}
 
-	memcpy(mTexture, rhs.mTexture, mBoundingBox.Area() * 4);
+	memcpy(mTexture, rhs.mTexture, mBoundingBox.Area() * BYTE_SIZE);
 
 	return *this; 
 }
@@ -81,7 +51,7 @@ bool Sprite::Load(std::string& filename, unsigned int spriteWidth, unsigned int 
 	mMaxSprites_col = maxHorizontalSprites;
 	mMaxSprites_row = maxVerticalSprites;
 
-	// Creating a modifieable texture array with initial values set to 0 
+	// Creating a modifiable texture array with initial values set to 0 
 	const unsigned int textureSize = mSheetSize.Area() * BYTE_SIZE;
 	mRotatedTexture = new BYTE[textureSize];
 	memset(mRotatedTexture, 0, textureSize);
@@ -103,20 +73,20 @@ bool Sprite::Load(std::string& filename, unsigned int spriteWidth, unsigned int 
 }
 
 /* +==== Render ====+ */
-void Sprite::Render(const Transform2D& transform, BYTE* screenPointer, const Rect& screenBoundary, unsigned int frameNumber)
+void Sprite::Render(const Transform2D& transform, float previousRotation, BYTE* screenPointer, const Rect& screenBoundary, unsigned int frameNumber)
 {
 	if (!RenderType)
 		return;
 
-	(this->*RenderType)(transform, screenPointer, screenBoundary, frameNumber);
+	(this->*RenderType)(transform, previousRotation, screenPointer, screenBoundary, frameNumber);
 }
 
 #pragma region BLITTING METHODS
-void Sprite::BlitLineByLine(const Transform2D& transform, BYTE* screenPointer, const Rect& screenBoundary, unsigned int frameNumber)
+void Sprite::BlitLineByLine(const Transform2D& transform, float previousRotation, BYTE* screenPointer, const Rect& screenBoundary, unsigned int frameNumber)
 {
 	Vector2 pos = transform.GetPosition();
 
-	if (mBoundingBox.CompletelyOutside(screenBoundary, pos.x, pos.y))
+	if (mBoundingBox.CompletelyOutside(screenBoundary, (int)pos.x, (int)pos.y))
 		return;
 
 	Rect Clipped = Clipping(screenBoundary, pos.x, pos.y);
@@ -136,50 +106,49 @@ void Sprite::BlitLineByLine(const Transform2D& transform, BYTE* screenPointer, c
 
 void Sprite::Rotate(real angle)
 {
-	if (angle != mCurrentRotation)
+	angle = toRadian<float>(angle);
+
+	const Vector2 posH = getBasicRotation(Right(), -angle);
+	const Vector2 posV = getBasicRotation(Up(), -angle);
+
+	Vector2 coord0 = getBasicRotation(Vector2(mBoundingBox.Center() * -1), -angle) + mBoundingBox.Center();
+	
+	for (int y = 0; y < mBoundingBox.Height(); y++)
 	{
-		angle = toRadian<float>(angle);
-		mCurrentRotation = angle;
-
-		const Vector2 posH = getBasicRotation(Right(), -angle);
-		const Vector2 posV = getBasicRotation(Up(), -angle);
-
-		Vector2 coord0 = getBasicRotation(Vector2(mBoundingBox.Center() * -1), -angle) + mBoundingBox.Center();
-
-		for (int y = 0; y < mBoundingBox.Height(); y++)
+		Vector2 coord1 = coord0;
+		for (int x = 0; x < mBoundingBox.Width(); x++)
 		{
-			Vector2 coord1 = coord0;
-			for (int x = 0; x < mBoundingBox.Width(); x++)
-			{
-				int xx = (int)coord1.x;
-				int yy = (int)coord1.y;
+			int xx = (int)coord1.x;
+			int yy = (int)coord1.y;
+			
+			const int rIndex = (x + y * mSheetSize.Width()) * BYTE_SIZE;
+			const int index = (xx + yy * mSheetSize.Width()) * BYTE_SIZE;
+			
+			BYTE alpha = 0;
+			if (rIndex < 0 && rIndex >= mBoundingBox.Area() * BYTE_SIZE)
+				alpha = 0;
+			else					
+				alpha = mTexture[index + 3];
+			
+			mRotatedTexture[rIndex] = mTexture[index];
+			mRotatedTexture[rIndex + 1] = mTexture[index + 1];
+			mRotatedTexture[rIndex + 2] = mTexture[index + 2];
+			mRotatedTexture[rIndex + 3] = alpha;
 
-				const int rIndex = (x + y * mSheetSize.Width()) * BYTE_SIZE;
-				const int index = (xx + yy * mSheetSize.Width()) * BYTE_SIZE;
-
-
-				BYTE alpha = 0;
-				if (rIndex < 0 && rIndex >= mBoundingBox.Area() * BYTE_SIZE)
-					alpha = 0;
-				else					
-					alpha = mTexture[index + 3];
-
-				mRotatedTexture[rIndex] = mTexture[index];
-				mRotatedTexture[rIndex + 1] = mTexture[index + 1];
-				mRotatedTexture[rIndex + 2] = mTexture[index + 2];
-				mRotatedTexture[rIndex + 3] = alpha;
-
-				coord1 += posH;
-			}
-			coord0 += posV;
+			coord1 += posH;
 		}
+		coord0 += posV;
 	}
 }
 
-void Sprite::BlitTransparent(const Transform2D& transform, BYTE* screenPointer, const Rect& screenBoundary, unsigned int frameNumber)
+void Sprite::BlitTransparent(const Transform2D& transform, float previousRotation, BYTE* screenPointer, const Rect& screenBoundary, unsigned int frameNumber)
 {
 	Vector2 pos = transform.GetPosition();
-	Rotate(transform.GetRotation());
+
+	if (transform.GetRotation() != previousRotation)
+		Rotate(transform.GetRotation());
+
+	DEBUG_MESSAGE.PushMessage(std::to_string(transform.GetRotation()) + " : " + std::to_string(previousRotation));
 
 	if (mBoundingBox.CompletelyOutside(screenBoundary, pos.x, pos.y))
 		return;

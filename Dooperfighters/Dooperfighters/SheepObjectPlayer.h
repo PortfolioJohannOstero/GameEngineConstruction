@@ -12,8 +12,8 @@ namespace Sheep
 	{
 	public:
 		ObjectPlayer(const std::string& name, unsigned int spriteId, eTAG tag, const Ammo& ammo);
-		ObjectPlayer(const std::string& name, unsigned int speed, int health, int damage, const Vector2& position, unsigned int spriteId, const Rect& collisionBox, eTAG tag, const Ammo& ammo);
-		ObjectPlayer(const std::string& name, unsigned int speed, int health, int damage, int x, int y, unsigned int spriteId, const Rect& collisionBox, eTAG tag, const Ammo& ammo);
+		ObjectPlayer(const std::string& name, real speed, int health, int damage, const Vector2& position, unsigned int spriteId, const Rect& collisionBox, const Vector2& collisionBoxOffset, eTAG tag, const Ammo& ammo);
+		ObjectPlayer(const std::string& name, real speed, int health, int damage, real x, real y, unsigned int spriteId, const Rect& collisionBox, const Vector2& collisionBoxOffset, eTAG tag, const Ammo& ammo);
 		~ObjectPlayer();
 
 		void Update() override final;

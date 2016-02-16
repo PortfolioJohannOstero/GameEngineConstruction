@@ -7,8 +7,8 @@ namespace Sheep
 	{
 	public:
 		SheepObjectScenery(const std::string& name, unsigned int spriteId, eTAG tag);
-		SheepObjectScenery(const std::string& name, unsigned int speed, const Vector2& position, unsigned int spriteId, const Rect& collisionBox, eTAG tag);
-		SheepObjectScenery(const std::string& name, unsigned int speed, int x, int y, unsigned int spriteId, const Rect& collisionBox, eTAG tag);
+		SheepObjectScenery(const std::string& name, real speed, const Vector2& position, unsigned int spriteId, const Rect& collisionBox, const Vector2& collisionBoxOffset, eTAG tag);
+		SheepObjectScenery(const std::string& name, real speed, real x, real y, unsigned int spriteId, const Rect& collisionBox, const Vector2& collisionBoxOffset, eTAG tag);
 
 		void Update() override final;
 	};

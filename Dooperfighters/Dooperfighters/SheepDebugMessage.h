@@ -41,6 +41,7 @@ namespace Sheep
 		void PushMessage(const std::string& message, MESSAGE_TYPE type = MESSAGE_TYPE::NORMAL);
 		// Extensions:
 		void PushMessage(const Vector2& message, MESSAGE_TYPE type = MESSAGE_TYPE::NORMAL);
+
 		void RenderMessages();
 
 		/* +=== Toggles ===+ */

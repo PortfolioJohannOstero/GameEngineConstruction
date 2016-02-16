@@ -5,9 +5,9 @@
 using namespace Sheep;
 
 #pragma region Constructor
-Transform2D::Transform2D(int x, int y) : mRotation(0)
+Transform2D::Transform2D(real x, real y) : mRotation(0)
 {
-	mPosition = new Vector2(x, y);
+	mPosition = new Vector2((real)x, (real)y);
 	mScale = new Vector2(1, 1);
 	mDirection = new Vector2(1, 1);
 }
@@ -60,7 +60,7 @@ Transform2D& Transform2D::operator = (const Transform2D& rhs)
 
 /* +==== Transformation ====+ */
 #pragma region Transformation
-void Transform2D::Translate(int x, int y)
+void Transform2D::Translate(real x, real y)
 {
 	mPosition->x += x;
 	mPosition->y += y;
@@ -71,13 +71,13 @@ void Transform2D::Translate(const Vector2& pos)
 	*mPosition += pos;
 }
 
-void Transform2D::Scale(int x, int y)
+void Transform2D::Scale(real x, real y)
 {
 	mScale->x += x;
 	mScale->y += y;
 }
 
-void Transform2D::Scale(int s)
+void Transform2D::Scale(real s)
 {
 	mScale->x += s;
 	mScale->y += s;
@@ -96,7 +96,7 @@ void Transform2D::Rotate(float angle_deg)
 
 /* +==== Setter Methods ====+ */
 #pragma region Setter Methods
-void Transform2D::SetPosition(int x, int y)
+void Transform2D::SetPosition(real x, real y)
 {
 	mPosition->x = x;
 	mPosition->y = y;
@@ -106,7 +106,7 @@ void Transform2D::SetPosition(const Vector2& pos)
 	*mPosition = pos;
 }
 
-void Transform2D::SetScale(int x, int y)
+void Transform2D::SetScale(real x, real y)
 {
 	mScale->x = x;
 	mScale->y = y;
@@ -117,7 +117,7 @@ void Transform2D::SetScale(const Vector2& pos)
 	*mScale = pos;
 }
 
-void Transform2D::SetRotation(float angle_deg)
+void Transform2D::SetRotation(real angle_deg)
 {
 	mRotation = angle_deg;
 }
@@ -145,7 +145,7 @@ Vector2 Transform2D::GetDirection(const Vector2& facing)
 	if (mCurrentRotation != mRotation)
 	{
 		mCurrentRotation = mRotation;
-		*mDirection = getBasicRotation(facing, toRadian<float>(mRotation));
+		*mDirection = getBasicRotation(facing, toRadian<real>(mRotation));
 	}
 
 	return *mDirection;

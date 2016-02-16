@@ -50,7 +50,7 @@ void Vector2::Normalize(const Vector2& otherPoint)
 
 Vector2 Vector2::Normalized(const Vector2& otherPoint) const
 {
-	int magnitude = Magnitude(otherPoint);
+	real magnitude = Magnitude(otherPoint);
 	Vector2 pos = (*this);
 	Vector2 derp = (*this) / magnitude;
 	return derp;

@@ -89,7 +89,6 @@
     <ClCompile Include="SheepDebugMessage.cpp" />
     <ClCompile Include="SheepInput.cpp" />
     <ClCompile Include="SheepObject.cpp" />
-    <ClCompile Include="SheepObjectPickup.cpp" />
     <ClCompile Include="SheepObjectPlayer.cpp" />
     <ClCompile Include="SheepObjectProjectile.cpp" />
     <ClCompile Include="SheepObjectScenery.cpp" />
@@ -113,7 +112,6 @@
     <ClInclude Include="SheepDebugMessage.h" />
     <ClInclude Include="SheepInput.h" />
     <ClInclude Include="SheepObject.h" />
-    <ClInclude Include="SheepObjectPickup.h" />
     <ClInclude Include="SheepObjectPlayer.h" />
     <ClInclude Include="SheepObjectProjectile.h" />
     <ClInclude Include="SheepObjectScenery.h" />

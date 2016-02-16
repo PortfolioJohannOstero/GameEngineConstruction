@@ -11,14 +11,14 @@ ObjectProjectile::ObjectProjectile(const std::string& name, unsigned int spriteI
 	SetActive(true);
 }
 
-ObjectProjectile::ObjectProjectile(const std::string& name, unsigned int speed, int health, int damage, const Vector2& position, unsigned int spriteId, const Rect& collisionBox, eTAG tag)
-	: Object(name, speed, health, damage, position, spriteId, collisionBox, tag)
+ObjectProjectile::ObjectProjectile(const std::string& name, real speed, int damage, const Vector2& position, unsigned int spriteId, const Rect& collisionBox, const Vector2& collisionBoxOffset, eTAG tag)
+	: Object(name, speed, 1, damage, position, spriteId, collisionBox, collisionBoxOffset, tag)
 {
 	SetActive(true);
 }
 
-ObjectProjectile::ObjectProjectile(const std::string& name, unsigned int speed, int health, int damage, int x, int y, unsigned int spriteId, const Rect& collisionBox, eTAG tag)
-	: Object(name, speed, health, damage, x, y, spriteId, collisionBox, tag)
+ObjectProjectile::ObjectProjectile(const std::string& name, real speed, int damage, real x, real y, unsigned int spriteId, const Rect& collisionBox, const Vector2& collisionBoxOffset, eTAG tag)
+	: Object(name, speed, 1, damage, x, y, spriteId, collisionBox, collisionBoxOffset, tag)
 {
 	SetActive(true);
 }
