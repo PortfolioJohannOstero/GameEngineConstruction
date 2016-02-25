@@ -69,6 +69,8 @@ namespace Sheep
 		//void vectorProductUpdate(const Vector2& vector);
 	};
 
+	/* +=== Default directions ====+ */
+	#pragma region DEFAULT DIRECTIONS
 	inline Vector2 Right()
 	{
 		return Vector2(1, 0);
@@ -88,7 +90,7 @@ namespace Sheep
 	{
 		return Vector2(0, -1);
 	}
-
+	#pragma endregion Default Direction
 }
 
 

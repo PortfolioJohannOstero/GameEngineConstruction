@@ -1,5 +1,5 @@
 #include "SheepObjectScenery.h"
-
+#include "SheepTransform2D.h"
 using namespace Sheep;
 
 SheepObjectScenery::SheepObjectScenery(const std::string& name, unsigned int spriteId, eTAG tag) : Object(name, spriteId, tag)
@@ -15,5 +15,4 @@ SheepObjectScenery::SheepObjectScenery(const std::string& name, real speed, real
 
 void SheepObjectScenery::Update()
 {
-
 }

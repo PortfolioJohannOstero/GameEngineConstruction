@@ -9,7 +9,7 @@ std::vector<Controller*> Input::mControllerData;
 void Input::SetupControllers()
 {
 	mControllerData.resize(HAPI->GetMaxControllers());
-	for (int i = 0; i < mControllerData.size(); i++)
+	for (unsigned int i = 0; i < mControllerData.size(); i++)
 		mControllerData[i] = new Controller;
 }
 

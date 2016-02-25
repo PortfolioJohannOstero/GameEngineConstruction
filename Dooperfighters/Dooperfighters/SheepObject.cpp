@@ -5,7 +5,9 @@
 #include "SheepSprite.h"
 
 #include "Utility_Animation.h"
+#include "SheepAnimator.h"
 #include "SheepDebug.h"
+#include "SheepInput.h"
 
 using namespace Sheep;
 
@@ -49,6 +51,9 @@ Object::~Object()
 
 	delete mCollisionBoxOffset;
 	mCollisionBoxOffset = nullptr;
+
+	delete mAnimation;
+	mAnimation = nullptr;
 }
 #pragma endregion
 
@@ -160,19 +165,42 @@ Vector2 Object::GetPreviousPosition() const
 
 #pragma endregion
 
+/* +=== Property handling ===+ */
+void Object::TakeDamage(int damage)
+{
+	mHealth -= damage;
+}
+
+void Object::AddAnimation(const Animator& animation)
+{
+	mAnimation = new Animator(animation);
+	mAnimation->Play();
+}
+
 /* +=== Rendering ===+ */
 void Object::Render()
 {
 	if (mIsActive)
 	{
-		Transform2D interpolatedPos = Lerp<Transform2D, DWORD>(*mPreviousTransform, *transform, HAPI->GetTime());
-		VIEW.Render(mSpriteId, interpolatedPos, mPreviousTransform->GetRotation(), 0);
+		if (mPreviousTransform != transform)
+		{
+			if (mAnimation != nullptr)
+			{
+				mFrameNumber = mAnimation->getKey();
+				mAnimation->Increment();
+			}
 
-		const float prevRot = mPreviousTransform->GetRotation();
-		const float currRot = transform->GetRotation();
-
-		Debug::DisplayCollisionBox(*this, { 255, 255, 0 });
-		Debug::DisplayDirection(*this, 30, { 255, 0, 0 });
+			Transform2D& interpolatedPos = Lerp<Transform2D, float>(*mPreviousTransform, *transform, (float)HAPI->GetTime());
+			VIEW.Render(mSpriteId, *transform, mPreviousTransform->GetRotation(), mFrameNumber);
+			mPreviousTransform->SetRotation(transform->GetRotation());
+			mPreviousTransform->SetPosition(transform->GetPosition());
+		}
+		
+		if (Input::Key_isPressed(HK_TAB))
+		{
+			Debug::DisplayCollisionBox(*this, { 255, 255, 0 });
+			Debug::DisplayDirection(*this, 30, { 255, 0, 0 });
+		}
 	}
 }
 
@@ -216,7 +244,7 @@ void Object::CollisionCheck(std::vector<Object*>& mapObjects)
 			continue;
 
 		// On Collision Enter
-		if (HitCheck(object->transform->GetPosition(), *object->mCollisionBorder))
+		if (HitCheck(object->transform->GetPosition() + object->GetCollisionBorderOffset(), *object->mCollisionBorder))
 		{
 			this->OnCollisionEnter(object);
 			mCurrentHitObject = object;
@@ -234,11 +262,10 @@ void Object::CollisionCheck(std::vector<Object*>& mapObjects)
 bool Object::HitCheck(const Vector2& objectHit_position, const Rect& objectHit_boundary)
 {
 	const Rect boundaryToWorld_local(transform->GetPosition() + *mCollisionBoxOffset, *mCollisionBorder);
-	const Rect boundaryToWorld_external(objectHit_position + *mCollisionBoxOffset, objectHit_boundary);
+	const Rect boundaryToWorld_external(objectHit_position, objectHit_boundary);
 
 	// if object is outside of the bounding box then return true, then flips it
 	return !(boundaryToWorld_external.left > boundaryToWorld_local.right || boundaryToWorld_external.right < boundaryToWorld_local.left ||
 			 boundaryToWorld_external.top > boundaryToWorld_local.bottom || boundaryToWorld_external.bottom < boundaryToWorld_local.top);
 }
-
 #pragma endregion

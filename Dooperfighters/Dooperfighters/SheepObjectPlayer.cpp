@@ -5,86 +5,107 @@
 #include "SheepInput.h"
 #include "SheepWorld.h"
 
-#include "SheepAmmo.h"
+#include "SheepAmmoCollection.h"
+#include "SheepPhysics.h"
+#include "Utility.h"
+
+#include "SheepWorldMessages.h"
 
 using namespace Sheep;
 
 /* +==== Constructors ====+ */
 #pragma region CONSTRUCTORS
-ObjectPlayer::ObjectPlayer(const std::string& name, unsigned int spriteId, eTAG tag, const Ammo& ammo) : Object(name, spriteId, tag)
+ObjectPlayer::ObjectPlayer(const std::string& name, unsigned int spriteId, eTAG tag, const AmmoCollection& ammo) : Object(name, spriteId, tag)
 {
 	SetProjectileSpawnPoint(transform->GetPosition() + mCollisionBorder->Center());
-	mProjectile_machineGun = new Ammo(ammo);
+	mProjectiles= new AmmoCollection(ammo);
 }
 
-ObjectPlayer::ObjectPlayer(const std::string& name, real speed, int health, int damage, const Vector2& position, unsigned int spriteId, const Rect& collisionBox, const Vector2& collisionBoxOffset, eTAG tag, const Ammo& ammo)
+ObjectPlayer::ObjectPlayer(const std::string& name, real speed, int health, int damage, const Vector2& position, unsigned int spriteId, const Rect& collisionBox, const Vector2& collisionBoxOffset, eTAG tag, const AmmoCollection& ammo)
 	: Object(name, speed, health, damage, position, spriteId, collisionBox, collisionBoxOffset, tag)
 {
 	SetProjectileSpawnPoint(transform->GetPosition() + mCollisionBorder->Center());
-	mProjectile_machineGun = new Ammo(ammo);
+	mProjectiles = new AmmoCollection(ammo);
 }
 
-ObjectPlayer::ObjectPlayer(const std::string& name, real speed, int health, int damage, real x, real y, unsigned int spriteId, const Rect& collisionBox, const Vector2& collisionBoxOffset, eTAG tag, const Ammo& ammo)
+ObjectPlayer::ObjectPlayer(const std::string& name, real speed, int health, int damage, real x, real y, unsigned int spriteId, const Rect& collisionBox, const Vector2& collisionBoxOffset, eTAG tag, const AmmoCollection& ammo)
 	: Object(name, speed, health, damage, x, y, spriteId, collisionBox, collisionBoxOffset, tag)
 {
 	SetProjectileSpawnPoint(transform->GetPosition() + mCollisionBorder->Center());
-	mProjectile_machineGun = new Ammo(ammo);
+	mProjectiles = new AmmoCollection(ammo);
 }
 
 ObjectPlayer::~ObjectPlayer()
 {
-	delete mProjectile_machineGun;
-	mProjectile_machineGun = nullptr;
+	delete mProjectiles;
+	mProjectiles = nullptr;
 }
 #pragma endregion constructors
 
+
 void ObjectPlayer::Update()
 {
-	mPreviousTransform;
-	transform;
+	if (mHealth < 0)
+		SetActive(false);
 
-	mPreviousTransform->SetRotation(transform->GetRotation());
+	if (!mIsActive)
+		return;
 
-	if (Input::Key_isPressed('Q'))
-		mIsActive = false;
+	/* +=== out of bound check ===+ */
+	const Rect& windowBoundary = VIEW.WindowBoundary();
+	const Vector2& pos = transform->GetPosition();
+	if (pos.x + mCollisionBorder->Width() + mCollisionBoxOffset->x > windowBoundary.Width())
+	{
+		transform->SetPosition(-mCollisionBorder->Width() - mCollisionBoxOffset->x, pos.y);
+	}
+	else if (pos.x + mCollisionBorder->Width() + mCollisionBoxOffset->x < 0)
+		transform->SetPosition(windowBoundary.Width() + mCollisionBorder->Width() + mCollisionBoxOffset->x, pos.y);
 
+	/* +=== Shooting ===+ */
+	if (Input::Key_isPressed(mControls.fire_bullet) && mProjectiles->bullets.Shoot())
+		WORLD.SendMessage(eWorld_message_types::FIRE, &WorldMessage_Fire(this, eTAG::ENEMY, eTAG::PROJECTILE_BULLET, mProjectileSpawnPoint));
+	else if (Input::Key_isPressed(mControls.fire_missile) && mProjectiles->missiles.Shoot())
+		WORLD.SendMessage(eWorld_message_types::FIRE, &WorldMessage_Fire(this, eTAG::ENEMY, eTAG::PROJECTILE_MISSILE, mProjectileSpawnPoint));
+	else if (Input::Key_isPressed(mControls.fire_bomb) && mProjectiles->bombs.Shoot())
+		WORLD.SendMessage(eWorld_message_types::FIRE, &WorldMessage_Fire(this, eTAG::ENEMY, eTAG::PROJECTILE_BOMB, mProjectileSpawnPoint));
+
+	/* +=== Controls and Pseudo physics*/
+	Vector2& dir = transform->GetDirection(Right());
+	if (dir.y < -0.5f)
+	{
+		mCurrentSpeed -= 0.2f;
+	}
+	else if (dir.y > 0.2f)
+	{
+		mCurrentSpeed += 0.2f;
+	}
 	
-	if (Input::Key_isPressed('B'))
-	{
-		AddAmmo(300);
-		DEBUG_MESSAGE.PushMessage("Added 300 bullets to player", MESSAGE_TYPE::WARNING);
-	}
+	if (mCurrentSpeed > Physics::GetGravity()/2)
+		mCurrentSpeed = Physics::GetGravity()/2;
 
-	if (Input::Key_isPressed(mControls.fire) && mProjectile_machineGun->Shoot())
-	{
-		WORLD.SendMessage(eWorld_message_types::FIRE, this);
-		DEBUG_MESSAGE.PushMessage(std::to_string(mProjectile_machineGun->GetAmmoCount()));
-	}
+	transform->Translate(dir * Physics::GetGravity());
+	mProjectileSpawnPoint = transform->GetPosition() + mCollisionBorder->Center();
+	transform->Translate(dir * mCurrentSpeed);
 
 	if (Input::Key_isPressed(mControls.left) || Input::Controller_LeftAnalogueMoved(0, Sheep::ANALOGUE_DIRECTION::LEFT))
 	{
-		transform->Translate(transform->GetDirection(Right()) * mSpeed * -1);
-		mProjectileSpawnPoint -= transform->GetDirection(Right()) * mSpeed;
-
-		mPreviousTransform->SetPosition(transform->GetPosition());
+		if (mCurrentSpeed > 0)
+			mCurrentSpeed -= 0.2f;
 	}
 	else if (Input::Key_isPressed(mControls.right) || Input::Controller_LeftAnalogueMoved(0, Sheep::ANALOGUE_DIRECTION::RIGHT))
 	{
-		transform->Translate(transform->GetDirection(Right()) * mSpeed);
-		mProjectileSpawnPoint += transform->GetDirection(Right()) * mSpeed;
-
-		mPreviousTransform->SetPosition(transform->GetPosition());
+		mCurrentSpeed += 0.2f;
 	}
 
 	if (Input::Key_isPressed(mControls.up) || Input::Controller_LeftAnalogueMoved(0, Sheep::ANALOGUE_DIRECTION::UP))
 	{
-		transform->Rotate(1);
-		//mProjectileSpawnPoint.y -= mSpeed;
+		transform->Rotate(abs(mCurrentSpeed));
+		mCollisionBorder->Rotate(1, transform->GetPosition());
 	}
 	else if (Input::Key_isPressed(mControls.down) || Input::Controller_LeftAnalogueMoved(0, Sheep::ANALOGUE_DIRECTION::DOWN))
 	{
-		transform->Rotate(-1);
-		//mProjectileSpawnPoint.y += mSpeed;
+		transform->Rotate(-abs(mCurrentSpeed));
+		mCollisionBorder->Rotate(1, transform->GetPosition());
 	}
 }
 
@@ -93,14 +114,8 @@ void ObjectPlayer::Update()
 void ObjectPlayer::OnCollisionEnter(Object* otherObject)
 {
 	if (otherObject->GetTag() == ENEMY)
-		otherObject->SetActive(false);
+		otherObject->TakeDamage(mCollisionDamage);
 
-}
-
-void ObjectPlayer::OnCollisionExit(Object* otherObject)
-{
-	if (otherObject->GetTag() == ENEMY)
-		otherObject->SetActive(true);
 }
 #pragma endregion collision handling
 
@@ -109,9 +124,9 @@ void ObjectPlayer::SetControls(const PlayerControls& controls)
 {
 	mControls = controls;
 }
-void ObjectPlayer::SetControls(unsigned int left, unsigned int right, unsigned int up, unsigned int down, unsigned int fire)
+void ObjectPlayer::SetControls(unsigned int left, unsigned int right, unsigned int up, unsigned int down, unsigned int fire_bullet, unsigned int fire_missile, unsigned int fire_bomb)
 {
-	mControls = PlayerControls(left, right, up, down, fire);
+	mControls = PlayerControls(left, right, up, down, fire_bullet, fire_missile, fire_bomb);
 }
 
 
@@ -128,14 +143,20 @@ void ObjectPlayer::SetProjectileSpawnPoint(const Vector2& point)
 }
 
 /* +=== Getters and setters */
-void ObjectPlayer::AddAmmo(int ammoCount)
+void ObjectPlayer::AddAmmo(int ammoCount, eTAG ammoType)
 {
-	mProjectile_machineGun->AddAmmo(ammoCount);
-}
-
-eTAG ObjectPlayer::GetAmmoType() const
-{
-	return mProjectile_machineGun->GetAmmoType();
+	switch (ammoType)
+	{
+	case eTAG::PROJECTILE_BULLET:
+		mProjectiles->bullets.AddAmmo(ammoCount);
+		break;
+	case eTAG::PROJECTILE_MISSILE:
+		mProjectiles->missiles.AddAmmo(ammoCount);
+		break;
+	case eTAG::PROJECTILE_BOMB:
+		mProjectiles->bombs.AddAmmo(ammoCount);
+		break;
+	}
 }
 
 #pragma endregion projectile handling

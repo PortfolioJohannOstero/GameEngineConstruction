@@ -25,6 +25,9 @@
     <Filter Include="SheepEngine\World\Object Utils">
       <UniqueIdentifier>{09ae2a48-e601-4495-905f-29831b40eb05}</UniqueIdentifier>
     </Filter>
+    <Filter Include="SheepEngine\World\Objects\Enemy">
+      <UniqueIdentifier>{6129ef81-f262-46fc-841c-69c7ec721d11}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source.cpp" />
@@ -78,6 +81,24 @@
     </ClCompile>
     <ClCompile Include="SheepAnimator.cpp">
       <Filter>SheepEngine\World\Object Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="SheepPhysics.cpp">
+      <Filter>SheepEngine\World</Filter>
+    </ClCompile>
+    <ClCompile Include="SheepObjectEnemyTurretUtil.cpp">
+      <Filter>SheepEngine\World\Objects\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="SheepObjectEnemyStationary.cpp">
+      <Filter>SheepEngine\World\Objects\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="SheepObjectEnemyPatrol.cpp">
+      <Filter>SheepEngine\World\Objects\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="SheepObjectProjectile_Bomb.cpp">
+      <Filter>SheepEngine\World\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="SheepObjectEnemyFollow.cpp">
+      <Filter>SheepEngine\World\Objects\Enemy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -147,5 +168,29 @@
     <ClInclude Include="SheepAnimator.h">
       <Filter>SheepEngine\World\Object Utils</Filter>
     </ClInclude>
+    <ClInclude Include="SheepPhysics.h">
+      <Filter>SheepEngine\World</Filter>
+    </ClInclude>
+    <ClInclude Include="SheepObjectEnemyTurretUtil.h">
+      <Filter>SheepEngine\World\Objects\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="SheepObjectEnemyStationary.h">
+      <Filter>SheepEngine\World\Objects\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="SheepAmmoCollection.h">
+      <Filter>SheepEngine\World\Object Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="SheepObjectEnemyPatrol.h">
+      <Filter>SheepEngine\World\Objects\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="SheepObjectProjectile_Bomb.h">
+      <Filter>SheepEngine\World\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="SheepObjectEnemyFollow.h">
+      <Filter>SheepEngine\World\Objects\Enemy</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>

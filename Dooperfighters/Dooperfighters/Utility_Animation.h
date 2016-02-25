@@ -1,12 +1,16 @@
 #ifndef UTILITY_ANIMATION
 #define UTILITY_ANIMATION
 
-/* +============================+
-	Utility Functions
-		~Animations Helpers
-	---------------------------	
-	Author: Jóhann Østerø
-	+============================+
+/*
++=============================================+
++==============================================+
+Utility_Animation.h
+Engine: Sheep Engine
+Author: Jóhann Østerø.
+--
+This is a general utility function, but more specialised towards animations.
++==============================================+
++============================================+
 */
 
 #include "Vector2.h"

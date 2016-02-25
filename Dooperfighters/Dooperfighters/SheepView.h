@@ -6,7 +6,12 @@ View.h
 Engine: Sheep Engine
 Author: Jóhann Østerø.
 --
-This is the view class, everything related to rendering goes through here!
+The View class is a black boxed system that handles all the rendering.
+it supports rendering sprites, drawing lines and clearing the background colour.
+
+: Keep in mind that when rendering sprites, and integer is changed using a reference. This integer (or ID)
+is to be stored by the client to decide to render the sprite.
+This is to remove any duplication of sprites.
 +==============================================+
 +============================================+
 */
@@ -32,7 +37,7 @@ namespace Sheep
 		static void Destroy();
 		static View& getInstance() { return *INSTANCE; }
 
-		bool Initialise(int screenWidth, int screenHeight, unsigned int maxLayers);
+		bool Initialise(int screenWidth, int screenHeight);
 
 		/* +==== Window Resolution ====+ */
 		Rect WindowBoundary() const;
@@ -59,8 +64,6 @@ namespace Sheep
 		BYTE* mScreenPointer = nullptr;
 
 		std::vector<Sprite*> mSpriteContainer;
-
-		unsigned int mMaxLayers = 10;
 
 		const HAPI_TColour frameBoxColour { 255, 0, 0, 255 };
 

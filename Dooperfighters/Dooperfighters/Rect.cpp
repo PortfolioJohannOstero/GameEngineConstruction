@@ -10,11 +10,11 @@ Rect::Rect(int width, int height) : left(0), right(width), top(0), bottom(height
 
 Rect::Rect(const Vector2& worldSpace, const Rect& boundary)
 {
-	left = worldSpace.x;
-	right = worldSpace.x + boundary.Width();
+	left = (int)worldSpace.x;
+	right = (int)worldSpace.x + boundary.Width();
 
-	top = worldSpace.y;
-	bottom = worldSpace.y + boundary.Height();
+	top = (int)worldSpace.y;
+	bottom = (int)worldSpace.y + boundary.Height();
 }
 
 /* +=== Copy ===+ */
@@ -42,7 +42,7 @@ int Rect::Area() const
 
 Vector2 Rect::Center() const
 {
-	return Vector2(Width() * 0.5, Height() * 0.5);
+	return Vector2(Width()/2.f, Height()/2.f);
 }
 #pragma endregion
 
@@ -72,12 +72,13 @@ void Rect::Translate(int x, int y)
 
 void Rect::Translate(const Vector2& pos)
 {
-	Translate(pos.x, pos.y);
+	Translate((int)pos.x, (int)pos.y);
 }
 
-void Rect::Rotate(const int angle)
+// TODO: Rotate corners
+void Rect::Rotate(real angle, const Vector2& position)
 {
-	Vector2 rotate = getBasicRotation(Right(), angle);
+	Vector2& center = Center();
 }
 #pragma endregion
 

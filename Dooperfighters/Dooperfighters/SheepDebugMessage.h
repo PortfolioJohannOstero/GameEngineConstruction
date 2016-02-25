@@ -1,6 +1,24 @@
 #ifndef SHEEP_DEBUG_MESSAGE
 #define SHEEP_DEBUG_MESSAGE
 
+/*
++=============================================+
++==============================================+
+Debug Message.h
+Engine: Sheep Engine
+Author: Jóhann Østerø.
+--
+The Debug class is semi-purely there to make debugging and testing easier.
+it allows the client to output message to a "console" by taking strings and other extensions (that the get turned into strings).
+This Class can be accessed from anywhere!
+
+It allows for three different colours, White(normal), Yellow(warning), Red(error)
+	By default it will always be white
++==============================================+
++============================================+
+*/
+
+
 #include <HAPI_lib.h>
 #include <vector>
 
@@ -42,6 +60,7 @@ namespace Sheep
 		// Extensions:
 		void PushMessage(const Vector2& message, MESSAGE_TYPE type = MESSAGE_TYPE::NORMAL);
 
+		/* +==== Render Text ====+ */
 		void RenderMessages();
 
 		/* +=== Toggles ===+ */

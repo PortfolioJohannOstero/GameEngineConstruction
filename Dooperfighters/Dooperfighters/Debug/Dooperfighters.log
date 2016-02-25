@@ -1,28 +1,25 @@
-﻿Build started 16-02-2016 14:27:56.
-     1>Project "D:\Users\Jóhann Østerø_2\Documents\GameEngineConstruction\Dooperfighters\Dooperfighters\Dooperfighters.vcxproj" on node 2 (Build target(s)).
+﻿Build started 25/02/2016 13:43:22.
+     1>Project "C:\Users\p4220933\Desktop\GameEngineConstruction\Dooperfighters\Dooperfighters\Dooperfighters.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /IHAPI /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt SheepObject.cpp SheepObjectPlayer.cpp
-         SheepObjectPlayer.cpp
-         SheepObject.cpp
-     1>d:\users\jóhann østerø_2\documents\gameengineconstruction\dooperfighters\dooperfighters\utility_animation.h(19): warning C4244: 'argument' : conversion from 'DWORD' to 'Sheep::real', possible loss of data
-                 d:\users\jóhann østerø_2\documents\gameengineconstruction\dooperfighters\dooperfighters\sheepobject.cpp(168) : see reference to function template instantiation 'T Sheep::Lerp<Sheep::Transform2D,DWORD>(const T &,const T &,timeType)' being compiled
-                 with
-                 [
-                     T=Sheep::Transform2D
-         ,            timeType=DWORD
-                 ]
-         Generating Code...
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /IHAPI /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt SheepObjectEnemyTurretUtil.cpp
+         SheepObjectEnemyTurretUtil.cpp
        Link:
-         D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\Users\Jóhann Østerø_2\Documents\GameEngineConstruction\Dooperfighters\Debug\Dooperfighters.exe" /INCREMENTAL /NOLOGO /LIBPATH:HAPI HAPI_debug.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\Users\Jóhann Østerø_2\Documents\GameEngineConstruction\Dooperfighters\Debug\Dooperfighters.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\Users\Jóhann Østerø_2\Documents\GameEngineConstruction\Dooperfighters\Debug\Dooperfighters.lib" /MACHINE:X86 Debug\Rect.obj
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\p4220933\Desktop\GameEngineConstruction\Dooperfighters\Debug\Dooperfighters.exe" /INCREMENTAL /NOLOGO /LIBPATH:HAPI HAPI_debug.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\p4220933\Desktop\GameEngineConstruction\Dooperfighters\Debug\Dooperfighters.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\p4220933\Desktop\GameEngineConstruction\Dooperfighters\Debug\Dooperfighters.lib" /MACHINE:X86 Debug\Rect.obj
          Debug\SheepAmmo.obj
          Debug\SheepAnimator.obj
          Debug\SheepDebug.obj
          Debug\SheepDebugMessage.obj
          Debug\SheepInput.obj
          Debug\SheepObject.obj
+         Debug\SheepObjectEnemyFollow.obj
+         Debug\SheepObjectEnemyPatrol.obj
+         Debug\SheepObjectEnemyStationary.obj
+         Debug\SheepObjectEnemyTurretUtil.obj
          Debug\SheepObjectPlayer.obj
          Debug\SheepObjectProjectile.obj
+         Debug\SheepObjectProjectile_Bomb.obj
          Debug\SheepObjectScenery.obj
+         Debug\SheepPhysics.obj
          Debug\SheepSprite.obj
          Debug\SheepTransform2D.obj
          Debug\SheepView.obj
@@ -31,9 +28,9 @@
          Debug\Utility_Animation.obj
          Debug\Vector2.obj
          Debug\SheepWorld.obj
-         Dooperfighters.vcxproj -> D:\Users\Jóhann Østerø_2\Documents\GameEngineConstruction\Dooperfighters\Debug\Dooperfighters.exe
-     1>Done Building Project "D:\Users\Jóhann Østerø_2\Documents\GameEngineConstruction\Dooperfighters\Dooperfighters\Dooperfighters.vcxproj" (Build target(s)).
+         Dooperfighters.vcxproj -> C:\Users\p4220933\Desktop\GameEngineConstruction\Dooperfighters\Debug\Dooperfighters.exe
+     1>Done Building Project "C:\Users\p4220933\Desktop\GameEngineConstruction\Dooperfighters\Dooperfighters\Dooperfighters.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:01.48
+Time Elapsed 00:00:00.75

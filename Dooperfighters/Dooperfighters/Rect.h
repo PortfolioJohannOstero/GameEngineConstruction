@@ -3,6 +3,19 @@
 
 #include "Vector2.h"
 
+/*
++=============================================+
++==============================================+
+Rect.h
+Engine: Sheep Engine
+Author: Jóhann Østerø.
+--
+A Rectangle class responsible for 4 points at all time as
+well as has the capability to check for rectangle collition
++==============================================+
++============================================+
+*/
+
 namespace Sheep
 {
 	class Rect
@@ -23,7 +36,7 @@ namespace Sheep
 		void setDimension(int width, int height);
 		void Translate(int x, int y);
 		void Translate(const Sheep::Vector2& pos);
-		void Rotate(const int angle);
+		void Rotate(real angle, const Vector2& position);
 
 		/* +==== Get Dimension ====+ */
 		int Width() const;
@@ -62,7 +75,6 @@ namespace Sheep
 
 		bool operator == (const Rect& rhs) const;
 		bool operator != (const Rect& rhs) const;
-
 		#pragma endregion
 	};
 }

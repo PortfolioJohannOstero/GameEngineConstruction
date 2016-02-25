@@ -89,9 +89,15 @@
     <ClCompile Include="SheepDebugMessage.cpp" />
     <ClCompile Include="SheepInput.cpp" />
     <ClCompile Include="SheepObject.cpp" />
+    <ClCompile Include="SheepObjectEnemyFollow.cpp" />
+    <ClCompile Include="SheepObjectEnemyPatrol.cpp" />
+    <ClCompile Include="SheepObjectEnemyStationary.cpp" />
+    <ClCompile Include="SheepObjectEnemyTurretUtil.cpp" />
     <ClCompile Include="SheepObjectPlayer.cpp" />
     <ClCompile Include="SheepObjectProjectile.cpp" />
+    <ClCompile Include="SheepObjectProjectile_Bomb.cpp" />
     <ClCompile Include="SheepObjectScenery.cpp" />
+    <ClCompile Include="SheepPhysics.cpp" />
     <ClCompile Include="SheepSprite.cpp" />
     <ClCompile Include="SheepTransform2D.cpp" />
     <ClCompile Include="SheepView.cpp" />
@@ -105,6 +111,7 @@
     <ClInclude Include="Precision.h" />
     <ClInclude Include="Rect.h" />
     <ClInclude Include="SheepAmmo.h" />
+    <ClInclude Include="SheepAmmoCollection.h" />
     <ClInclude Include="SheepAnimator.h" />
     <ClInclude Include="SheepBlittingTypes.h" />
     <ClInclude Include="SheepControls.h" />
@@ -112,9 +119,15 @@
     <ClInclude Include="SheepDebugMessage.h" />
     <ClInclude Include="SheepInput.h" />
     <ClInclude Include="SheepObject.h" />
+    <ClInclude Include="SheepObjectEnemyFollow.h" />
+    <ClInclude Include="SheepObjectEnemyPatrol.h" />
+    <ClInclude Include="SheepObjectEnemyStationary.h" />
+    <ClInclude Include="SheepObjectEnemyTurretUtil.h" />
     <ClInclude Include="SheepObjectPlayer.h" />
     <ClInclude Include="SheepObjectProjectile.h" />
+    <ClInclude Include="SheepObjectProjectile_Bomb.h" />
     <ClInclude Include="SheepObjectScenery.h" />
+    <ClInclude Include="SheepPhysics.h" />
     <ClInclude Include="SheepSprite.h" />
     <ClInclude Include="SheepTag.h" />
     <ClInclude Include="SheepTransform2D.h" />
@@ -124,6 +137,9 @@
     <ClInclude Include="Utility.h" />
     <ClInclude Include="Utility_Animation.h" />
     <ClInclude Include="Vector2.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

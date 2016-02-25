@@ -11,7 +11,7 @@
 void HAPI_Main()
 {
 	WORLD.Create();
-	if (WORLD.Initialise(1080, 600))
+	if (WORLD.Initialise(1080, 800))
 	{
 		DEBUG_MESSAGE.Create();
 		DEBUG_MESSAGE.Initialise(Sheep::Vector2(8, 20), 10, 10);

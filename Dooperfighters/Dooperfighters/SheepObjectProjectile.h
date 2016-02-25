@@ -1,6 +1,22 @@
 #ifndef SHEEP_OBJECT_PROJECTILE
 #define SHEEP_OBJECT_PROJECTILE
 
+/*
++=============================================+
++==============================================+
+Object - Projectile.h
+Engine: Sheep Engine
+Author: Jóhann Østerø.
+--
+This is a very simple object, this is the object used for every single projectile.
+uppon activation the object, it will automatically just travel in whatever direction given.
+if it hits a player or an enemy, it'll will take of some health
+
+if a bullet leaves the screen or if it hits anything it will automatically deactivate itself
++==============================================+
++============================================+
+*/
+
 #include "SheepObject.h"
 
 namespace Sheep

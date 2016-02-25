@@ -1,6 +1,23 @@
 #ifndef SHEEP_INPUT
 #define SHEEP_INPUT
 
+/*
++=============================================+
++==============================================+
+Sheep Input.h
+Engine: Sheep Engine
+Author: Jóhann Østerø.
+--
+This is a static class that allows for the user to check for keyboard and xbox controller inputs.
+This class is a build on HAPI's already setup Input handler.
+This one is more of an extension of it.
+
+It automatically handles hot-pluggeable xbox controllers, and handles the deadzone on the xbox analogues behind the scenes,
+cleaning up other code. It also makes sure that any input will all be collected from one central location, making updating inputs much easier and cleaner.
++==============================================+
++============================================+
+*/
+
 #include <HAPI_lib.h>
 #include <vector>
 

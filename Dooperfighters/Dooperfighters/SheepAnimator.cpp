@@ -4,6 +4,7 @@
 
 using namespace Sheep;
 
+/* +==== Constructor ====+ */
 Animator::Animator(unsigned int startFrame, unsigned int endFrame, bool loopAnimation)
 	: mStartFrame(startFrame), mCurrentFrame(startFrame), mIsPlaying(false), mIsLooping(loopAnimation)
 {
@@ -17,6 +18,7 @@ Animator::Animator(const Animator& cpy)
 	mCurrentFrame = cpy.mCurrentFrame;
 }
 
+/* +==== Remote Controls ====+ */
 void Animator::Play()
 {
 	mIsPlaying = true;
@@ -33,6 +35,7 @@ void Animator::Pause()
 	mIsPlaying = false;
 }
 
+/* +==== "Update" ====+ */
 void Animator::Increment()
 {
 	if (mIsPlaying)
@@ -47,6 +50,7 @@ void Animator::Increment()
 	}
 }
 
+/* +==== Setters ====+*/
 void Animator::SetCurrentFrame(int frame)
 {
 	if (frame < mStartFrame)
@@ -62,6 +66,7 @@ void Animator::SetCurrentFrameToRandomFrame()
 	mCurrentFrame = mStartFrame + std::rand() % ((mEndFrame + 1) - mStartFrame);
 }
 
+/* +==== Getter ====+*/
 int Animator::getKey()
 {
 	return mCurrentFrame;

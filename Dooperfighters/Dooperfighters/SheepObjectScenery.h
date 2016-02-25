@@ -1,6 +1,18 @@
 #pragma once
 #include "SheepObject.h"
 
+/*
++=============================================+
++==============================================+
+Object - Scenery.h
+Engine: Sheep Engine
+Author: Jóhann Østerø.
+--
+The scenery object is extremely simple and and it's only purpose is aesthetics, such as background.
++==============================================+
++============================================+
+*/
+
 namespace Sheep
 {
 	class SheepObjectScenery : public Object

@@ -1,6 +1,5 @@
 #include "SheepSprite.h"
 #include "SheepTransform2D.h"
-#include "SheepDebugMessage.h"
 #include "Utility.h"
 
 using namespace Sheep;
@@ -54,7 +53,7 @@ bool Sprite::Load(std::string& filename, unsigned int spriteWidth, unsigned int 
 	// Creating a modifiable texture array with initial values set to 0 
 	const unsigned int textureSize = mSheetSize.Area() * BYTE_SIZE;
 	mRotatedTexture = new BYTE[textureSize];
-	memset(mRotatedTexture, 0, textureSize);
+	memcpy(mRotatedTexture, mTexture, textureSize);
 	
 	switch (type)
 	{
@@ -104,43 +103,6 @@ void Sprite::BlitLineByLine(const Transform2D& transform, float previousRotation
 	}
 }
 
-void Sprite::Rotate(real angle)
-{
-	angle = toRadian<float>(angle);
-
-	const Vector2 posH = getBasicRotation(Right(), -angle);
-	const Vector2 posV = getBasicRotation(Up(), -angle);
-
-	Vector2 coord0 = getBasicRotation(Vector2(mBoundingBox.Center() * -1), -angle) + mBoundingBox.Center();
-	
-	for (int y = 0; y < mBoundingBox.Height(); y++)
-	{
-		Vector2 coord1 = coord0;
-		for (int x = 0; x < mBoundingBox.Width(); x++)
-		{
-			int xx = (int)coord1.x;
-			int yy = (int)coord1.y;
-			
-			const int rIndex = (x + y * mSheetSize.Width()) * BYTE_SIZE;
-			const int index = (xx + yy * mSheetSize.Width()) * BYTE_SIZE;
-			
-			BYTE alpha = 0;
-			if (rIndex < 0 && rIndex >= mBoundingBox.Area() * BYTE_SIZE)
-				alpha = 0;
-			else					
-				alpha = mTexture[index + 3];
-			
-			mRotatedTexture[rIndex] = mTexture[index];
-			mRotatedTexture[rIndex + 1] = mTexture[index + 1];
-			mRotatedTexture[rIndex + 2] = mTexture[index + 2];
-			mRotatedTexture[rIndex + 3] = alpha;
-
-			coord1 += posH;
-		}
-		coord0 += posV;
-	}
-}
-
 void Sprite::BlitTransparent(const Transform2D& transform, float previousRotation, BYTE* screenPointer, const Rect& screenBoundary, unsigned int frameNumber)
 {
 	Vector2 pos = transform.GetPosition();
@@ -148,9 +110,7 @@ void Sprite::BlitTransparent(const Transform2D& transform, float previousRotatio
 	if (transform.GetRotation() != previousRotation)
 		Rotate(transform.GetRotation());
 
-	DEBUG_MESSAGE.PushMessage(std::to_string(transform.GetRotation()) + " : " + std::to_string(previousRotation));
-
-	if (mBoundingBox.CompletelyOutside(screenBoundary, pos.x, pos.y))
+	if (mBoundingBox.CompletelyOutside(screenBoundary, (int)pos.x, (int)pos.y))
 		return;
 
 	Rect Clipped = Clipping(screenBoundary, pos.x, pos.y);
@@ -189,16 +149,20 @@ void Sprite::BlitTransparent(const Transform2D& transform, float previousRotatio
 }
 #pragma endregion Blitting methods
 
+/* +==== Image manipulation ====+ */
 Rect Sprite::Clipping(const Rect& screenBoundary, real &x, real &y)
 {
+	const int xi = (int)x;
+	const int yi = (int)y;
+
 	Rect Clipped(0, mBoundingBox.Width(), 0, mBoundingBox.Height()); /* 1. source space */
-	Clipped.Translate(x, y); /* 2. Convert to screen space */
+	Clipped.Translate(xi, yi); /* 2. Convert to screen space */
 	Clipped.ClipTo(screenBoundary); /* 3. Clip to window */
-	Clipped.Translate(-x, -y); /* 4. Convert back to source space */
+	Clipped.Translate(-xi, -yi); /* 4. Convert back to source space */
 
 	/* 5. clamp x and y values if they go below 0 */
-	if (x < 0) x = 0;
-	if (y < 0) y = 0;
+	if (xi < 0) x = 0;
+	if (yi < 0) y = 0;
 
 	return Clipped;
 }
@@ -218,57 +182,42 @@ void Sprite::AnimationOffset(unsigned int frameNumber, Rect& animationClipContai
 	animationClipContainer.Translate(frameNumber * mBoundingBox.Width(), yoffset * mBoundingBox.Height());
 }
 
-/* +==== Getter Methods ====+ */
-#pragma region GETTER METHODS
-BYTE* Sprite::GetImagePointer()
+void Sprite::Rotate(real angle)
 {
-	return mTexture;
-}
+	angle = toRadian<float>(angle);
 
-/* +=== Get Sprite Bounding Box ===+ */
-Rect Sprite::Image() const
-{
-	return mBoundingBox;
-}
+	const Vector2 posH = getBasicRotation(Right(), -angle);
+	const Vector2 posV = getBasicRotation(Up(), -angle);
 
-#pragma endregion getter methods
-
-
-
-/* +==== Pixel Handling ====+ */
-BYTE* Sprite::GetPixel(int x, int y)
-{
-	return mTexture + ((x + y * mBoundingBox.Width()) * BYTE_SIZE);
-}
-
-void Sprite::SetPixel(int x, int y, const HAPI_TColour& colour)
-{
-	memcpy(GetPixel(x, y), &colour, BYTE_SIZE);
-}
-
-/*
-bool Sprite::resizePixels(int newWidth, int newHeight) {
-	BYTE* newTexture = new BYTE[newWidth * newHeight * 4];
-	BYTE* destinationPointer = newTexture;
-	BYTE* sourcePointer = mTexture;
-	
-	int x_ratio = (int)((mWidth << 16) / newWidth) + 1;
-	int y_ratio = (int)((mHeight << 16) / newHeight) + 1;
-	
-	for (int y = 0; y < newHeight; y++)
+	Vector2 coord0 = getBasicRotation(Vector2(mBoundingBox.Center() * -1), -angle) + mBoundingBox.Center();
+	for (int y = 0; y < mBoundingBox.Height(); y++)
 	{
-		for (int x = 0; x < newWidth; x++)
+		Vector2 coord1 = coord0;
+		for (int x = 0; x < mBoundingBox.Width(); x++)
 		{
-			BYTE blue = sourcePointer[0];
-			BYTE green = sourcePointer[1];
-			BYTE red = sourcePointer[2];
-			BYTE alpha = sourcePointer[3];
+			int xi = (int)coord1.x;
+			int yi = (int)coord1.y;
 
-			sourcePointer += 4;
-			destinationPointer += 4;
+			const int rIndex = (x + y * mSheetSize.Width()) * BYTE_SIZE;
+			const int index = (xi + yi * mSheetSize.Width()) * BYTE_SIZE;
+
+			BYTE alpha = 0;
+			if (xi < 0 || xi >= mBoundingBox.Width() || yi < 0 || yi >= mBoundingBox.Height())
+			{
+				mRotatedTexture[rIndex] = 0;
+				mRotatedTexture[rIndex + 1] = 0;
+				mRotatedTexture[rIndex + 2] = 0;
+				mRotatedTexture[rIndex + 3] = 0;
+			}
+			else
+			{
+				mRotatedTexture[rIndex] = mTexture[index];
+				mRotatedTexture[rIndex + 1] = mTexture[index + 1];
+				mRotatedTexture[rIndex + 2] = mTexture[index + 2];
+				mRotatedTexture[rIndex + 3] = mTexture[index + 3];
+			}
+			coord1 += posH;
 		}
+		coord0 += posV;
 	}
-
-	return true;
-
-}*/
+}

@@ -101,9 +101,9 @@ void DebugMessage::RenderMessages()
 			}
 
 			if (mDisplayTimeStamp)
-				HAPI->RenderText(mWindowPosition->x, mWindowPosition->y + (yOffset * mRowPadding), *colour, std::to_string(message.timestamp / 1000) + "s: " + message.message);
+				HAPI->RenderText((int)mWindowPosition->x, (int)mWindowPosition->y + (yOffset * mRowPadding), *colour, std::to_string(message.timestamp / 1000) + "s: " + message.message);
 			else
-				HAPI->RenderText(mWindowPosition->x, mWindowPosition->y + (yOffset * mRowPadding), *colour, message.message);
+				HAPI->RenderText((int)mWindowPosition->x, (int)mWindowPosition->y + (yOffset * mRowPadding), *colour, message.message);
 
 			yOffset++;
 		}

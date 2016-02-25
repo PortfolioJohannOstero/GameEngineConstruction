@@ -3,6 +3,19 @@
 
 #include "Precision.h"
 
+/*
++=============================================+
++==============================================+
+Transform2D.h
+Engine: Sheep Engine
+Author: Jóhann Østerø.
+--
+This class is responsible for every object movement in the Sheep Engine.
+It handles rotation, (WIP) scaling and translation, as well as calculating directions
++==============================================+
++============================================+
+*/
+
 namespace Sheep
 {
 	class Vector2;
@@ -43,7 +56,6 @@ namespace Sheep
 		Vector2 GetScale() const;
 		float GetRotation() const;
 		Vector2 GetDirection(const Vector2& facing);
-		Transform2D GetPreviousTransform() const;
 
 		/* +==== Operator overloading ====+ */
 		Transform2D operator + (const Transform2D& rhs) const;

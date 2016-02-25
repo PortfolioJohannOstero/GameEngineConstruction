@@ -32,20 +32,19 @@ void View::Destroy()
 }
 
 /* +=== Initialises the HAPI library; creates a window ===+ */
-bool View::Initialise(int screenWidth, int screenHeight, unsigned int maxLayers)
+bool View::Initialise(int screenWidth, int screenHeight)
 {
 	/* Check if the instance has been created and if the happy initialize */
 	if (!INSTANCE)
 		return false;
 
 	// TODO: fix [original: !HAPI->Initialise(&screenWidth, &screenHeight)
-	if (HAPI->Initialise(&screenWidth, &screenHeight))
+	if (!HAPI->Initialise(&screenWidth, &screenHeight))
 		return false;
 
 	/* Get Window properties */
 	mWindowBoundary = new Rect(0, screenWidth, 0, screenHeight);
 	mScreenPointer = HAPI->GetScreenPointer();
-	mMaxLayers = maxLayers;
 
 	return true;
 }

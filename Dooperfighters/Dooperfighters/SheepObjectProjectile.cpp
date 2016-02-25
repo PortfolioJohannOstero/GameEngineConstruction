@@ -27,8 +27,6 @@ void ObjectProjectile::Update()
 {
 	if (isActive())
 	{
-		// TODO: move into transform
-		mPreviousTransform = transform;
 		transform->Translate(transform->GetDirection(Right()) * mSpeed);
 
 		if (transform->GetPosition().x < 0 || transform->GetPosition().x > VIEW.WindowBoundary().Width() ||
@@ -41,10 +39,7 @@ void ObjectProjectile::Update()
 void ObjectProjectile::OnCollisionEnter(Object* otherObject)
 {
 	if (otherObject->GetTag() == mTarget && otherObject->isActive())
-	{
-		SetActive(false);
-		otherObject->SetActive(false);
-	}
+		otherObject->TakeDamage(mCollisionDamage);
 }
 
 void ObjectProjectile::SetTarget(eTAG target)

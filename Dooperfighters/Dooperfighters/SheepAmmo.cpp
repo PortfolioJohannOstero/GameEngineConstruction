@@ -3,6 +3,9 @@
 
 using namespace Sheep;
 
+Ammo::Ammo()
+	:mMaxAmmo(0), mFireRate(0), mAmmoType(eTAG::PROJECTILE_BULLET), mCurrentAmmoCount(0) {}
+
 Ammo::Ammo(unsigned int maxAmmo, float fireRate, eTAG ammoType, int currentAmmo)
 	: mMaxAmmo(maxAmmo), mFireRate(fireRate), mAmmoType(ammoType)
 {
@@ -30,8 +33,15 @@ bool Ammo::Shoot()
 	if (!HasAmmo())
 		return false;
 
-	mCurrentAmmoCount--;
-	return true;
+	if (mCurrTime > mFireRate)
+	{
+		mCurrentAmmoCount--;
+		mCurrTime = 0;
+		return true;
+	}
+	
+	mCurrTime += 0.5;
+	return false;
 }
 
 /* +==== Getters ====+ */
