@@ -160,7 +160,7 @@ void World::LoadLevel(unsigned int index)
 	ammoCollection.bombs	= Ammo(4, 8, eTAG::PROJECTILE_BOMB);
 
 	Animator playerAnim(1, 8, true);
-	ObjectPlayer* player = new Sheep::ObjectPlayer("Player", 10, 100000000, 10, 200, 200, playerIndex, { 75, 29 }, Vector2(10, 25), Sheep::eTAG::PLAYER, ammoCollection);
+	ObjectPlayer* player = new Sheep::ObjectPlayer("Player", 10, 10, 10, 200, 200, playerIndex, { 75, 29 }, Vector2(10, 25), Sheep::eTAG::PLAYER, ammoCollection);
 	player->AddCollisionTag(Sheep::eTAG::ENEMY);
 	player->SetControls('A', 'D', 'W', 'S', HK_SPACE, 'C', HK_CONTROL);
 
@@ -168,37 +168,36 @@ void World::LoadLevel(unsigned int index)
 	enemy_gatlinGun->AddCollisionTag(eTAG::PLAYER);
 	ObjectEnemyTurretUtil* enemyUtil_gatlinGun = enemy_gatlinGun->AttachTurret(50, 1, { 500, 500 }, Vector2(-250, -500), 90, eTAG::PLAYER);
 
-	//ObjectEnemyPatrol* enemy_patrollingGatlingun = new ObjectEnemyPatrol("Ducky the wandering gatlingun", 2, 50, 8000, Vector2(200, 700), enemy_gatlingunIndex, { 65, 29 }, Vector2(0, 40), eTAG::ENEMY);
-	//enemy_patrollingGatlingun->AddPatrolPoint(Vector2(210, 700));
-	//enemy_patrollingGatlingun->AddPatrolPoint(Vector2(500, 750));
-	//enemy_patrollingGatlingun->AddPatrolPoint(Vector2(200, 700));
+	ObjectEnemyPatrol* enemy_patrollingGatlingun = new ObjectEnemyPatrol("Ducky the wandering gatlingun", 2, 50, 8000, Vector2(200, 700), enemy_gatlingunIndex, { 65, 29 }, Vector2(0, 40), eTAG::ENEMY);
+	enemy_patrollingGatlingun->AddPatrolPoint(Vector2(210, 700));
+	enemy_patrollingGatlingun->AddPatrolPoint(Vector2(500, 750));
+	enemy_patrollingGatlingun->AddPatrolPoint(Vector2(200, 700));
 
 
 	SheepObjectScenery* background = new Sheep::SheepObjectScenery("Background", 10, 0, 0, bgIndex, { 0, 0, 0, 0 }, { 0, 0 }, Sheep::eTAG::NEUTRAL);
 	SheepObjectScenery* foreground = new Sheep::SheepObjectScenery("Foreground", 10, -5, 550, fgIndex, { 0, 0, 0, 0 }, {0,  0}, Sheep::eTAG::NEUTRAL);
-	//
-	//// +=== Push Objects to World
+	
+	// +=== Push Objects to World
 	mObjectList.push_back(background);
 	mObjectList.push_back(foreground);
 	mObjectList.push_back(player);
 	mObjectList.push_back(enemy_gatlinGun);
 	mObjectList.push_back(enemyUtil_gatlinGun);
-	//mObjectList.push_back(enemy_patrollingGatlingun);
+	mObjectList.push_back(enemy_patrollingGatlingun);
 
-	//for (int i = 0; i < 5; i++)
-	//{
-	//	Vector2 randomPos((real)randomRange<int>(0, VIEW.WindowBoundary().Width()),
-	//					  (real)randomRange<int>(0, VIEW.WindowBoundary().Height()));
-	//	ObjectEnemyFollow* enemy_followingMine = new ObjectEnemyFollow("Following Mine", 2.f, 1, 50, randomPos, enemy_followingMineIndex, { 56, 56 }, Vector2(0, 0), eTAG::ENEMY);
-	//	enemy_followingMine->SetTarget(player->transform);
-	//	enemy_followingMine->AddCollisionTag(eTAG::PLAYER);
-	//	mObjectList.push_back(enemy_followingMine);
-	//}
+	for (int i = 0; i < 5; i++)
+	{
+		Vector2 randomPos((real)randomRange<int>(0, VIEW.WindowBoundary().Width()),
+						  (real)randomRange<int>(0, VIEW.WindowBoundary().Height()));
+		ObjectEnemyFollow* enemy_followingMine = new ObjectEnemyFollow("Following Mine", 2.f, 1, 50, randomPos, enemy_followingMineIndex, { 56, 56 }, Vector2(0, 0), eTAG::ENEMY);
+		enemy_followingMine->SetTarget(player->transform);
+		mObjectList.push_back(enemy_followingMine);
+	}
 
 
 	int projectileCount = 50;
 	mBulletManager.resize(projectileCount * 3);
-	for (int i = 0; i < projectileCount; i += 3)
+	for (int i = 0; i < projectileCount; i+= 3)
 	{
 		Sheep::ObjectProjectile* bullet = new Sheep::ObjectProjectile("Bullet", 30, 1, 0, 0, bulletIndex, { 15, 6 }, { 0, 5 }, Sheep::eTAG::PROJECTILE_BULLET);
 		Sheep::ObjectProjectile* missile = new Sheep::ObjectProjectile("Rocket", 20, 80, 0, 0, missileIndex, { 30, 10 }, { 20, 30 }, Sheep::eTAG::PROJECTILE_MISSILE);
@@ -246,6 +245,7 @@ void World::ExecuteGameLoop()
 		for (auto *object : mObjectList)
 			object->Render();
 
+		//HAPI->RenderText(10, 20, { 255, 255, 255 }, std::to_string(mObjectList[1]->transform->GetRotation()));
 		DEBUG_MESSAGE.RenderMessages();
 	}
 }

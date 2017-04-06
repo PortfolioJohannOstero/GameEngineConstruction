@@ -1,0 +1,207 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Sheep::Rect" Collapsed="true">
+    <Position X="5.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABAAAABAAgAAAAUggECAIAAAAQAAkAQAYgAA=</HashCode>
+      <FileName>Rect.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sheep::Vector2" Collapsed="true">
+    <Position X="5.25" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEEAAAABAAAAUAAAAQAAAgAAAAgEAABgAAEEAAA=</HashCode>
+      <FileName>Vector2.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sheep::Transform2D" Collapsed="true">
+    <Position X="5.25" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAABDCIAAAAAAIAAQBAEAAACggAIgAkAgAAAgA=</HashCode>
+      <FileName>SheepTransform2D.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sheep::Sprite" Collapsed="true">
+    <Position X="13.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEgAAFAAgAAABAAAIAAARAEIQAABgQCBAgAAAAAAI=</HashCode>
+      <FileName>SheepSprite.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sheep::View" Collapsed="true">
+    <Position X="13.5" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAABAAACIQAQAEAAAAAAAAVBIEQAAFAAAAIAAIA=</HashCode>
+      <FileName>SheepView.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sheep::Input" Collapsed="true">
+    <Position X="7.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAAAEBgAAAAAAAAQAAAAAAAAAAAEAAACAAoAAA=</HashCode>
+      <FileName>SheepInput.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sheep::Physics" Collapsed="true">
+    <Position X="2.75" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAACAAAAAAAABAAAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SheepPhysics.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sheep::Object" Collapsed="true">
+    <Position X="5.25" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAQQIABAARAEgApoQAAAABAQAQMEAAAsABggyqFABAA=</HashCode>
+      <FileName>SheepObject.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sheep::World" Collapsed="true">
+    <Position X="11.75" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEADABAQAAACAAEAAEAARCBUQAAAAAAAAAAAA=</HashCode>
+      <FileName>SheepWorld.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sheep::ObjectPlayer" Collapsed="true">
+    <Position X="5.25" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAQQAAAAAAACAAAAAEAAAgAAAAIAIAAKABAAAEAAAAA=</HashCode>
+      <FileName>SheepObjectPlayer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sheep::DebugMessage" Collapsed="true">
+    <Position X="13.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQACAAJAgACAgQAAAAAkRQABAARAAEQAgAAAAAAAAAA=</HashCode>
+      <FileName>SheepDebugMessage.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sheep::ObjectProjectile" Collapsed="true">
+    <Position X="7.5" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAAQAAAAIAAAAABAAAAI=</HashCode>
+      <FileName>SheepObjectProjectile.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sheep::SheepObjectScenery" Collapsed="true">
+    <Position X="9.75" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAE=</HashCode>
+      <FileName>SheepObjectScenery.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sheep::ObjectEnemyTurretUtil" Collapsed="true">
+    <Position X="0.75" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAgAAgAAMAAAAABAAAAA=</HashCode>
+      <FileName>SheepObjectEnemyTurretUtil.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sheep::ObjectEnemyStationary" Collapsed="true">
+    <Position X="3" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAQAAAAAAAAAAIAACAAAAAAgAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>SheepObjectEnemyStationary.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sheep::Ammo" Collapsed="true">
+    <Position X="1" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAIAAAIAAABAAJAAAAAIAAAAAAAAFAAAAgAEAAAAA=</HashCode>
+      <FileName>SheepAmmo.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sheep::Animator" Collapsed="true">
+    <Position X="2.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAQAgCAAAAAAAJAAACAAAAACQAAAAoAAAAAQAAIA=</HashCode>
+      <FileName>SheepAnimator.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="Sheep::PlayerControls" Collapsed="true">
+    <Position X="2.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAACAAAAAAAIAAAAAAAKAAAABgAAAgAAgAA=</HashCode>
+      <FileName>SheepControls.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Sheep::Controller" Collapsed="true">
+    <Position X="1" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAEAAA=</HashCode>
+      <FileName>SheepInput.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Sheep::WorldMessage_Fire" Collapsed="true">
+    <Position X="11.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAEAAAAQAAAAAAIAAAAAAAAAAAAAAAAAAAAAACAAA=</HashCode>
+      <FileName>SheepWorldMessages.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Sheep::Debug" Collapsed="true">
+    <Position X="13.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAI=</HashCode>
+      <FileName>SheepDebug.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Sheep::Message" Collapsed="true">
+    <Position X="13.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAgABAAAAAAAAIAAAACA=</HashCode>
+      <FileName>SheepDebugMessage.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Sheep::AmmoCollection" Collapsed="true">
+    <Position X="1" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAAAAAAAAAAQAAAAAAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>SheepAmmoCollection.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Typedef Name="Sheep::real" Collapsed="true">
+    <Position X="5.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Precision.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Enum Name="BLITTING_TYPES" Collapsed="true">
+    <Position X="13.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAABAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SheepBlittingTypes.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Sheep::ANALOGUE_DIRECTION" Collapsed="true">
+    <Position X="7.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAAICAAAgAAAAAAAAAAA=</HashCode>
+      <FileName>SheepInput.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Sheep::eTAG" Collapsed="true">
+    <Position X="11.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAIAAMAAAAIAAQAAAAAAAAAAAAAAAAAAAAgAAA=</HashCode>
+      <FileName>SheepTag.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Sheep::eWorld_message_types" Collapsed="true">
+    <Position X="11.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAA=</HashCode>
+      <FileName>SheepWorld.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Sheep::MESSAGE_TYPE" Collapsed="true">
+    <Position X="7.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAABACAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SheepDebugMessage.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

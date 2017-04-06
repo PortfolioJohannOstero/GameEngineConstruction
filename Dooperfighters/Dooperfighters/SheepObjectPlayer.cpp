@@ -63,11 +63,15 @@ void ObjectPlayer::Update()
 
 	/* +=== Shooting ===+ */
 	if (Input::Key_isPressed(mControls.fire_bullet) && mProjectiles->bullets.Shoot())
+	{
 		WORLD.SendMessage(eWorld_message_types::FIRE, &WorldMessage_Fire(this, eTAG::ENEMY, eTAG::PROJECTILE_BULLET, mProjectileSpawnPoint));
+		DEBUG_MESSAGE.PushMessage(std::to_string(mProjectiles->bullets.GetAmmoCount()));
+	}
 	else if (Input::Key_isPressed(mControls.fire_missile) && mProjectiles->missiles.Shoot())
 		WORLD.SendMessage(eWorld_message_types::FIRE, &WorldMessage_Fire(this, eTAG::ENEMY, eTAG::PROJECTILE_MISSILE, mProjectileSpawnPoint));
 	else if (Input::Key_isPressed(mControls.fire_bomb) && mProjectiles->bombs.Shoot())
 		WORLD.SendMessage(eWorld_message_types::FIRE, &WorldMessage_Fire(this, eTAG::ENEMY, eTAG::PROJECTILE_BOMB, mProjectileSpawnPoint));
+
 
 	/* +=== Controls and Pseudo physics*/
 	Vector2& dir = transform->GetDirection(Right());
